@@ -1,0 +1,80 @@
+.nav {
+  display: flex;
+  width: 100%;
+  height: 70px;
+  background: darkslategray;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.logo {
+  height: 35px;
+  margin-right: 10px;
+}
+
+.ul {
+  display: flex;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+.ul * {
+  text-decoration: none;
+}
+
+.ul li {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 0 5px;
+  color: white;
+  transition: all 0.5s;
+  border-radius: 8px;
+}
+
+.ul li:hover {
+  cursor: pointer;
+  background: white;
+  color: darkslategray;
+}
+
+.input {
+  width: 200px;
+  height: 38px;
+  margin-left: auto;
+  border-radius: 7px;
+  border: 0px;
+}
+
+.buttons * {
+  height: 38px;
+  margin-left: 10px;
+  border-radius: 7px;
+  border: 0px;
+}
+
+.buttons button:nth-child(1) {
+  background: darkslategray;
+  color: white;
+  border: 1px solid white;
+}
+.buttons button:nth-child(2) {
+  background: rgb(255, 202, 44) !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .logo {
+    margin: 5px;
+  }
+  .nav {
+    padding: 20px 20px;
+    flex-direction: column;
+    height: auto;
+  }
+  .input {
+    margin: 20px 0px;
+    width: 90%;
+  }
+}

@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  background: whitesmoke;
+}
+.aside {
+  width: 250px;
+  height: calc(100vh - 70px);
+  background-color: rgb(100, 100, 100);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section {
+  width: calc(100% - 250px);
+  overflow-x: scroll;
+}
+
+.aside div {
+  width: 100%;
+  padding: 40px 10px;
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
+  transition: all 0.7s;
+}
+
+.aside .divOn {
+  color: rgb(255, 202, 44);
+  text-decoration-line: underline;
+}
+.aside div:hover {
+  cursor: pointer;
+  background: rgb(255, 202, 44);
+  color: white !important;
+}
