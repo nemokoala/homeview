@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
 import styles from "./AdminUser.module.css";
+
+interface Users {
+  id: string;
+  name: string;
+  createdAt: string;
+  recentConnect: string;
+  interestArea: Array<string>;
+}
 function AdminUser() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<Users[]>([]);
   useEffect(() => {
     setUsers([
       {
-        id: 0,
+        id: "0",
         name: "코알라",
         createdAt: "20230228",
         recentConnect: "202302281000",
@@ -13,21 +21,21 @@ function AdminUser() {
       },
 
       {
-        id: 1,
+        id: "1",
         name: "김만보",
         createdAt: "20230328",
         recentConnect: "202304261020",
         interestArea: ["세종", "충주"],
       },
       {
-        id: 2,
+        id: "2",
         name: "코알순",
         createdAt: "20230528",
         recentConnect: "202302281000",
         interestArea: ["대전", "대구", "일산"],
       },
       {
-        id: 3,
+        id: "3",
         name: "바나나",
         createdAt: "20230725",
         recentConnect: "202302281104",
@@ -37,7 +45,8 @@ function AdminUser() {
 
     console.log(users);
   }, []);
-  const onClickDestroy = (id) => {
+
+  const onClickDestroy = (id: string) => {
     const answer = prompt(
       `해당 유저의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
@@ -47,7 +56,7 @@ function AdminUser() {
     else if (answer != id)
       alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");
   };
-  const sortId = (n) => {
+  const sortId = (n: number) => {
     const sortedId = [...users].sort((a, b) => {
       if (a.id < b.id) return n;
       if (a.id > b.id) return -n;
@@ -55,7 +64,7 @@ function AdminUser() {
     });
     setUsers(sortedId);
   };
-  const sortName = (n) => {
+  const sortName = (n: number) => {
     const sortedName = [...users].sort((a, b) => {
       if (a.name < b.name) return n;
       if (a.name > b.name) return -n;
@@ -63,7 +72,7 @@ function AdminUser() {
     });
     setUsers(sortedName);
   };
-  const sortCreatedAt = (n) => {
+  const sortCreatedAt = (n: number) => {
     const sortedCreatedAt = [...users].sort((a, b) => {
       if (a.createdAt < b.createdAt) return n;
       if (a.createdAt > b.createdAt) return -n;

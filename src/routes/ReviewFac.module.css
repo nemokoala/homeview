@@ -91,3 +91,11 @@
 .submitBtns div:nth-child(2):hover {
   background-color: rgb(199, 208, 247);
 }
+
+.daumAddressForm {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+}

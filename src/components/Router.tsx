@@ -7,6 +7,7 @@ import {
 import Admin from "routes/Admin";
 import Home from "routes/Home";
 import ReviewFac from "routes/ReviewFac";
+import Map from "./Map";
 import Nav from "./Nav";
 import styles from "./Router.module.css";
 function AppRouter() {
@@ -18,6 +19,7 @@ function AppRouter() {
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/reviewfac" element={<ReviewFac />} />
+          <Route path="/map" element={<Map />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>

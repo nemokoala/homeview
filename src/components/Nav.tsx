@@ -6,6 +6,7 @@ function Nav() {
       <img
         className={styles.logo}
         src="https://icon-library.com/images/white-home-icon-png/white-home-icon-png-21.jpg"
+        alt="logo"
       />
       <ul className={styles.ul}>
         <Link to="/">
@@ -14,12 +15,14 @@ function Nav() {
         <Link to="/reviewFac">
           <li>리뷰작성</li>
         </Link>
-        <li>FAQs</li>
+        <Link to="/map">
+          <li>지도</li>
+        </Link>
         <Link to="/admin">
           <li>Admin</li>
         </Link>
       </ul>
-      <input className={styles.input} />
+      <input className={styles.input} placeholder="검색" />
       <div className={styles.buttons}>
         <button>로그인</button>
         <button>회원가입</button>

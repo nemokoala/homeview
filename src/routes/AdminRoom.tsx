@@ -1,11 +1,23 @@
 import { useState, useEffect } from "react";
 import styles from "./AdminUser.module.css";
+
+interface Rooms {
+  id: string;
+  name: string;
+  totalScore: number;
+  address: string;
+  coordinate: {
+    x: number;
+    y: number;
+  };
+}
+
 function AdminRoom() {
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState<Array<Rooms>>([]);
   useEffect(() => {
     setRooms([
       {
-        id: 300,
+        id: "300",
         name: "올리브",
         totalScore: 10,
         address: "고봉로34길 35",
@@ -13,14 +25,14 @@ function AdminRoom() {
       },
 
       {
-        id: 301,
+        id: "301",
         name: "네모빌라",
         totalScore: 9,
         address: "고봉로34길 35",
         coordinate: { x: 35.7323, y: 125.4312 },
       },
       {
-        id: 302,
+        id: "302",
         name: "세모원룸",
         totalScore: 8,
         address: "고봉로34길 35",
@@ -30,7 +42,8 @@ function AdminRoom() {
 
     console.log(rooms);
   }, []);
-  const onClickDestroy = (id) => {
+
+  const onClickDestroy = (id: string): void => {
     const answer = prompt(
       `해당 방의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
@@ -40,7 +53,7 @@ function AdminRoom() {
     else if (answer != id)
       alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");
   };
-  const sortId = (n) => {
+  const sortId = (n: number): void => {
     const sortedId = [...rooms].sort((a, b) => {
       if (a.id < b.id) return n;
       if (a.id > b.id) return -n;
@@ -48,7 +61,7 @@ function AdminRoom() {
     });
     setRooms(sortedId);
   };
-  const sortName = (n) => {
+  const sortName = (n: number): void => {
     const sortedName = [...rooms].sort((a, b) => {
       if (a.name < b.name) return n;
       if (a.name > b.name) return -n;
@@ -56,7 +69,7 @@ function AdminRoom() {
     });
     setRooms(sortedName);
   };
-  const sortScore = (n) => {
+  const sortScore = (n: number): void => {
     const sortedScore = [...rooms].sort((a, b) => {
       if (a.totalScore < b.totalScore) return n;
       if (a.totalScore > b.totalScore) return -n;
@@ -64,7 +77,7 @@ function AdminRoom() {
     });
     setRooms(sortedScore);
   };
-  const sortaddress = (n) => {
+  const sortaddress = (n: number): void => {
     const sortedaddress = [...rooms].sort((a, b) => {
       if (a.address < b.address) return n;
       if (a.address > b.address) return -n;

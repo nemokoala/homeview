@@ -21,7 +21,7 @@ function ReviewFac() {
     },
 
     // 주소 선택 이벤트
-    selectAddress: (data) => {
+    selectAddress: (data: any) => {
       setAddress(data.address);
       setBuildingName(data.buildingName);
       console.log(`
@@ -32,10 +32,10 @@ function ReviewFac() {
     },
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
     } = e;
@@ -43,13 +43,7 @@ function ReviewFac() {
     if (name === "weakness") setWeakness(value);
     console.log(strength, weakness);
   };
-  const daumStyle = {
-    width: "100vw",
-    height: "100vh",
-    position: "fixed",
-    left: "0px",
-    top: "0px",
-  };
+
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit}>
@@ -118,9 +112,19 @@ function ReviewFac() {
           </div>
         </div>
         <label>장점</label>
-        <input value={strength} name="strength" onChange={onChange} />
+        <input
+          value={strength}
+          name="strength"
+          onChange={onChange}
+          placeholder="장점"
+        />
         <label>단점</label>
-        <input value={weakness} name="weakness" onChange={onChange} />
+        <input
+          value={weakness}
+          name="weakness"
+          onChange={onChange}
+          placeholder="단점"
+        />
         <label>총 별점</label>
         <div className={styles.stars}>
           <div
@@ -163,7 +167,7 @@ function ReviewFac() {
       <div>
         {openPostcode && (
           <DaumPostcode
-            style={daumStyle}
+            className={styles.daumAddressForm}
             onComplete={handle.selectAddress} // 값을 선택할 경우 실행되는 이벤트
             autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
             defaultQuery="고봉로 34길" // 팝업을 열때 기본적으로 입력되는 검색어
