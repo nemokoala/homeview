@@ -15,11 +15,8 @@ function Nav() {
         <Link to="/review">
           <li>리뷰보기</li>
         </Link>
-        <Link to="/reviewFac">
+        <Link to="/reviewfac">
           <li>리뷰작성</li>
-        </Link>
-        <Link to="/map">
-          <li>지도</li>
         </Link>
         <Link to="/admin">
           <li>Admin</li>

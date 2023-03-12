@@ -3,4 +3,42 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   padding: 20px;
   border-radius: 20px;
+  transition: all 0.7s;
+}
+
+.reviewContainer:hover {
+  background-color: var(--lightBlue);
+  cursor: pointer;
+}
+
+.reviewContainer div:nth-child(1) {
+  font-size: 1.4rem;
+  font-weight: bolder;
+}
+
+.reviewContainer div:nth-child(2) {
+  color: rgb(134, 134, 134);
+}
+.reviewContainer div:nth-child(3) {
+  color: rgb(134, 134, 134);
+  margin-bottom: 10px;
+}
+
+.reviewContainer div:nth-child(4) {
+  font-size: 1.1rem;
+  font-weight: bolder;
+  color: rgb(107, 107, 240);
+}
+
+.reviewContainer div:nth-child(5) {
+  font-size: 1.1rem;
+  font-weight: bolder;
+  color: rgb(240, 107, 107);
+  margin-bottom: 10px;
+}
+
+.reviewContainer div:nth-child(6) {
+  font-size: 1rem;
+  font-weight: light;
+  color: rgb(134, 134, 134);
 }

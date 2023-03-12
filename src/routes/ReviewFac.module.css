@@ -6,7 +6,7 @@
   align-items: center;
   background-image: url("https://images.unsplash.com/photo-1630890102474-f9b4236f26c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1cnJlZCUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100vw 300vh;
 }
 .container * {
   transition: all 0.5s;
@@ -53,6 +53,7 @@
 .buttons {
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
 }
 .mediumBtn {
   width: 150px;
@@ -63,6 +64,7 @@
   justify-content: center;
   align-items: center;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 .mediumBtn:hover {
   cursor: pointer;

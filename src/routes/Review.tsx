@@ -32,7 +32,7 @@ function Review() {
     },
     {
       reviewId: "0003",
-      building: "대구 남구 장전1길 182",
+      building: "올리브",
       newAddress: "대구 남구 장전1길 182",
       oldAddress: "익산시 영등동",
       pros: "집이 싸요",
@@ -40,7 +40,7 @@ function Review() {
     },
     {
       reviewId: "0004",
-      building: "대구 남구 대명동 1675-26",
+      building: "올리브",
       newAddress: "대구 남구 대명동 1675-26",
       oldAddress: "익산시 영등동",
       pros: "집이 싸요",
@@ -73,14 +73,17 @@ function Review() {
       ) : (
         <div className={styles.container}>
           {reviews.map((review) => (
-            <div className={styles.reviewContainer} key={review.reviewId}>
+            <div
+              className={styles.reviewContainer}
+              key={review.reviewId}
+              onClick={() => setReview(review)}
+            >
+              <div>{review.building}</div>
               <div>{review.newAddress}</div>
               <div>{review.oldAddress}</div>
               <div>장점 : {review.pros}</div>
               <div>단점 : {review.cons}</div>
-              <div onClick={() => setReview(review)} style={{ color: "blue" }}>
-                자세히 보기...
-              </div>
+              <div>클릭하여 자세히 보기...</div>
             </div>
           ))}
         </div>

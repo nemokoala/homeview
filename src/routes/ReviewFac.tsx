@@ -12,8 +12,17 @@ function ReviewFac() {
   const [residenceFloor, setResidenceFloor] = useState("");
   const [strength, setStrength] = useState("");
   const [weakness, setWeakness] = useState("");
+  const [livedYear, setLivedYear] = useState(0);
   const [star, setStar] = useState(0);
   const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
+
+  let now = new Date();
+  let nowYear = now.getFullYear();
+  let years = new Array(nowYear - 2020);
+  for (let i = 2021; i <= nowYear; i++) {
+    years[i - 2021] = i;
+  }
+  years.reverse();
   /**
    * handler
    */
@@ -126,6 +135,20 @@ function ReviewFac() {
           >
             고층
           </div>
+        </div>
+        <label>거주년도</label>
+        <div className={styles.buttons}>
+          {years.map((year) => (
+            <div
+              key={year}
+              className={`${styles.mediumBtn} ${
+                livedYear == year && styles.active
+              }`}
+              onClick={() => setLivedYear(year)}
+            >
+              {year}년까지
+            </div>
+          ))}
         </div>
         <label>장점</label>
         <input
