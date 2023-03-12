@@ -31,6 +31,25 @@
   align-items: center;
   padding: 10px;
 }
+.addressInput:hover {
+  background-color: var(--lightBlue);
+  cursor: pointer;
+}
+.addressInput.active {
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.addressInformation div {
+  margin: 5px 0;
+}
+.addressInformation div:nth-child(1) {
+  font-size: 1.25rem;
+  font-weight: bolder;
+}
 .buttons {
   display: flex;
   width: 100%;
@@ -92,10 +111,29 @@
   background-color: rgb(199, 208, 247);
 }
 
-.daumAddressForm {
+.topContainer {
   width: 100vw;
-  height: 100vh !important;
+  height: 60px !important;
   position: fixed;
   left: 0px;
   top: 0px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+  font-size: 1.5rem;
+}
+
+.topContainer:hover {
+  cursor: pointer;
+  background-color: rgb(247, 199, 199);
+}
+
+.daumAddressForm {
+  width: 100vw;
+  height: calc(100vh - 80px) !important;
+  position: fixed;
+  left: 0px;
+  top: 60px;
 }

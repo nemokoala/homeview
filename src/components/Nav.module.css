@@ -1,7 +1,7 @@
 .nav {
   display: flex;
   width: 100%;
-  height: 70px;
+  height: var(--navHeight);
   background: darkslategray;
   align-items: center;
   padding: 0 40px;
@@ -71,7 +71,7 @@
   .nav {
     padding: 20px 20px;
     flex-direction: column;
-    height: auto;
+    height: var(--navLargeHeight);
   }
   .input {
     margin: 20px 0px;

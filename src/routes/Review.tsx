@@ -30,6 +30,22 @@ function Review() {
       pros: "집이 싸요",
       cons: "집이 좁아요",
     },
+    {
+      reviewId: "0003",
+      building: "대구 남구 장전1길 182",
+      newAddress: "대구 남구 장전1길 182",
+      oldAddress: "익산시 영등동",
+      pros: "집이 싸요",
+      cons: "집이 좁아요",
+    },
+    {
+      reviewId: "0004",
+      building: "대구 남구 대명동 1675-26",
+      newAddress: "대구 남구 대명동 1675-26",
+      oldAddress: "익산시 영등동",
+      pros: "집이 싸요",
+      cons: "집이 좁아요",
+    },
   ]);
 
   useEffect(() => {
@@ -57,14 +73,7 @@ function Review() {
       ) : (
         <div className={styles.container}>
           {reviews.map((review) => (
-            <div
-              key={review.reviewId}
-              style={{
-                margin: "20px",
-                border: "1px solid black",
-                padding: "10px",
-              }}
-            >
+            <div className={styles.reviewContainer} key={review.reviewId}>
               <div>{review.newAddress}</div>
               <div>{review.oldAddress}</div>
               <div>장점 : {review.pros}</div>

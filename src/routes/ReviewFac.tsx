@@ -4,13 +4,16 @@ import styles from "./ReviewFac.module.css";
 
 function ReviewFac() {
   const [openPostcode, setOpenPostcode] = useState(false);
+  const [sido, setSido] = useState<string>("");
   const [address, setAddress] = useState("");
+  const [oldAddress, setOldAddress] = useState<string>("");
   const [buildingName, setBuildingName] = useState("");
   const [residenceType, setResidenceType] = useState("");
   const [residenceFloor, setResidenceFloor] = useState("");
   const [strength, setStrength] = useState("");
   const [weakness, setWeakness] = useState("");
   const [star, setStar] = useState(0);
+  const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
   /**
    * handler
    */
@@ -22,11 +25,17 @@ function ReviewFac() {
 
     // 주소 선택 이벤트
     selectAddress: (data: any) => {
-      setAddress(data.address);
       setBuildingName(data.buildingName);
+      setAddress(data.roadAddress);
+      setOldAddress(data.jibunAddress);
+      setSido(data.sido);
+      setAddressTitle("클릭하여 주소 변경");
+      if (data.buildingName == "") setBuildingName(data.roadAddress);
       console.log(`
-              주소: ${data.address},
-              우편번호: ${data.zonecode}
+              주소: ${data.roadAddress},
+              우편번호: ${data.zonecode},
+              지번 : ${data.jibunAddress},
+              시도 : ${data.sido}
           `);
       setOpenPostcode(false);
     },
@@ -50,12 +59,19 @@ function ReviewFac() {
         <label htmlFor="address">주소</label>
         <div
           id="address"
-          className={styles.addressInput}
+          className={`${styles.addressInput} ${address == "" || styles.active}`}
           onClick={() => setOpenPostcode(true)}
+          title={addressTitle}
         >
-          {buildingName}
-          <br />
-          {address}
+          {address == "" ? (
+            <>클릭하여 주소 검색</>
+          ) : (
+            <div className={styles.addressInformation}>
+              <div>{buildingName}</div>
+              <div>{address}</div>
+              <div>{oldAddress}</div>
+            </div>
+          )}
         </div>
         <label>거주유형</label>
         <div className={styles.buttons}>
@@ -166,12 +182,20 @@ function ReviewFac() {
 
       <div>
         {openPostcode && (
-          <DaumPostcode
-            className={styles.daumAddressForm}
-            onComplete={handle.selectAddress} // 값을 선택할 경우 실행되는 이벤트
-            autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-            defaultQuery="고봉로 34길" // 팝업을 열때 기본적으로 입력되는 검색어
-          />
+          <>
+            <div
+              className={styles.topContainer}
+              onClick={() => setOpenPostcode(false)}
+            >
+              주소 검색 X
+            </div>
+            <DaumPostcode
+              className={styles.daumAddressForm}
+              onComplete={handle.selectAddress} // 값을 선택할 경우 실행되는 이벤트
+              autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+              defaultQuery="고봉로 34길" // 팝업을 열때 기본적으로 입력되는 검색어
+            />
+          </>
         )}
       </div>
     </div>
