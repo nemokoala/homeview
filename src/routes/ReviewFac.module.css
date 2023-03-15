@@ -1,7 +1,6 @@
 .container {
   width: 100%;
-  min-height: auto;
-  height: calc(100vh - var(--navHeight));
+  min-height: calc(100vh - var(--navHeight));
   padding: 30px 0;
   display: flex;
   flex-flow: column nowrap;
@@ -116,7 +115,7 @@
 }
 .topContainer {
   width: 100vw;
-  height: 60px !important;
+  height: var(--navHeight) !important;
   position: fixed;
   left: 0px;
   top: 0px;
@@ -133,8 +132,8 @@
 }
 .daumAddressForm {
   width: 100vw;
-  height: calc(100vh - 80px) !important;
+  height: calc(100vh - var(--navHeight)) !important;
   position: fixed;
   left: 0px;
-  top: 60px;
+  top: var(--navHeight);
 }

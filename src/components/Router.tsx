@@ -1,5 +1,5 @@
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Navigate,
   Route,
   Routes,
@@ -15,7 +15,7 @@ import styles from "./Router.module.css";
 function AppRouter({ reviewData, setReviewData }: any) {
   return (
     <div className={styles.body}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
