@@ -8,7 +8,7 @@ declare global {
 }
 const { kakao } = window;
 
-function Map({
+function MapContainer({
   address,
   title,
 }: {
@@ -82,4 +82,4 @@ function Map({
   return <div id="map" ref={ref} style={{ width: "100vw", height: "300px" }} />;
 }
 
-export default Map;
+export default MapContainer;

@@ -9,10 +9,10 @@ function Admin() {
   const navigate = useNavigate();
   useEffect(() => {
     const password = 1234;
-    const answer: any = prompt(`패스워드를 입력하세요.`);
+    // const answer: any = prompt(`패스워드를 입력하세요.`);
 
-    if (answer == password) setUnlock(true);
-    else if (answer != password) navigate("/");
+    // if (answer == password) setUnlock(true);
+    // else if (answer != password) navigate("/");
   }, []);
   return (
     <div className={styles.container}>

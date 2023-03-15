@@ -1,14 +1,29 @@
 * {
   box-sizing: border-box;
 }
-html,
-body {
+html {
   padding: 0;
   margin: 0;
   width: 100%;
+  margin: 0 auto;
+  min-height: auto;
   height: 100vh;
   --lightBlue: rgb(199, 208, 247);
   --lightRed: rgb(247, 199, 199);
   --navHeight: 70px;
   --navLargeHeight: 240px;
+  --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
+  line-height: 1.5;
+  font-family: var(--defaultFont);
+}
+body {
+  padding: 0;
+  margin: 0;
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.body {
+  height: 100%;
 }

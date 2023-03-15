@@ -1,21 +1,22 @@
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { useNavigate } from "react-router-dom";
 import styles from "./ReviewFac.module.css";
 
-function ReviewFac() {
+function ReviewFac({ setReviewData }: any) {
   const [openPostcode, setOpenPostcode] = useState(false);
   const [sido, setSido] = useState<string>("");
-  const [address, setAddress] = useState("");
+  const [newAddress, setNewAddress] = useState("");
   const [oldAddress, setOldAddress] = useState<string>("");
   const [buildingName, setBuildingName] = useState("");
   const [residenceType, setResidenceType] = useState("");
   const [residenceFloor, setResidenceFloor] = useState("");
-  const [strength, setStrength] = useState("");
-  const [weakness, setWeakness] = useState("");
+  const [pros, setPros] = useState("");
+  const [cons, setCons] = useState("");
   const [livedYear, setLivedYear] = useState(0);
   const [star, setStar] = useState(0);
   const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
-
+  const navigate = useNavigate();
   let now = new Date();
   let nowYear = now.getFullYear();
   let years = new Array(nowYear - 2020);
@@ -35,7 +36,7 @@ function ReviewFac() {
     // 주소 선택 이벤트
     selectAddress: (data: any) => {
       setBuildingName(data.buildingName);
-      setAddress(data.roadAddress);
+      setNewAddress(data.roadAddress);
       setOldAddress(data.jibunAddress);
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
@@ -57,9 +58,29 @@ function ReviewFac() {
     const {
       target: { name, value },
     } = e;
-    if (name === "strength") setStrength(value);
-    if (name === "weakness") setWeakness(value);
-    console.log(strength, weakness);
+    if (name === "pros") setPros(value);
+    if (name === "cons") setCons(value);
+    console.log(pros, cons);
+  };
+
+  const sendReview = () => {
+    setReviewData((prev: any) => [
+      ...prev,
+      {
+        reviewId: Math.floor(Math.random() * 10000) + 1,
+        building: buildingName,
+        newAddress: newAddress,
+        oldAddress: oldAddress,
+        pros: pros,
+        cons: cons,
+        residenceType: residenceType,
+        residenceFloor: residenceFloor,
+        livedYear: livedYear,
+        star: star,
+      },
+    ]);
+
+    navigate("/");
   };
 
   return (
@@ -68,16 +89,18 @@ function ReviewFac() {
         <label htmlFor="address">주소</label>
         <div
           id="address"
-          className={`${styles.addressInput} ${address == "" || styles.active}`}
+          className={`${styles.addressInput} ${
+            newAddress == "" || styles.active
+          }`}
           onClick={() => setOpenPostcode(true)}
           title={addressTitle}
         >
-          {address == "" ? (
+          {newAddress == "" ? (
             <>클릭하여 주소 검색</>
           ) : (
             <div className={styles.addressInformation}>
               <div>{buildingName}</div>
-              <div>{address}</div>
+              <div>{newAddress}</div>
               <div>{oldAddress}</div>
             </div>
           )}
@@ -152,15 +175,15 @@ function ReviewFac() {
         </div>
         <label>장점</label>
         <input
-          value={strength}
-          name="strength"
+          value={pros}
+          name="pros"
           onChange={onChange}
           placeholder="장점"
         />
         <label>단점</label>
         <input
-          value={weakness}
-          name="weakness"
+          value={cons}
+          name="cons"
           onChange={onChange}
           placeholder="단점"
         />
@@ -199,7 +222,9 @@ function ReviewFac() {
         </div>
         <div className={styles.submitBtns}>
           <div className={styles.mediumBtn}>취소</div>
-          <div className={styles.mediumBtn}>제출</div>
+          <div className={styles.mediumBtn} onClick={sendReview}>
+            제출
+          </div>
         </div>
       </form>
 

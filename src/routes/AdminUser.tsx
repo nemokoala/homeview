@@ -14,7 +14,7 @@ function AdminUser() {
     setUsers([
       {
         id: "0",
-        name: "코알라",
+        name: "홍길동",
         createdAt: "20230228",
         recentConnect: "202302281000",
         interestArea: ["서울", "인천", "부산"],
@@ -22,21 +22,21 @@ function AdminUser() {
 
       {
         id: "1",
-        name: "김만보",
+        name: "김민재",
         createdAt: "20230328",
         recentConnect: "202304261020",
         interestArea: ["세종", "충주"],
       },
       {
         id: "2",
-        name: "코알순",
+        name: "박명수",
         createdAt: "20230528",
         recentConnect: "202302281000",
         interestArea: ["대전", "대구", "일산"],
       },
       {
         id: "3",
-        name: "바나나",
+        name: "이준영",
         createdAt: "20230725",
         recentConnect: "202302281104",
         interestArea: ["익산", "전주"],

@@ -1,12 +1,14 @@
 .container {
   width: 100%;
+  min-height: auto;
+  height: calc(100vh - var(--navHeight));
   padding: 30px 0;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   background-image: url("https://images.unsplash.com/photo-1630890102474-f9b4236f26c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1cnJlZCUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80");
   background-repeat: no-repeat;
-  background-size: 100vw 300vh;
+  background-size: 100vw 200%;
 }
 .container * {
   transition: all 0.5s;
@@ -112,7 +114,6 @@
 .submitBtns div:nth-child(2):hover {
   background-color: rgb(199, 208, 247);
 }
-
 .topContainer {
   width: 100vw;
   height: 60px !important;
@@ -126,12 +127,10 @@
   background-color: whitesmoke;
   font-size: 1.5rem;
 }
-
 .topContainer:hover {
   cursor: pointer;
   background-color: rgb(247, 199, 199);
 }
-
 .daumAddressForm {
   width: 100vw;
   height: calc(100vh - 80px) !important;
