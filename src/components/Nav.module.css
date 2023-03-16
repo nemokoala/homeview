@@ -61,12 +61,17 @@
   border: 0px;
   padding: 0 10px;
 }
+.buttons {
+  display: flex;
+  flex-wrap: nowrap;
+}
 
 .buttons * {
   height: 38px;
   margin-left: 10px;
   border-radius: 7px;
   border: 0px;
+  white-space: nowrap;
 }
 
 .buttons button:nth-child(1) {
@@ -112,7 +117,7 @@
     width: 100%;
   }
   .nav {
-    padding: 0 15px;
+    padding: 0 10px;
   }
   .buttons {
     margin-left: auto;
