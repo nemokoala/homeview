@@ -20,8 +20,8 @@ function ReviewFac({ setReviewData }: any) {
   let now = new Date();
   let nowYear = now.getFullYear();
   let years = new Array(nowYear - 2020);
-  for (let i = 2021; i <= nowYear; i++) {
-    years[i - 2021] = i;
+  for (let i = 2020; i <= nowYear; i++) {
+    years[i - 2020] = i;
   }
   years.reverse();
   /**

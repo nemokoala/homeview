@@ -30,7 +30,7 @@
   border: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 15px;
 }
 .addressInput:hover {
   background-color: var(--lightBlue);
@@ -42,7 +42,7 @@
   border: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 10px 15px;
 }
 .addressInformation div {
   margin: 5px 0;
