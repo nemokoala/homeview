@@ -2,7 +2,7 @@ import MapContainer from "components/MapContainer";
 import { useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./Review.module.css";
+import styled from "styled-components";
 
 function ReviewDetail({ reviewData }: any | null) {
   const { id } = useParams();
@@ -14,18 +14,25 @@ function ReviewDetail({ reviewData }: any | null) {
     if (review == null) navigate("/");
   }, []);
   return (
-    <div className={styles.container}>
+    <>
       {review != null && (
         <>
-          <MapContainer data={review}/>
-          <h1>{review.building}</h1>
-          <h3>{review.newAddress}</h3>
-          <h3>{review.oldAddress}</h3>
-          <h4>장점 : {review.pros}</h4>
-          <h4>단점 : {review.cons}</h4>
+          <MapContainer data={review} />
+          <Div>
+            <h1>{review.building}</h1>
+            <h3>{review.newAddress}</h3>
+            <h3>{review.oldAddress}</h3>
+            <h4>장점 : {review.pros}</h4>
+            <h4>단점 : {review.cons}</h4>
+          </Div>
         </>
       )}
-    </div>
+    </>
   );
 }
+
+const Div = styled.div`
+  width: 100%;
+  padding: 0 20px;
+`;
 export default ReviewDetail;

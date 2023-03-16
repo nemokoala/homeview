@@ -6,6 +6,7 @@ import {
 } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+
 function MapContainer({ data }: any) {
   const [state, setState] = useState<any>({
     center: { lat: 33.452613, lng: 126.570888 },
@@ -35,7 +36,7 @@ function MapContainer({ data }: any) {
         style={{
           // 지도의 크기
           width: "100%",
-          height: "450px",
+          height: "400px",
         }}
         level={4} // 지도의 확대 레벨
       >
@@ -46,14 +47,22 @@ function MapContainer({ data }: any) {
           <Div>
             <div className="building">{data.building}</div>
             <div className="buttons">
-              <div className="road">길찾기</div>
-              <div className="showmap">지도보기</div>
+              <a
+                href={`https://map.kakao.com/link/to/${data.building},${state.center.lat},${state.center.lng}`}
+                target="_blank"
+              >
+                <div className="road">길찾기</div>
+              </a>
+              <a
+                href={`https://map.kakao.com/link/map/${data.building},${state.center.lat},${state.center.lng}`}
+                target="_blank"
+              >
+                <div className="showmap">지도보기</div>
+              </a>
             </div>
           </Div>
         </CustomOverlayMap>
       </Map>
-
-      <button>버튼</button>
     </>
   );
 }
@@ -93,10 +102,18 @@ const Div = styled.div`
     height: 40px;
     border-radius: 10px;
     margin: 10px;
+    transition: all 0.5s;
+  }
+  & .road:hover,
+  .showmap:hover {
+    background-color: rgb(255, 139, 139);
   }
 
   & .showmap {
     margin-left: 0px;
+  }
+  & a {
+    text-decoration: none;
   }
 `;
 

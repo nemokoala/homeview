@@ -40,7 +40,7 @@ function ReviewFac({ setReviewData }: any) {
       setOldAddress(data.jibunAddress);
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
-      if (data.buildingName == "") setBuildingName(data.roadAddress);
+      if (data.buildingName === "") setBuildingName(data.roadAddress);
       console.log(`
               주소: ${data.roadAddress},
               우편번호: ${data.zonecode},
@@ -54,7 +54,7 @@ function ReviewFac({ setReviewData }: any) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {
       target: { name, value },
     } = e;
@@ -64,23 +64,33 @@ function ReviewFac({ setReviewData }: any) {
   };
 
   const sendReview = () => {
-    setReviewData((prev: any) => [
-      ...prev,
-      {
-        reviewId: Math.floor(Math.random() * 10000) + 1,
-        building: buildingName,
-        newAddress: newAddress,
-        oldAddress: oldAddress,
-        pros: pros,
-        cons: cons,
-        residenceType: residenceType,
-        residenceFloor: residenceFloor,
-        livedYear: livedYear,
-        star: star,
-      },
-    ]);
+    if (buildingName === "") alert("주소를 입력해주세요.");
+    else if (residenceType === "") alert("거주유형을 선택해주세요");
+    else if (residenceFloor === "") alert("거주층을 선택해주세요");
+    else if (livedYear === 0) alert("거주년도를 선택해주세요.");
+    else if (pros === "") alert("장점을 입력해주세요.");
+    else if (cons === "") alert("단점을 입력해주세요.");
+    else if (star === 0) alert("별점을 선택해주세요.");
+    else {
+      setReviewData((prev: any) => [
+        ...prev,
+        {
+          reviewId: Math.floor(Math.random() * 10000) + 1,
+          building: buildingName,
+          newAddress: newAddress,
+          oldAddress: oldAddress,
+          pros: pros,
+          cons: cons,
+          residenceType: residenceType,
+          residenceFloor: residenceFloor,
+          livedYear: livedYear,
+          star: star,
+        },
+      ]);
 
-    navigate("/");
+      navigate("/review");
+      alert("리뷰작성이 완료되었습니다!");
+    }
   };
 
   return (
@@ -90,12 +100,12 @@ function ReviewFac({ setReviewData }: any) {
         <div
           id="address"
           className={`${styles.addressInput} ${
-            newAddress == "" || styles.active
+            newAddress === "" || styles.active
           }`}
           onClick={() => setOpenPostcode(true)}
           title={addressTitle}
         >
-          {newAddress == "" ? (
+          {newAddress === "" ? (
             <>클릭하여 주소 검색</>
           ) : (
             <div className={styles.addressInformation}>
@@ -109,7 +119,7 @@ function ReviewFac({ setReviewData }: any) {
         <div className={styles.buttons}>
           <div
             className={`${styles.mediumBtn} ${
-              residenceType == "아파트" && styles.active
+              residenceType === "아파트" && styles.active
             }`}
             onClick={() => setResidenceType("아파트")}
           >
@@ -117,7 +127,7 @@ function ReviewFac({ setReviewData }: any) {
           </div>
           <div
             className={`${styles.mediumBtn} ${
-              residenceType == "오피스텔" && styles.active
+              residenceType === "오피스텔" && styles.active
             }`}
             onClick={() => setResidenceType("오피스텔")}
           >
@@ -125,7 +135,7 @@ function ReviewFac({ setReviewData }: any) {
           </div>
           <div
             className={`${styles.mediumBtn} ${
-              residenceType == "원룸/주택/빌라" && styles.active
+              residenceType === "원룸/주택/빌라" && styles.active
             }`}
             onClick={() => setResidenceType("원룸/주택/빌라")}
           >
@@ -136,7 +146,7 @@ function ReviewFac({ setReviewData }: any) {
         <div className={styles.buttons}>
           <div
             className={`${styles.mediumBtn} ${
-              residenceFloor == "저층" && styles.active
+              residenceFloor === "저층" && styles.active
             }`}
             onClick={() => setResidenceFloor("저층")}
           >
@@ -144,7 +154,7 @@ function ReviewFac({ setReviewData }: any) {
           </div>
           <div
             className={`${styles.mediumBtn} ${
-              residenceFloor == "중층" && styles.active
+              residenceFloor === "중층" && styles.active
             }`}
             onClick={() => setResidenceFloor("중층")}
           >
@@ -152,7 +162,7 @@ function ReviewFac({ setReviewData }: any) {
           </div>
           <div
             className={`${styles.mediumBtn} ${
-              residenceFloor == "고층" && styles.active
+              residenceFloor === "고층" && styles.active
             }`}
             onClick={() => setResidenceFloor("고층")}
           >
@@ -165,7 +175,7 @@ function ReviewFac({ setReviewData }: any) {
             <div
               key={year}
               className={`${styles.mediumBtn} ${
-                livedYear == year && styles.active
+                livedYear === year && styles.active
               }`}
               onClick={() => setLivedYear(year)}
             >
@@ -174,18 +184,22 @@ function ReviewFac({ setReviewData }: any) {
           ))}
         </div>
         <label>장점</label>
-        <input
+        <textarea
           value={pros}
           name="pros"
           onChange={onChange}
-          placeholder="장점"
+          placeholder="장점 최대 100글자"
+          rows={1}
+          maxLength={100}
         />
         <label>단점</label>
-        <input
+        <textarea
           value={cons}
           name="cons"
           onChange={onChange}
-          placeholder="단점"
+          placeholder="단점 최대 100글자"
+          rows={1}
+          maxLength={100}
         />
         <label>총 별점</label>
         <div className={styles.stars}>

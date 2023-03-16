@@ -1,20 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 * {
   box-sizing: border-box;
+  font-family: var(--notoFont);
 }
 html {
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 1000px;
   margin: 0 auto;
-  min-height: auto;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   --lightBlue: rgb(199, 208, 247);
   --lightRed: rgb(247, 199, 199);
   --navHeight: 70px;
   --navLargeHeight: 240px;
   --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
+  --notoFont: "Noto Sans KR", sans-serif;
   line-height: 1.5;
-  font-family: var(--defaultFont);
+  box-shadow: 0 0 70px 10px rgba(0, 0, 0, 0.205);
 }
 body {
   padding: 0;
@@ -26,4 +29,10 @@ body {
 
 .body {
   height: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+  html {
+    width: 100%;
+  }
 }

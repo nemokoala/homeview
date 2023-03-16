@@ -1,10 +1,21 @@
-.nav {
+.dummyNav {
   display: flex;
   width: 100%;
+  height: var(--navHeight);
+  padding: 0 40px;
+  z-index: -50;
+}
+.nav {
+  display: flex;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  max-width: 1000px;
   height: var(--navHeight);
   background: darkslategray;
   align-items: center;
   padding: 0 40px;
+  z-index: 50;
 }
 
 .logo {
@@ -67,17 +78,103 @@
   background: rgb(255, 202, 44) !important;
 }
 
-@media screen and (max-width: 1000px) {
-  .logo {
-    margin: 5px;
+.hamburger {
+  display: none;
+}
+.menu {
+  display: none;
+}
+@media screen and (max-width: 910px) {
+  .ul {
+    display: none;
+    transition: all 0.5s;
   }
-  .nav {
-    padding: 20px 20px;
-    flex-direction: column;
-    height: var(--navLargeHeight);
+  .hamburger {
+    display: flex;
+    min-width: 50px;
+    width: 60px;
+    margin-left: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 1s;
+  }
+  .hamburger img {
+    filter: invert(100%);
+  }
+  .hamburger.active {
+    background-color: white;
+  }
+  .hamburger.active img {
+    filter: invert(0);
   }
   .input {
-    margin: 20px 0px;
+    margin-left: 10px;
+    width: 100%;
+  }
+  .nav {
+    padding: 0 15px;
+  }
+  .buttons {
+    margin-left: auto;
+    min-width: 132px;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: -300px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    background: transparent;
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    background-color: rgb(47, 79, 79, 0.6);
+    z-index: 20;
+    transition: all 1s;
+  }
+  .menu.active {
+    top: 70px;
+    z-index: 20;
+  }
+  .sideul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 15px 0 15px 0;
+    gap: 15px;
+  }
+  .sideul * {
+    text-decoration: none;
+  }
+
+  .sideul > a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sideul li {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 0 5px;
+    color: white;
+    transition: all 0.5s;
+    border-radius: 8px;
     width: 90%;
+    white-space: nowrap;
+    font-size: 1.3rem;
+  }
+
+  .sideul li:hover {
+    cursor: pointer;
+    background: white;
+    color: darkslategray;
   }
 }
