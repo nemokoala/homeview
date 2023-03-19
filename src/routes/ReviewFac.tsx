@@ -16,6 +16,8 @@ function ReviewFac({ setReviewData }: any) {
   const [livedYear, setLivedYear] = useState(0);
   const [star, setStar] = useState(0);
   const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
+  const [lat, setLat] = useState(0); //위도 35.xx
+  const [lng, setLng] = useState(0); //경도 127.xx
   const navigate = useNavigate();
   let now = new Date();
   let nowYear = now.getFullYear();
@@ -40,13 +42,29 @@ function ReviewFac({ setReviewData }: any) {
       setOldAddress(data.jibunAddress);
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
-      if (data.buildingName === "") setBuildingName(data.roadAddress);
+      if (data.buildingName === "")
+        setBuildingName(
+          data.roadAddress.replace(data.sido, "").replace(data.sigungu, "")
+        );
       console.log(`
               주소: ${data.roadAddress},
               우편번호: ${data.zonecode},
               지번 : ${data.jibunAddress},
-              시도 : ${data.sido}
+              시도 : ${data.sido},
+              시군구: ${data.sigungu},
           `);
+      let geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(
+        data.roadAddress,
+        function (result: any, status: any): any {
+          // 정상적으로 검색이 완료됐으면
+          if (status == kakao.maps.services.Status.OK) {
+            setLat(result[0].y);
+            setLng(result[0].x);
+            console.log(lat, lng);
+          }
+        }
+      );
       setOpenPostcode(false);
     },
   };
@@ -84,7 +102,10 @@ function ReviewFac({ setReviewData }: any) {
           residenceType: residenceType,
           residenceFloor: residenceFloor,
           livedYear: livedYear,
-          star: star,
+          star,
+          lat,
+          lng,
+          sido,
         },
       ]);
 
@@ -235,7 +256,9 @@ function ReviewFac({ setReviewData }: any) {
           </div>
         </div>
         <div className={styles.submitBtns}>
-          <div className={styles.mediumBtn}>취소</div>
+          <div className={styles.mediumBtn} onClick={() => navigate("/review")}>
+            취소
+          </div>
           <div className={styles.mediumBtn} onClick={sendReview}>
             제출
           </div>
@@ -255,7 +278,7 @@ function ReviewFac({ setReviewData }: any) {
               className={styles.daumAddressForm}
               onComplete={handle.selectAddress} // 값을 선택할 경우 실행되는 이벤트
               autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-              defaultQuery="고봉로 34길" // 팝업을 열때 기본적으로 입력되는 검색어
+              defaultQuery="" // 팝업을 열때 기본적으로 입력되는 검색어
             />
           </>
         )}

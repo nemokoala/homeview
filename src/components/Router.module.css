@@ -2,11 +2,9 @@
 * {
   box-sizing: border-box;
   font-family: var(--notoFont);
+  color: black;
 }
-* * {
-  box-sizing: border-box;
-  font-family: var(--notoFont);
-}
+
 html {
   padding: 0;
   margin: 0;

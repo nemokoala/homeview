@@ -42,3 +42,27 @@
   font-weight: light;
   color: rgb(134, 134, 134);
 }
+
+.btns {
+  margin: 30px;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sidoBtn {
+  padding: 10px 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  transition: all 0.5s;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidoBtn:hover {
+  cursor: pointer;
+  background: rgb(238, 251, 255);
+}
+.sidoBtn.active {
+  background: var(--lightBlue);
+}

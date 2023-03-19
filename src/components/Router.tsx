@@ -18,7 +18,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
       <Router>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home reviewData={reviewData} />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/review" element={<Review reviewData={reviewData} />} />
           <Route

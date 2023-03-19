@@ -50,8 +50,8 @@ function AdminUser() {
     const answer = prompt(
       `해당 유저의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
-    if (answer == null) alert("유저 삭제를 취소하였습니다.");
-    else if (answer == id)
+    if (answer === null) alert("유저 삭제를 취소하였습니다.");
+    else if (answer === id)
       setUsers((current) => current.filter((user) => user.id !== id));
     else if (answer != id)
       alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");

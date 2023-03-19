@@ -1,8 +1,10 @@
-function Home() {
+import MapCluster from "components/MapCluster";
+
+function Home({ reviewData }: any) {
   const color = "red";
   return (
     <>
-      <h1>hello</h1>
+      <MapCluster reviewData={reviewData} />
     </>
   );
 }

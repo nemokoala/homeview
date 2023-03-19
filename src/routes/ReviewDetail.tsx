@@ -24,6 +24,10 @@ function ReviewDetail({ reviewData }: any | null) {
             <h3>{review.oldAddress}</h3>
             <h4>장점 : {review.pros}</h4>
             <h4>단점 : {review.cons}</h4>
+            <h4>거주유형 : {review.residenceType}</h4>
+            <h4>거주층 : {review.residenceFloor}</h4>
+            <h4>거주년도 : {review.livedYear}까지</h4>
+            <h4>별점 : {review.star}</h4>
           </Div>
         </>
       )}

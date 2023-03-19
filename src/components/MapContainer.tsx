@@ -12,6 +12,14 @@ function MapContainer({ data }: any) {
     center: { lat: 33.452613, lng: 126.570888 },
     isPanto: false,
   });
+  const [myLocation, setMyLocation] = useState({
+    location: {
+      lat: 35,
+      lng: 127,
+    },
+
+    isLoading: true,
+  });
   let geocoder = new kakao.maps.services.Geocoder();
 
   function searchLoc() {
@@ -19,7 +27,7 @@ function MapContainer({ data }: any) {
       data.newAddress,
       function (result: any, status: any): any {
         // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
+        if (status == kakao.maps.services.Status.OK) {
           let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           setState({ center: { lat: result[0].y, lng: result[0].x } });
         }
@@ -28,6 +36,19 @@ function MapContainer({ data }: any) {
   }
   useEffect(() => {
     searchLoc();
+
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition((position) => {
+        setMyLocation((prev) => ({
+          location: {
+            lat: position.coords.latitude, // 위도
+            lng: position.coords.longitude, // 경도
+          },
+          isLoading: false,
+        }));
+      });
+    }
   }, []);
   return (
     <>
@@ -40,7 +61,7 @@ function MapContainer({ data }: any) {
         }}
         level={4} // 지도의 확대 레벨
       >
-        <MapMarker // 마커를 생성합니다
+        <MapMarker // 해당 건물 마커
           position={state.center}
         ></MapMarker>
         <CustomOverlayMap position={state.center} xAnchor={0.5} yAnchor={1.5}>
@@ -62,6 +83,24 @@ function MapContainer({ data }: any) {
             </div>
           </Div>
         </CustomOverlayMap>
+
+        <MapMarker // 내 위치 마커
+          position={myLocation.location}
+        ></MapMarker>
+        <CustomOverlayMap
+          position={myLocation.location}
+          xAnchor={0.5}
+          yAnchor={2.3}
+        >
+          <Div>
+            <div
+              className="building"
+              style={{ padding: "7px 10px", fontSize: "1rem", height: "auto" }}
+            >
+              현재 위치
+            </div>
+          </Div>
+        </CustomOverlayMap>
       </Map>
     </>
   );
@@ -74,7 +113,10 @@ const Div = styled.div`
   align-items: center;
   width: auto;
   height: auto;
-  background-color: white;
+  background: transparent;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgb(255, 255, 255, 0.3);
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -87,7 +129,7 @@ const Div = styled.div`
     align-items: center;
     width: auto;
     height: 50px;
-    padding-top: 10px;
+    padding: 10px 10px 0 10px;
     font-weight: bolder;
     font-size: 1.3rem;
   }

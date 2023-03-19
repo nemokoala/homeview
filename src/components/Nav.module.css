@@ -94,11 +94,14 @@
     display: none;
     transition: all 0.5s;
   }
+  .logo {
+    margin: 0 1px 0 10px;
+  }
   .hamburger {
     display: flex;
     min-width: 50px;
     width: 60px;
-    margin-left: 12px;
+    margin: 0 5px;
     padding: 8px;
     border-radius: 8px;
     transition: all 1s;
@@ -117,7 +120,7 @@
     width: 100%;
   }
   .nav {
-    padding: 0 10px;
+    padding: 0 0;
   }
   .buttons {
     margin-left: auto;
