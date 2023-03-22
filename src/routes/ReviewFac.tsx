@@ -44,21 +44,26 @@ function ReviewFac({ setReviewData }: any) {
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
       setSigungu(data.sigungu);
-      if (data.buildingName === "")
-        setBuildingName(
-          data.roadAddress.replace(data.sido, "").replace(data.sigungu, "")
-        );
+      if (data.buildingName === "") {
+        const newBuilding = data.roadAddress
+          .replace(data.sido, "")
+          .replace(data.sigungu, "")
+          .trim();
+        setBuildingName(newBuilding);
+      }
       if (data.sido === "세종특별자치시") {
         setSido("세종");
         setSigungu("세종시");
       }
       if (data.sido === "제주특별차지도") setSido("제주");
-      console.log(`
+      if (data.sido)
+        console.log(`
               주소: ${data.roadAddress},
               우편번호: ${data.zonecode},
               지번 : ${data.jibunAddress},
               시도 : ${data.sido},
               시군구: ${data.sigungu},
+              
           `);
       let geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(
@@ -113,6 +118,7 @@ function ReviewFac({ setReviewData }: any) {
           lat,
           lng,
           sido,
+          sigungu,
         },
       ]);
 

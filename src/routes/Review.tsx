@@ -26,6 +26,7 @@ function Review({ reviewData }: any) {
   }, []);
   useEffect(() => {
     if (review !== null) setShowDetail(true);
+    console.log(reviews);
   }, [review]);
 
   const createSidoBtn = () => {
@@ -92,8 +93,6 @@ function Review({ reviewData }: any) {
                   <div>장점 : {review.pros}</div>
                   <div>단점 : {review.cons}</div>
                   <div>별점 : {review.star}</div>
-                  <div>위도 : {review.lat}</div>
-                  <div>경도 : {review.lng}</div>
                   <div>지역 : {review.sido}</div>
                   <div>클릭하여 자세히 보기...</div>
                 </div>
