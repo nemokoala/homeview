@@ -116,6 +116,7 @@
     filter: invert(0);
   }
   .input {
+    width: 50px;
     margin-left: 10px;
     flex-grow: 1;
   }

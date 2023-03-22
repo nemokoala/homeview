@@ -429,7 +429,8 @@ const CustomDiv = styled.div`
   flex-direction: row;
   gap: 7px;
   color: black;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
   padding: 7px;
   font-size: 0.9rem;
   border-radius: 30px;
