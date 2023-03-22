@@ -6,6 +6,7 @@ import styles from "./ReviewFac.module.css";
 function ReviewFac({ setReviewData }: any) {
   const [openPostcode, setOpenPostcode] = useState(false);
   const [sido, setSido] = useState<string>("");
+  const [sigungu, setSigungu] = useState<string>("");
   const [newAddress, setNewAddress] = useState("");
   const [oldAddress, setOldAddress] = useState<string>("");
   const [buildingName, setBuildingName] = useState("");
@@ -42,10 +43,16 @@ function ReviewFac({ setReviewData }: any) {
       setOldAddress(data.jibunAddress);
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
+      setSigungu(data.sigungu);
       if (data.buildingName === "")
         setBuildingName(
           data.roadAddress.replace(data.sido, "").replace(data.sigungu, "")
         );
+      if (data.sido === "세종특별자치시") {
+        setSido("세종");
+        setSigungu("세종시");
+      }
+      if (data.sido === "제주특별차지도") setSido("제주");
       console.log(`
               주소: ${data.roadAddress},
               우편번호: ${data.zonecode},

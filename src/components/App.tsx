@@ -16,6 +16,7 @@ interface Reviews {
   lat: number;
   lng: number;
   sido: string;
+  sigungu: string;
 }
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       lat: 35.9603410900727,
       lng: 126.973805773829,
       sido: "전북",
+      sigungu: "익산시",
     },
     {
       reviewId: "2",
@@ -49,6 +51,7 @@ function App() {
       lat: 35.9602708316844,
       lng: 126.971596923903,
       sido: "전북",
+      sigungu: "익산시",
     },
     {
       reviewId: "3",
@@ -64,6 +67,7 @@ function App() {
       lat: 35.9599858688137,
       lng: 126.972019488308,
       sido: "전북",
+      sigungu: "익산시",
     },
     {
       reviewId: "4",
@@ -79,6 +83,7 @@ function App() {
       lat: 35.8256954560441,
       lng: 128.621712582663,
       sido: "대구",
+      sigungu: "수성구",
     },
     {
       reviewId: "5",
@@ -94,6 +99,7 @@ function App() {
       lat: 35.8476347725294,
       lng: 128.574071383549,
       sido: "대구",
+      sigungu: "남구",
     },
     {
       reviewId: "6",
@@ -109,6 +115,7 @@ function App() {
       lat: 35.9212631577091,
       lng: 126.957043421827,
       sido: "전북",
+      sigungu: "익산시",
     },
     {
       reviewId: "7",
@@ -124,6 +131,7 @@ function App() {
       lat: 37.4794819160355,
       lng: 126.95108210547,
       sido: "서울",
+      sigungu: "익산시",
     },
     {
       reviewId: "8",
@@ -139,6 +147,7 @@ function App() {
       lat: 37.5422914154608,
       lng: 126.94462959649,
       sido: "서울",
+      sigungu: "관악구",
     },
   ]);
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
