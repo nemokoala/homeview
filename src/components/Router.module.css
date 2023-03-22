@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 * {
   box-sizing: border-box;
   font-family: var(--notoFont);
+  font-weight: normal;
   color: black;
 }
 
@@ -17,7 +17,7 @@ html {
   --navHeight: 70px;
   --navLargeHeight: 240px;
   --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
-  --notoFont: "Noto Sans KR", sans-serif;
+  --notoFont: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
   line-height: 1.5;
   box-shadow: 0 0 70px 10px rgba(0, 0, 0, 0.205);
 }

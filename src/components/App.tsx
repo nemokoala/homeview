@@ -149,6 +149,22 @@ function App() {
       sido: "서울",
       sigungu: "관악구",
     },
+    {
+      reviewId: "8",
+      building: "마포 네이버타운",
+      newAddress: "서울 마포구 큰우물로 53",
+      oldAddress: "서울 마포구 염리동 174-14",
+      pros: "ㄱㄱ",
+      cons: "ㄴㄴㄴ",
+      residenceType: "원룸/주택/빌라",
+      residenceFloor: "저층",
+      livedYear: 2022,
+      star: 3,
+      lat: 37.5422914154608,
+      lng: 126.94462959649,
+      sido: "서울",
+      sigungu: "관악구",
+    },
   ]);
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
 }
