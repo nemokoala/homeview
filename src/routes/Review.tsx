@@ -1,4 +1,5 @@
 import Map from "components/LegacyMapContainer";
+import ReviewBlock from "components/ReviewBlock";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Review.module.css";
@@ -11,7 +12,7 @@ interface Reviews {
   pros: string;
   cons: string;
 }
-function Review({ reviewData }: any) {
+function Review({ reviewData, searchTerm }: any) {
   const [showDetail, setShowDetail] = useState<Boolean>(false);
   const [review, setReview] = useState<any>(null);
   const [reviews, setReviews] = useState<[object]>(reviewData);
@@ -26,7 +27,6 @@ function Review({ reviewData }: any) {
   }, []);
   useEffect(() => {
     if (review !== null) setShowDetail(true);
-    console.log(reviews);
   }, [review]);
 
   const createSidoBtn = () => {
@@ -37,12 +37,18 @@ function Review({ reviewData }: any) {
         if (sido === reviewData[i].sido) 중복 = true;
       });
       if (중복 === false) sidos.push(reviewData[i].sido);
-      console.log(sidos);
     }
 
     const sortedSidos = sidos.sort();
     setSidoList([...sortedSidos, "전체"]);
   };
+
+  const filteredReview = reviewData.filter(
+    (review: any) =>
+      review.building.includes(searchTerm) ||
+      review.newAddress.includes(searchTerm) ||
+      review.oldAddress.includes(searchTerm)
+  );
 
   return (
     <>
@@ -79,25 +85,19 @@ function Review({ reviewData }: any) {
             ))}
           </div>
 
-          {reviews.map(
-            (review: any) =>
-              (sidoFilter === review.sido || sidoFilter === "전체") && (
-                <div
-                  className={styles.reviewContainer}
-                  key={review.reviewId}
-                  onClick={() => gotoDetail(review)}
-                >
-                  <div>{review.building}</div>
-                  <div>{review.newAddress}</div>
-                  <div>{review.oldAddress}</div>
-                  <div>장점 : {review.pros}</div>
-                  <div>단점 : {review.cons}</div>
-                  <div>별점 : {review.star}</div>
-                  <div>지역 : {review.sido}</div>
-                  <div>클릭하여 자세히 보기...</div>
-                </div>
+          {searchTerm === ""
+            ? reviews.map(
+                (review: any) =>
+                  (sidoFilter === review.sido || sidoFilter === "전체") && (
+                    <ReviewBlock review={review} key={review.reviewId} />
+                  )
               )
-          )}
+            : filteredReview.map(
+                (review: any) =>
+                  (sidoFilter === review.sido || sidoFilter === "전체") && (
+                    <ReviewBlock review={review} key={review.reviewId} />
+                  )
+              )}
         </div>
       )}
     </>

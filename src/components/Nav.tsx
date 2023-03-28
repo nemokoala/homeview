@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
 import { useEffect, useState } from "react";
-function Nav() {
+function Nav({ searchTerm, setSearchTerm }: any) {
   const [hamOn, setHamOn] = useState<Boolean>(false);
   const toggleHam = () => {
     setHamOn((prev) => !prev);
   };
+  const navigate = useNavigate();
   return (
     <>
       <div className={styles.dummyNav}></div>
@@ -31,7 +32,19 @@ function Nav() {
             <li>Admin</li>
           </Link>
         </ul>
-        <input className={styles.input} placeholder="검색" />
+        <input
+          className={styles.input}
+          placeholder="검색"
+          type="text"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            navigate("/review");
+          }}
+        />
+        <div className={styles.inputX} onClick={() => setSearchTerm("")}>
+          x
+        </div>
         <div className={styles.buttons}>
           <button>로그인</button>
           <button>회원가입</button>

@@ -3,20 +3,24 @@ import {
   Map,
   MapInfoWindow,
   MapMarker,
+  MapTypeControl,
   MarkerClusterer,
+  ZoomControl,
 } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ReviewBlock from "./ReviewBlock";
 
 function MapCluster({ reviewData }: any) {
-  const [reviewDatas, setReviewDatas] = useState<any>([]);
+  const [reviewDatas, setReviewDatas] = useState<any>(reviewData);
   const [zoomLevel, setZoomLevel] = useState(13);
   const [center, setCenter] = useState({
     lat: 36.2683,
     lng: 127.6358,
   });
+  const [showReview, setShowReview] = useState([]);
   const navigate = useNavigate();
 
   const [sido, setSido] = useState([
@@ -272,12 +276,9 @@ function MapCluster({ reviewData }: any) {
   ]);
 
   useEffect(() => {
-    setReviewDatas(reviewData);
-  }, []);
-  useEffect(() => {
     countSet();
     sigunguCountSet();
-  }, [reviewDatas]);
+  }, []);
 
   const countSet = () => {
     reviewDatas.forEach((review: any) => {
@@ -307,10 +308,36 @@ function MapCluster({ reviewData }: any) {
         })
       );
     });
+    reviewReset();
   };
   const returnSigungu = (name: string): string => {
     const [sido, sigungu] = name.split("/");
     return sigungu;
+  };
+
+  const reviewReset = () => {
+    const newReviewData = reviewData.reduce((acc: any, cur: any) => {
+      const { building, newAddress } = cur; //cur.building
+      const existingData = acc.find(
+        (item: any) =>
+          item.building === building && item.newAddress === newAddress
+      );
+      if (existingData) {
+        existingData.count += 1;
+      } else {
+        acc.push({ ...cur, count: 1 });
+      }
+      return acc;
+    }, []);
+    setReviewDatas(newReviewData);
+    console.log(newReviewData);
+  };
+
+  const setShow = (reviews: any) => {
+    const showReview = reviewData.filter(
+      (review: any) => review.building === reviews.building
+    );
+    setShowReview(showReview);
   };
   return (
     <>
@@ -334,18 +361,19 @@ function MapCluster({ reviewData }: any) {
               <React.Fragment
                 key={`customoverlay_${reviewData.lat}-${reviewData.lng}`}
               >
-                <CustomOverlayMap //건물 표시
+                <CustomOverlayMap //커스텀 오버레이 건물 표시
                   position={{
                     lat: reviewData.lat,
                     lng: reviewData.lng,
                   }}
-                  yAnchor={2.2}
+                  yAnchor={zoomLevel >= 6 ? 1.0 : 2.2}
                 >
                   <CustomDiv
-                    style={{ background: "rgb(255,255, 255,0.2)" }}
-                    onClick={() => navigate(`/review/${reviewData.reviewId}`)}
+                    style={{ background: "rgb(255,255, 255,0.5)" }}
+                    onClick={() => setShow(reviewData)}
                   >
-                    {reviewData.building}
+                    {reviewData.building}{" "}
+                    <div style={{ color: "red" }}>{reviewData.count}</div>
                   </CustomDiv>
                 </CustomOverlayMap>
               </React.Fragment>
@@ -353,7 +381,9 @@ function MapCluster({ reviewData }: any) {
         </MarkerClusterer>
 
         {reviewDatas.map((reviewData: any, idx: any): any => (
-          <React.Fragment key={`marker_${reviewData.lat}-${reviewData.lng}`}>
+          <React.Fragment
+            key={`marker_${reviewData.reviewId}-${reviewData.lat}-${reviewData.lng}`}
+          >
             {zoomLevel < 6 && (
               <MapMarker // 해당 건물 마커
                 position={{
@@ -381,7 +411,9 @@ function MapCluster({ reviewData }: any) {
                 }}
                 style={
                   root.count > 0
-                    ? { backgroundColor: "rgb(59, 255, 0, 0.6)" }
+                    ? {
+                        backgroundColor: "rgb(59, 255, 0, 0.6)",
+                      }
                     : {}
                 }
               >
@@ -417,9 +449,14 @@ function MapCluster({ reviewData }: any) {
               </CustomDiv>
             </CustomOverlayMap>
           ))}
+        <ZoomControl />
+        <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
 
-      <button onClick={() => console.log(sido)}>버튼 </button>
+      {showReview &&
+        showReview.map((review: any) => (
+          <ReviewBlock key={review.reviewId} review={review} />
+        ))}
     </>
   );
 }
@@ -430,14 +467,14 @@ const CustomDiv = styled.div`
   gap: 7px;
   color: black;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   padding: 7px;
   font-size: 0.9rem;
   border-radius: 30px;
   background: transparent;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  background-color: rgb(204, 255, 188, 0.3);
+  background-color: rgb(204, 255, 188, 0.4);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 
@@ -445,4 +482,5 @@ const CustomDiv = styled.div`
     background-color: rgb(199, 208, 247, 0.6);
   }
 `;
+
 export default MapCluster;

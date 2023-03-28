@@ -1,8 +1,8 @@
 * {
   box-sizing: border-box;
-  font-family: var(--notoFont);
-  font-weight: normal;
   color: black;
+  font-family: var(--notoFont);
+  font-weight: bold;
 }
 
 html {
@@ -17,8 +17,8 @@ html {
   --navHeight: 70px;
   --navLargeHeight: 240px;
   --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
-  --notoFont: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
-  line-height: 1.5;
+  --notoFont: "Noto Sans KR";
+
   box-shadow: 0 0 70px 10px rgba(0, 0, 0, 0.205);
 }
 body {

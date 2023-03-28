@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   HashRouter as Router,
   Navigate,
@@ -13,14 +14,18 @@ import Map from "./LegacyMapContainer";
 import Nav from "./Nav";
 import styles from "./Router.module.css";
 function AppRouter({ reviewData, setReviewData }: any) {
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <div className={styles.body}>
       <Router>
-        <Nav />
+        <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Routes>
           <Route path="/" element={<Home reviewData={reviewData} />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/review" element={<Review reviewData={reviewData} />} />
+          <Route
+            path="/review"
+            element={<Review reviewData={reviewData} searchTerm={searchTerm} />}
+          />
           <Route
             path="/review/:id"
             element={<ReviewDetail reviewData={reviewData} />}

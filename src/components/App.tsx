@@ -38,6 +38,22 @@ function App() {
       sigungu: "익산시",
     },
     {
+      reviewId: "111",
+      building: "제일3차아파트",
+      newAddress: "고봉로34길 35",
+      oldAddress: "전북 익산시 영등동 821",
+      pros: "222",
+      cons: "222",
+      residenceType: "아파트",
+      residenceFloor: "저층",
+      livedYear: 2023,
+      star: 4,
+      lat: 35.9603410100727,
+      lng: 126.973805773829,
+      sido: "전북",
+      sigungu: "익산시",
+    },
+    {
       reviewId: "2",
       building: "우남샘물아파트",
       newAddress: "고봉로34길 5-4",
@@ -131,7 +147,7 @@ function App() {
       lat: 37.4794819160355,
       lng: 126.95108210547,
       sido: "서울",
-      sigungu: "익산시",
+      sigungu: "마포구",
     },
     {
       reviewId: "8",
@@ -149,23 +165,8 @@ function App() {
       sido: "서울",
       sigungu: "관악구",
     },
-    {
-      reviewId: "8",
-      building: "마포 네이버타운",
-      newAddress: "서울 마포구 큰우물로 53",
-      oldAddress: "서울 마포구 염리동 174-14",
-      pros: "ㄱㄱ",
-      cons: "ㄴㄴㄴ",
-      residenceType: "원룸/주택/빌라",
-      residenceFloor: "저층",
-      livedYear: 2022,
-      star: 3,
-      lat: 37.5422914153608,
-      lng: 126.94462959649,
-      sido: "서울",
-      sigungu: "관악구",
-    },
   ]);
+  const [roomData, setRoomData] = useState([]);
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
 }
 

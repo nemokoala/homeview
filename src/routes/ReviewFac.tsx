@@ -55,7 +55,7 @@ function ReviewFac({ setReviewData }: any) {
         setSido("세종");
         setSigungu("세종시");
       }
-      if (data.sido === "제주특별차지도") setSido("제주");
+      if (data.sido === "제주특별자치도") setSido("제주");
       if (data.sido)
         console.log(`
               주소: ${data.roadAddress},

@@ -57,6 +57,7 @@
   width: 200px;
   height: 38px;
   margin-left: auto;
+  margin-right: 2px;
   border-radius: 7px;
   border: 0px;
   padding: 0 10px;
@@ -64,11 +65,11 @@
 .buttons {
   display: flex;
   flex-wrap: nowrap;
+  gap: 10px;
 }
 
 .buttons * {
   height: 38px;
-  margin-left: 10px;
   border-radius: 7px;
   border: 0px;
   white-space: nowrap;
@@ -89,6 +90,14 @@
 .menu {
   display: none;
 }
+.inputX {
+  position: relative;
+  left: -17px;
+  top: -2px;
+}
+.inputX:hover {
+  cursor: pointer;
+}
 @media screen and (max-width: 910px) {
   .ul {
     display: none;
@@ -99,12 +108,15 @@
   }
   .hamburger {
     display: flex;
-    min-width: 50px;
-    width: 60px;
+    width: 48px;
+    height: 38px;
     margin: 0 5px;
-    padding: 8px;
+    padding: 3px 6px;
     border-radius: 8px;
     transition: all 1s;
+  }
+  .hamburger:hover {
+    cursor: pointer;
   }
   .hamburger img {
     filter: invert(100%);
