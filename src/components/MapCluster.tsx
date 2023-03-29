@@ -12,16 +12,19 @@ import styled from "styled-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ReviewBlock from "./ReviewBlock";
+import { saveZoom, saveCenter, saveShowReview } from "slice/mapSlice";
+import { Provider, useSelector, useDispatch } from "react-redux";
 
 function MapCluster({ reviewData }: any) {
+  const loadZoomLevel = useSelector((state: any) => state.mapSet.zoomLevel);
+  const loadCenter = useSelector((state: any) => state.mapSet.center);
+  const loadShowReview = useSelector((state: any) => state.mapSet.showReview);
   const [reviewDatas, setReviewDatas] = useState<any>(reviewData);
-  const [zoomLevel, setZoomLevel] = useState(13);
-  const [center, setCenter] = useState({
-    lat: 36.2683,
-    lng: 127.6358,
-  });
-  const [showReview, setShowReview] = useState([]);
+  const [zoomLevel, setZoomLevel] = useState(loadZoomLevel);
+  const [center, setCenter] = useState(loadCenter);
+  const [showReview, setShowReview] = useState(loadShowReview);
   const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
 
   const [sido, setSido] = useState([
     { name: "서울", location: [37.5635694, 126.9800083], count: 0 },
@@ -337,6 +340,7 @@ function MapCluster({ reviewData }: any) {
     const showReview = reviewData.filter(
       (review: any) => review.building === reviews.building
     );
+    dispatch(saveShowReview(showReview as any));
     setShowReview(showReview);
   };
   return (
@@ -346,10 +350,21 @@ function MapCluster({ reviewData }: any) {
         style={{
           // 지도의 크기
           width: "100%",
-          height: "650px",
+          height: "500px",
         }}
         level={zoomLevel} // 지도의 확대 레벨
-        onZoomChanged={(map) => setZoomLevel(map.getLevel())}
+        onZoomChanged={(map) => {
+          setZoomLevel(map.getLevel());
+        }}
+        onTileLoaded={(map) => {
+          dispatch(saveZoom(map.getLevel() as any));
+          dispatch(
+            saveCenter({
+              lat: map.getCenter().getLat(),
+              lng: map.getCenter().getLng(),
+            } as any)
+          );
+        }}
         isPanto={false}
       >
         <MarkerClusterer
@@ -359,7 +374,7 @@ function MapCluster({ reviewData }: any) {
           {zoomLevel < 8 &&
             reviewDatas.map((reviewData: any, idx: any): any => (
               <React.Fragment
-                key={`customoverlay_${reviewData.lat}-${reviewData.lng}`}
+                key={`customoverlay_${reviewData.reviewId}-${reviewData.lat}-${reviewData.lng}`}
               >
                 <CustomOverlayMap //커스텀 오버레이 건물 표시
                   position={{
