@@ -66,6 +66,7 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 9px;
+  justify-content: space-evenly;
 }
 
 .buttons * {
@@ -73,6 +74,7 @@
   border-radius: 7px;
   border: 0px;
   white-space: nowrap;
+  font-size: 0.7rem;
 }
 
 .buttons button:nth-child(1) {
@@ -137,7 +139,8 @@
   }
   .buttons {
     margin-left: auto;
-    min-width: 132px;
+    min-width: 125px;
+    gap: 7px;
   }
 
   .menu {

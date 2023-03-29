@@ -3,6 +3,7 @@
   color: black;
   font-family: var(--notoFont);
   font-weight: bold;
+  font-size: 16px;
 }
 
 html {
