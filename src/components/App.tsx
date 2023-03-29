@@ -4,6 +4,7 @@ import AppRouter from "./Router";
 
 interface Reviews {
   reviewId: string;
+  userName: string;
   building: string;
   newAddress: string;
   oldAddress: string;
@@ -23,6 +24,7 @@ function App() {
   const [reviewData, setReviewData] = useState<Reviews[]>([
     {
       reviewId: "1",
+      userName: "코알라",
       building: "제일3차아파트",
       newAddress: "고봉로34길 35",
       oldAddress: "전북 익산시 영등동 821",
@@ -39,6 +41,7 @@ function App() {
     },
     {
       reviewId: "111",
+      userName: "코알라",
       building: "제일3차아파트",
       newAddress: "고봉로34길 35",
       oldAddress: "전북 익산시 영등동 821",
@@ -55,6 +58,7 @@ function App() {
     },
     {
       reviewId: "2",
+      userName: "코알라",
       building: "우남샘물아파트",
       newAddress: "고봉로34길 5-4",
       oldAddress: "전북 익산시 영등동 800",
@@ -71,6 +75,7 @@ function App() {
     },
     {
       reviewId: "3",
+      userName: "코알라",
       building: "예광교회",
       newAddress: "전북 익산시 고봉로34길 5-4",
       oldAddress: "전북 익산시 영등동 800",
@@ -87,6 +92,7 @@ function App() {
     },
     {
       reviewId: "4",
+      userName: "코알라",
       building: "수성못길 4",
       newAddress: "대구 수성구 수성못길 4",
       oldAddress: "대구 수성구 두산동 840-1",
@@ -103,6 +109,7 @@ function App() {
     },
     {
       reviewId: "5",
+      userName: "코알라",
       building: "경상길 1",
       newAddress: "대구 남구 경상길 1",
       oldAddress: "대구 남구 대명동 3019-30",
@@ -119,6 +126,7 @@ function App() {
     },
     {
       reviewId: "6",
+      userName: "코알라",
       building: "동익산역",
       newAddress: "전북 익산시 옛둑2길 84",
       oldAddress: "",
@@ -135,6 +143,7 @@ function App() {
     },
     {
       reviewId: "7",
+      userName: "코알라",
       building: "카카오티",
       newAddress: "서울 관악구 관악로13길 20",
       oldAddress: "",
@@ -151,6 +160,7 @@ function App() {
     },
     {
       reviewId: "8",
+      userName: "코알라",
       building: "마포 네이버타운",
       newAddress: "서울 마포구 큰우물로 53",
       oldAddress: "서울 마포구 염리동 174-14",

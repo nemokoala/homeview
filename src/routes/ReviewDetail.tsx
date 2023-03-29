@@ -8,7 +8,12 @@ function ReviewDetail({ reviewData }: any | null) {
   const { id } = useParams();
   if (reviewData != null) {
   }
+
   const review = reviewData?.find((reviewId: any) => reviewId.reviewId == id);
+  let stars = "";
+  for (let i = 0; i < review.star; i++) {
+    stars += "★";
+  }
   const navigate = useNavigate();
   useEffect(() => {
     if (review == null) navigate("/");
@@ -18,25 +23,80 @@ function ReviewDetail({ reviewData }: any | null) {
       {review != null && (
         <>
           <MapContainer data={review} />
-          <Div>
-            <h1>{review.building}</h1>
-            <h3>{review.newAddress}</h3>
-            <h3>{review.oldAddress}</h3>
-            <h4>장점 : {review.pros}</h4>
-            <h4>단점 : {review.cons}</h4>
-            <h4>거주유형 : {review.residenceType}</h4>
-            <h4>거주층 : {review.residenceFloor}</h4>
-            <h4>거주년도 : {review.livedYear}까지</h4>
-            <h4>별점 : {review.star}</h4>
-          </Div>
+          <CustomDiv>
+            <Building>
+              {review.building} <Star>{stars}</Star>{" "}
+            </Building>
+            <Address>{review.newAddress}</Address>
+            <Address>{review.oldAddress}</Address>
+            <Hr></Hr>
+            <Pros>장점 : {review.pros}</Pros>
+            <Cons>단점 : {review.cons}</Cons>
+            <Year>거주년도 : {review.livedYear}년까지</Year>
+            <Year>거주유형 : {review.residenceType}</Year>
+            <Year>거주층 : {review.residenceFloor}</Year>
+            <UserName>작성자 : {review.userName}</UserName>
+          </CustomDiv>
         </>
       )}
     </>
   );
 }
 
-const Div = styled.div`
-  width: 100%;
-  padding: 0 20px;
+const CustomDiv = styled.div`
+  margin: 20px 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  padding: 20px;
+  border-radius: 20px;
+  transition: all 0.7s;
+
+  &:hover {
+    transform: scale(1.005);
+  }
+`;
+const Building = styled.div`
+  font-size: 1.5rem;
+  font-weight: bolder;
+`;
+const Address = styled.div`
+  font-size: 1.1rem;
+  color: rgb(134, 134, 134);
+`;
+const Star = styled.span`
+  font-size: 1.3rem;
+  vertical-align: 3px;
+  color: rgb(255, 202, 44);
+`;
+const Pros = styled.div`
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: rgb(107, 107, 240);
+`;
+const Cons = styled.div`
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: rgb(240, 107, 107);
+`;
+const Year = styled.div`
+  font-size: 1.1rem;
+  color: rgb(46, 50, 53);
+  margin: 15px 0;
+`;
+const Detail = styled.div`
+  font-size: 0.9rem;
+  color: rgb(70, 142, 190);
+  margin-top: 10px;
+`;
+const Hr = styled.hr`
+  width: 98%;
+  height: 1px;
+  border: 0px;
+  background-color: black;
+  margin: 10px 0;
+`;
+const UserName = styled.div`
+  font-size: 1rem;
+  color: rgb(156, 89, 0);
+  text-align: right;
 `;
 export default ReviewDetail;
