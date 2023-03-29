@@ -65,7 +65,7 @@
 .buttons {
   display: flex;
   flex-wrap: nowrap;
-  gap: 10px;
+  gap: 9px;
 }
 
 .buttons * {
