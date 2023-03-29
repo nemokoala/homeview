@@ -472,6 +472,9 @@ function MapCluster({ reviewData }: any) {
         showReview.map((review: any) => (
           <ReviewBlock key={review.reviewId} review={review} />
         ))}
+      {showReview.length === 0 && (
+        <Notice>마커를 클릭하여 리뷰정보를 확인하세요!</Notice>
+      )}
     </>
   );
 }
@@ -495,6 +498,21 @@ const CustomDiv = styled.div`
 
   &:hover {
     background-color: rgb(199, 208, 247, 0.6);
+  }
+`;
+const Notice = styled.div`
+  margin: 15px;
+  font-size: 1.2rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  padding: 20px;
+  border-radius: 20px;
+  transition: all 0.7s;
+  text-align: center;
+  background-color: rgb(250, 175, 175);
+  &:hover {
+    background-color: rgb(255, 241, 195);
+    cursor: pointer;
+    transform: scale(1.03);
   }
 `;
 

@@ -12,7 +12,9 @@ function ReviewBlock({ review }: any) {
   return (
     <CustomDiv className="reviewContainer" onClick={() => gotoDetail(review)}>
       <Building>
-        {review.building} <Star>{stars}</Star>
+        {review.building}
+        <span style={{ color: "gray" }}> #{review.reviewId}</span>{" "}
+        <Star>{stars}</Star>
       </Building>
       <Address>{review.newAddress}</Address>
       <Address>{review.oldAddress}</Address>
