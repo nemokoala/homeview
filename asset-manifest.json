@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/homeview/static/css/main.fcd5adf8.css",
-    "main.js": "/homeview/static/js/main.3ca6c216.js",
+    "main.js": "/homeview/static/js/main.7273e5c3.js",
     "static/media/DoHyeon-Regular.woff": "/homeview/static/media/DoHyeon-Regular.9bc23f35caf48a827be0.woff",
     "static/media/NotoSansKR-Regular.woff2": "/homeview/static/media/NotoSansKR-Regular.22224a014f077e6e38f0.woff2",
     "static/media/NotoSansKR-Medium.woff2": "/homeview/static/media/NotoSansKR-Medium.0d0d606650239095b970.woff2",
@@ -15,10 +15,10 @@
     "static/media/NotoSansKR-Thin.woff": "/homeview/static/media/NotoSansKR-Thin.25838b5195f1b5340f47.woff",
     "index.html": "/homeview/index.html",
     "main.fcd5adf8.css.map": "/homeview/static/css/main.fcd5adf8.css.map",
-    "main.3ca6c216.js.map": "/homeview/static/js/main.3ca6c216.js.map"
+    "main.7273e5c3.js.map": "/homeview/static/js/main.7273e5c3.js.map"
   },
   "entrypoints": [
     "static/css/main.fcd5adf8.css",
-    "static/js/main.3ca6c216.js"
+    "static/js/main.7273e5c3.js"
   ]
 }
