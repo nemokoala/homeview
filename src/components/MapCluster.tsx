@@ -427,7 +427,7 @@ function MapCluster({ reviewData }: any) {
                 style={
                   root.count > 0
                     ? {
-                        backgroundColor: "rgb(59, 255, 0, 0.6)",
+                        backgroundColor: "rgb(243, 206, 83, 0.7)",
                       }
                     : {}
                 }
@@ -455,7 +455,7 @@ function MapCluster({ reviewData }: any) {
                 }}
                 style={
                   sigungu.count > 0
-                    ? { backgroundColor: "rgb(59, 255, 0, 0.6)" }
+                    ? { backgroundColor: "rgb(243, 206, 83, 0.7)" }
                     : {}
                 }
               >
@@ -492,12 +492,12 @@ const CustomDiv = styled.div`
   background: transparent;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  background-color: rgb(204, 255, 188, 0.4);
+  background-color: rgba(255, 241, 195, 0.4);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-
+  transition: all 0.5s;
   &:hover {
-    background-color: rgb(199, 208, 247, 0.6);
+    background-color: rgba(199, 208, 247, 0.8) !important;
   }
 `;
 const Notice = styled.div`

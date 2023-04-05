@@ -24,7 +24,13 @@ function AppRouter({ reviewData, setReviewData }: any) {
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/review"
-            element={<Review reviewData={reviewData} searchTerm={searchTerm} />}
+            element={
+              <Review
+                reviewData={reviewData}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
+            }
           />
           <Route
             path="/review/:id"

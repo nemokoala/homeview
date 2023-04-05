@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function Nav({ searchTerm, setSearchTerm }: any) {
   const [hamOn, setHamOn] = useState<Boolean>(false);
   const toggleHam = () => {
