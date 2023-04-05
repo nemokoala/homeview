@@ -12,7 +12,7 @@ interface Reviews {
   pros: string;
   cons: string;
 }
-function Review({ reviewData, searchTerm }: any) {
+function Review({ reviewData, searchTerm, setSearchTerm }: any) {
   const [showDetail, setShowDetail] = useState<Boolean>(false);
   const [review, setReview] = useState<any>(null);
   const [reviews, setReviews] = useState<[object]>(reviewData);
@@ -98,6 +98,17 @@ function Review({ reviewData, searchTerm }: any) {
                     <ReviewBlock review={review} key={review.reviewId} />
                   )
               )}
+          {searchTerm !== "" && filteredReview.length === 0 && (
+            <div
+              className={styles.searchNothing}
+              onClick={() => setSearchTerm("")}
+            >
+              <div>현재 검색어 필터 : "{searchTerm}"</div>
+              <span className={styles.x}>x</span>
+              <br />
+              <span>검색 결과 없음</span>
+            </div>
+          )}
         </div>
       )}
     </>
