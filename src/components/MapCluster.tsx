@@ -281,7 +281,13 @@ function MapCluster({ reviewData }: any) {
   useEffect(() => {
     countSet();
     sigunguCountSet();
-  }, []);
+    if (zoomLevel <= 5) {
+      setZoomLevel(6);
+      setTimeout(() => {
+        setZoomLevel(loadZoomLevel);
+      }, 10);
+    }
+  }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   const countSet = () => {
     reviewDatas.forEach((review: any) => {
@@ -364,6 +370,17 @@ function MapCluster({ reviewData }: any) {
               lng: map.getCenter().getLng(),
             } as any)
           );
+        }}
+        onDragEnd={(map) => {
+          setTimeout(() => {
+            dispatch(saveZoom(map.getLevel() as any));
+            dispatch(
+              saveCenter({
+                lat: map.getCenter().getLat(),
+                lng: map.getCenter().getLng(),
+              } as any)
+            );
+          }, 100);
         }}
         isPanto={false}
       >

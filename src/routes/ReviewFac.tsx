@@ -102,26 +102,26 @@ function ReviewFac({ setReviewData }: any) {
     else if (cons === "") alert("단점을 입력해주세요.");
     else if (star === 0) alert("별점을 선택해주세요.");
     else {
-      setReviewData((prev: any) => [
-        ...prev,
-        {
-          reviewId: Math.floor(Math.random() * 10000) + 1,
-          building: buildingName,
-          newAddress: newAddress,
-          oldAddress: oldAddress,
-          pros: pros,
-          cons: cons,
-          residenceType: residenceType,
-          residenceFloor: residenceFloor,
-          livedYear: livedYear,
-          star,
-          lat,
-          lng,
-          sido,
-          sigungu,
-        },
-      ]);
-
+      const newReview = {
+        reviewId: (Math.floor(Math.random() * 10000) + 1).toString(),
+        userName: "코알라",
+        building: buildingName,
+        newAddress: newAddress,
+        oldAddress: oldAddress,
+        pros: pros,
+        cons: cons,
+        residenceType: residenceType,
+        residenceFloor: residenceFloor,
+        livedYear: livedYear,
+        star,
+        lat: Number(lat),
+        lng: Number(lng),
+        sido,
+        sigungu,
+      };
+      setReviewData((prev: any) => [...prev, newReview]);
+      const json = JSON.stringify(newReview);
+      console.log(json);
       navigate("/review");
       alert("리뷰작성이 완료되었습니다!");
     }
