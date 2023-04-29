@@ -18,6 +18,7 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
   const [reviews, setReviews] = useState<[object]>(reviewData);
   const [sidoList, setSidoList] = useState<any>([]);
   const [sidoFilter, setSidoFilter] = useState("전체");
+  const [sidoFilterCount,setSidoFilterCount] = useState(0);
   const navigate = useNavigate();
   const gotoDetail = (review: any): void => {
     navigate(`/review/${review.reviewId}`);
@@ -52,24 +53,6 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
 
   return (
     <>
-      {showDetail ? (
-        <>
-          <div
-            onClick={() => {
-              setReview(null);
-              setShowDetail(false);
-            }}
-          >
-            뒤로가기
-          </div>
-          <Map title={review.building} address={review.newAddress} />
-          <h1>{review.building}</h1>
-          <h3>{review.newAddress}</h3>
-          <h3>{review.oldAddress}</h3>
-          <h4>장점 : {review.pros}</h4>
-          <h4>단점 : {review.cons}</h4>
-        </>
-      ) : (
         <div className={styles.container}>
           <div className={styles.btns}>
             {sidoList.map((sido: any) => (
@@ -92,13 +75,14 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
                     <ReviewBlock review={review} key={review.reviewId} />
                   )
               )
-            : filteredReview.map(
-                (review: any) =>
-                  (sidoFilter === review.sido || sidoFilter === "전체") && (
-                    <ReviewBlock review={review} key={review.reviewId} />
-                  )
-              )}
-          {searchTerm !== "" && filteredReview.length === 0 && (
+            : (filteredReview.map(
+              (review: any) =>
+                (sidoFilter === review.sido || sidoFilter === "전체") && (
+                  <ReviewBlock review={review} key={review.reviewId} />
+                )
+             ))
+          }
+          {searchTerm !== "" && (filteredReview.length === 0) && (
             <div
               className={styles.searchNothing}
               onClick={() => setSearchTerm("")}
@@ -110,7 +94,7 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
             </div>
           )}
         </div>
-      )}
+      
     </>
   );
 }
