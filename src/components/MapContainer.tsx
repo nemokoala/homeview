@@ -126,6 +126,8 @@ const Div = styled.div`
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   & .buttons {
     display: flex;
+    gap: 10px;
+    margin: 0px 10px 10px 10px;
   }
   & .building {
     display: flex;
@@ -133,9 +135,9 @@ const Div = styled.div`
     align-items: center;
     width: auto;
     height: 50px;
-    padding: 10px 10px 0 10px;
+    padding: 0;
     font-weight: bolder;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   & .road,
   .showmap {
@@ -144,20 +146,18 @@ const Div = styled.div`
     align-items: center;
     background-color: rgb(255, 71, 71);
     color: white;
-    width: 100px;
-    height: 40px;
+    width: 80px;
+    height: 37px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 0;
     transition: all 0.5s;
+    font-size: 0.9rem;
   }
   & .road:hover,
   .showmap:hover {
     background-color: rgb(255, 139, 139);
   }
 
-  & .showmap {
-    margin-left: 0px;
-  }
   & a {
     text-decoration: none;
   }

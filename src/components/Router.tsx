@@ -4,6 +4,7 @@ import {
   Navigate,
   Route,
   Routes,
+  useNavigate,
 } from "react-router-dom";
 import Admin from "routes/Admin";
 import Home from "routes/Home";
@@ -13,12 +14,14 @@ import ReviewFac from "routes/ReviewFac";
 import Map from "./LegacyMapContainer";
 import Nav from "./Nav";
 import styles from "./Router.module.css";
+import BackButton from "./BackButton";
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <div className={styles.body}>
       <Router>
         <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <BackButton />
         <Routes>
           <Route path="/" element={<Home reviewData={reviewData} />} />
           <Route path="/admin" element={<Admin />} />
