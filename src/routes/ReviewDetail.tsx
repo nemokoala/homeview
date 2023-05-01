@@ -26,6 +26,7 @@ function ReviewDetail({ reviewData }: any | null) {
           <CustomDiv>
             <Building>
               {review.building} <Star>{stars}</Star>{" "}
+              <span style={{ color: "gray" }}> #{review.reviewId}</span>{" "}
             </Building>
             <Address>{review.newAddress}</Address>
             <Address>{review.oldAddress}</Address>

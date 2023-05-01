@@ -5,9 +5,12 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  background-image: url("https://images.unsplash.com/photo-1630890102474-f9b4236f26c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1cnJlZCUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80");
-  background-repeat: no-repeat;
-  background-size: 100vw 200%;
+  background: linear-gradient(
+    to bottom,
+    rgb(204, 231, 237),
+    rgb(255, 255, 255),
+    rgb(255, 189, 91)
+  );
 }
 .container * {
   transition: all 0.5s;

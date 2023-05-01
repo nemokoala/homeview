@@ -9,7 +9,6 @@ function Nav({ searchTerm, setSearchTerm }: any) {
   const navigate = useNavigate();
   return (
     <>
-      <div className={styles.dummyNav}></div>
       <nav className={styles.nav}>
         <Link to="/">
           <img
@@ -20,16 +19,16 @@ function Nav({ searchTerm, setSearchTerm }: any) {
         </Link>
         <ul className={styles.ul}>
           <Link to="/">
-            <li>Home</li>
+            <li>리뷰 지도</li>
           </Link>
           <Link to="/review">
-            <li>리뷰보기</li>
+            <li>리뷰 목록</li>
           </Link>
           <Link to="/reviewfac">
-            <li>리뷰작성</li>
+            <li>리뷰 작성</li>
           </Link>
           <Link to="/admin">
-            <li>Admin</li>
+            <li>관리 페이지</li>
           </Link>
         </ul>
         <input
@@ -63,16 +62,16 @@ function Nav({ searchTerm, setSearchTerm }: any) {
       <div className={`${styles.menu} ${hamOn === true && styles.active}`}>
         <ul className={styles.sideul}>
           <Link to="/" onClick={() => setHamOn(false)}>
-            <li>Home</li>
+            <li>리뷰 지도</li>
           </Link>
           <Link to="/review" onClick={() => setHamOn(false)}>
-            <li>리뷰보기</li>
+            <li>리뷰 목록</li>
           </Link>
           <Link to="/reviewfac" onClick={() => setHamOn(false)}>
-            <li>리뷰작성</li>
+            <li>리뷰 작성</li>
           </Link>
           <Link to="/admin" onClick={() => setHamOn(false)}>
-            <li>Admin</li>
+            <li>관리 페이지</li>
           </Link>
         </ul>
       </div>
