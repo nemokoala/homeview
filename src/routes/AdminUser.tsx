@@ -1,62 +1,30 @@
 import { useState, useEffect } from "react";
 import styles from "./AdminUser.module.css";
 
-interface Users {
-  id: string;
-  name: string;
-  createdAt: string;
-  recentConnect: string;
-  interestArea: Array<string>;
-}
 function AdminUser() {
-  const [users, setUsers] = useState<Users[]>([]);
+  const [users, setUsers] = useState<any>([]);
   useEffect(() => {
-    setUsers([
-      {
-        id: "0",
-        name: "홍길동",
-        createdAt: "20230228",
-        recentConnect: "202302281000",
-        interestArea: ["서울", "인천", "부산"],
-      },
-
-      {
-        id: "1",
-        name: "김민재",
-        createdAt: "20230328",
-        recentConnect: "202304261020",
-        interestArea: ["세종", "충주"],
-      },
-      {
-        id: "2",
-        name: "박명수",
-        createdAt: "20230528",
-        recentConnect: "202302281000",
-        interestArea: ["대전", "대구", "일산"],
-      },
-      {
-        id: "3",
-        name: "이준영",
-        createdAt: "20230725",
-        recentConnect: "202302281104",
-        interestArea: ["익산", "전주"],
-      },
-    ]);
-
-    console.log(users);
+    const getMembers = async () => {
+      const json = await (
+        await fetch("http://43.200.254.30:8080/members")
+      ).json();
+      setUsers(json);
+      console.log(json);
+    };
+    getMembers();
   }, []);
 
-  const onClickDestroy = (id: string) => {
+  const onClickDestroy = (id: any) => {
     const answer = prompt(
       `해당 유저의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
     if (answer === null) alert("유저 삭제를 취소하였습니다.");
     else if (answer === id)
-      setUsers((current) => current.filter((user) => user.id !== id));
+      setUsers((current: any) => current.filter((user: any) => user.id !== id));
     else if (answer != id)
       alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");
   };
-  const sortId = (n: number) => {
+  const sortId = (n: any) => {
     const sortedId = [...users].sort((a, b) => {
       if (a.id < b.id) return n;
       if (a.id > b.id) return -n;
@@ -64,7 +32,7 @@ function AdminUser() {
     });
     setUsers(sortedId);
   };
-  const sortName = (n: number) => {
+  const sortName = (n: any) => {
     const sortedName = [...users].sort((a, b) => {
       if (a.name < b.name) return n;
       if (a.name > b.name) return -n;
@@ -97,28 +65,29 @@ function AdminUser() {
               <button onClick={() => sortName(1)}>▼</button>
             </th>
             <th>
-              생성 날짜
+              이메일
               <button onClick={() => sortCreatedAt(-1)}>▲</button>
               <button onClick={() => sortCreatedAt(1)}>▼</button>
             </th>
-            <th>마지막 접속</th>
+            <th>비밀번호</th>
             <th>관심 지역</th>
             <th>삭제</th>
           </tr>
-          {users.map((user) => (
+          {users.map((user: any) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.name}</td>
-              <td>{user.createdAt}</td>
-              <td>{user.recentConnect}</td>
-              <td>
-                {user.interestArea.map((area, index) => (
+              <td>{user.email}</td>
+              <td>{user.password}</td>
+              <td>관심지역</td>
+              {/*<td>
+                {user.interestArea.map((area: any, index: any) => (
                   <span key={`${user.id}${index}_inter`}>
                     {area}
                     {user.interestArea.length - 1 != index ? "," : null}
                   </span>
                 ))}
-              </td>
+                </td>*/}
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}

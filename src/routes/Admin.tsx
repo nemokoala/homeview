@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Admin.module.css";
 import AdminRoom from "./AdminRoom";
 import AdminUser from "./AdminUser";
-function Admin() {
+function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
   const [members, setMembers] = useState<any>();
@@ -14,14 +14,8 @@ function Admin() {
 
     // if (answer === password) setUnlock(true);
     // else if (answer != password) navigate("/");
-    getMembers();
   }, []);
-  const getMembers = async () => {
-    const json = await (
-      await fetch("http://43.200.254.30:8080/members")
-    ).json();
-    setMembers(json);
-  };
+
   return (
     <div className={styles.container}>
       <aside className={styles.aside}>
@@ -43,7 +37,9 @@ function Admin() {
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
-        {location === "room" ? <AdminRoom /> : null}
+        {location === "room" ? (
+          <AdminRoom reviewData={reviewData} setReviewData={setReviewData} />
+        ) : null}
       </section>
     </div>
   );

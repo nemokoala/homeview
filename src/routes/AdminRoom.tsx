@@ -1,86 +1,52 @@
 import { useState, useEffect } from "react";
 import styles from "./AdminUser.module.css";
 
-interface Rooms {
-  id: string;
-  name: string;
-  totalScore: number;
-  address: string;
-  coordinate: {
-    x: number;
-    y: number;
-  };
-}
-
-function AdminRoom() {
-  const [rooms, setRooms] = useState<Array<Rooms>>([]);
-  useEffect(() => {
-    setRooms([
-      {
-        id: "300",
-        name: "올리브",
-        totalScore: 10,
-        address: "고봉로34길 35",
-        coordinate: { x: 35.2323, y: 125.5312 },
-      },
-
-      {
-        id: "301",
-        name: "네모빌라",
-        totalScore: 9,
-        address: "고봉로34길 35",
-        coordinate: { x: 35.7323, y: 125.4312 },
-      },
-      {
-        id: "302",
-        name: "세모원룸",
-        totalScore: 8,
-        address: "고봉로34길 35",
-        coordinate: { x: 35.6623, y: 125.1312 },
-      },
-    ]);
-
-    console.log(rooms);
-  }, []);
+function AdminRoom({ reviewData, setReviewData }: any) {
+  const [rooms, setRooms] = useState<any>([...reviewData]);
 
   const onClickDestroy = (id: string): void => {
     const answer = prompt(
       `해당 방의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
-    if (answer == null) alert("유저 삭제를 취소하였습니다.");
-    else if (answer == id)
-      setRooms((current) => current.filter((room) => room.id !== id));
-    else if (answer != id)
-      alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");
+    if (answer == null) alert("방 삭제를 취소하였습니다.");
+    else if (answer == id) {
+      setRooms((current: any) =>
+        current.filter((room: any) => room.reviewId !== id)
+      );
+      setReviewData((current: any) =>
+        current.filter((room: any) => room.reviewId !== id)
+      );
+    } else if (answer != id)
+      alert("id값을 잘못 입력하여서 방 삭제가 취소 되었습니다.");
   };
   const sortId = (n: number): void => {
     const sortedId = [...rooms].sort((a, b) => {
-      if (a.id < b.id) return n;
-      if (a.id > b.id) return -n;
+      if (a.reviewId < b.reviewId) return n;
+      if (a.reviewId > b.reviewId) return -n;
       return 0;
     });
     setRooms(sortedId);
   };
   const sortName = (n: number): void => {
     const sortedName = [...rooms].sort((a, b) => {
-      if (a.name < b.name) return n;
-      if (a.name > b.name) return -n;
+      if (a.building < b.building) return n;
+      if (a.building > b.building) return -n;
       return 0;
     });
     setRooms(sortedName);
   };
   const sortScore = (n: number): void => {
     const sortedScore = [...rooms].sort((a, b) => {
-      if (a.totalScore < b.totalScore) return n;
-      if (a.totalScore > b.totalScore) return -n;
+      if (a.star < b.star) return n;
+      if (a.star > b.star) return -n;
       return 0;
     });
     setRooms(sortedScore);
   };
   const sortaddress = (n: number): void => {
     const sortedaddress = [...rooms].sort((a, b) => {
-      if (a.address < b.address) return n;
-      if (a.address > b.address) return -n;
+      if (a.newAddress < b.newAddress) return n;
+      if (a.newAddress > b.newAddress) return -n;
       return 0;
     });
     setRooms(sortedaddress);
@@ -102,7 +68,7 @@ function AdminRoom() {
               <button onClick={() => sortName(1)}>▼</button>
             </th>
             <th>
-              총점
+              별점
               <button onClick={() => sortScore(-1)}>▲</button>
               <button onClick={() => sortScore(1)}>▼</button>
             </th>
@@ -110,19 +76,19 @@ function AdminRoom() {
             <th>지역 좌표</th>
             <th>삭제</th>
           </tr>
-          {rooms.map((room) => (
-            <tr key={room.id}>
-              <td>{room.id}</td>
-              <td>{room.name}</td>
-              <td>{room.totalScore}</td>
-              <td>{room.address}</td>
+          {rooms.map((room: any) => (
+            <tr key={room.reviewId}>
+              <td>{room.reviewId}</td>
+              <td>{room.building}</td>
+              <td>{room.star}</td>
+              <td>{room.newAddress}</td>
               <td>
-                {room.coordinate.x},{room.coordinate.y}
+                {room.lat},{room.lng}
               </td>
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => onClickDestroy(room.id)}
+                  onClick={() => onClickDestroy(room.reviewId)}
                 >
                   삭제
                 </button>
