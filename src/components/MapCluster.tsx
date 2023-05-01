@@ -285,7 +285,7 @@ function MapCluster({ reviewData }: any) {
       setZoomLevel(6);
       setTimeout(() => {
         setZoomLevel(loadZoomLevel);
-      }, 10);
+      }, 15);
     }
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
@@ -402,7 +402,19 @@ function MapCluster({ reviewData }: any) {
                 >
                   <CustomDiv
                     style={{ background: "rgb(255,255, 255,0.5)" }}
-                    onClick={() => setShow(reviewData)}
+                    onClick={() => {
+                      setShow(reviewData);
+                      setCenter({
+                        lat:
+                          reviewData.lat +
+                          Math.random() * (0.000009 - 0.000001) +
+                          0.0001,
+                        lng:
+                          reviewData.lng +
+                          Math.random() * (0.000009 - 0.000001) +
+                          0.0001, //같은 거 클릭했을 때 먹통 안되게 랜덤값 추가
+                      });
+                    }}
                   >
                     {reviewData.building}{" "}
                     <div style={{ color: "red" }}>{reviewData.count}</div>
@@ -438,7 +450,16 @@ function MapCluster({ reviewData }: any) {
             >
               <CustomDiv
                 onClick={() => {
-                  setCenter({ lat: root.location[0], lng: root.location[1] });
+                  setCenter({
+                    lat:
+                      root.location[0] +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
+                    lng:
+                      root.location[1] +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
+                  });
                   setZoomLevel(9);
                 }}
                 style={
@@ -467,7 +488,16 @@ function MapCluster({ reviewData }: any) {
             >
               <CustomDiv
                 onClick={() => {
-                  setCenter({ lat: sigungu.lat, lng: sigungu.lng });
+                  setCenter({
+                    lat:
+                      sigungu.lat +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
+                    lng:
+                      sigungu.lng +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
+                  });
                   setZoomLevel(7);
                 }}
                 style={

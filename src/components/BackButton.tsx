@@ -3,7 +3,11 @@ import styled from "styled-components";
 
 function BackButton() {
   const navigate = useNavigate();
-  return <Div onClick={() => navigate(-1)}>◀</Div>;
+  return (
+    <Div onClick={() => navigate(-1)}>
+      <img src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="<" />
+    </Div>
+  );
 }
 
 const Div = styled.div`
@@ -11,7 +15,7 @@ const Div = styled.div`
   justify-content: center;
   width: 60px;
   height: 60px;
-  border-radius: 20px;
+  border-radius: 29px;
   background-color: orange;
   color: black;
   font-size: 2rem;
@@ -26,7 +30,7 @@ const Div = styled.div`
     background-color: #fdc55e;
   }
   @media screen and (min-width: 1000px) {
-    display: none;
+    left: calc((100% - 1000px) / 2 + 20px);
   }
 `;
 
