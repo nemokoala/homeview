@@ -24,7 +24,12 @@ function AppRouter({ reviewData, setReviewData }: any) {
         <BackButton />
         <Routes>
           <Route path="/" element={<Home reviewData={reviewData} />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/admin"
+            element={
+              <Admin reviewData={reviewData} setReviewData={setReviewData} />
+            }
+          />
           <Route
             path="/review"
             element={

@@ -24,13 +24,21 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
 
   useEffect(() => {
     if (searchTerm.length > 0) {
-      const filtered = reviewData.filter(
+      let filtered = reviewData.filter(
         (review: any) =>
           (review.building.includes(searchTerm) ||
             review.newAddress.includes(searchTerm) ||
             review.oldAddress.includes(searchTerm)) &&
           review.sido === sidoFilter
       );
+      if (sidoFilter === "전체") {
+        filtered = reviewData.filter(
+          (review: any) =>
+            review.building.includes(searchTerm) ||
+            review.newAddress.includes(searchTerm) ||
+            review.oldAddress.includes(searchTerm)
+        );
+      }
       console.log(filtered);
       if (filtered.length === 0) setShowNoResult(true);
       else setShowNoResult(false);
