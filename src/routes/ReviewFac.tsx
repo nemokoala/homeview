@@ -19,6 +19,7 @@ function ReviewFac({ setReviewData }: any) {
   const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
   const [lat, setLat] = useState(0); //위도 35.xx
   const [lng, setLng] = useState(0); //경도 127.xx
+  const [dong, setDong] = useState("");
   const navigate = useNavigate();
   let now = new Date();
   let nowYear = now.getFullYear();
@@ -44,6 +45,7 @@ function ReviewFac({ setReviewData }: any) {
       setSido(data.sido);
       setAddressTitle("클릭하여 주소 변경");
       setSigungu(data.sigungu);
+      setDong(data.bname);
       if (data.buildingName === "") {
         const newBuilding = data.roadAddress
           .replace(data.sido, "")
@@ -63,6 +65,7 @@ function ReviewFac({ setReviewData }: any) {
               지번 : ${data.jibunAddress},
               시도 : ${data.sido},
               시군구: ${data.sigungu},
+              동: ${data.bname},
               
           `);
       let geocoder = new kakao.maps.services.Geocoder();
@@ -118,6 +121,7 @@ function ReviewFac({ setReviewData }: any) {
         lng: Number(lng),
         sido,
         sigungu,
+        dong,
       };
       setReviewData((prev: any) => [...prev, newReview]);
       const json = JSON.stringify(newReview);
