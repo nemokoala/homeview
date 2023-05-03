@@ -381,13 +381,13 @@ function MapCluster({ reviewData }: any) {
     setShowReview(showReview);
   };
   return (
-    <>
+    <Container>
       <Map // 지도를 표시할 Container
         center={center}
         style={{
           // 지도의 크기
           width: "100%",
-          height: "500px",
+          height: "50%",
         }}
         level={zoomLevel} // 지도의 확대 레벨
         onZoomChanged={(map) => {
@@ -577,17 +577,22 @@ function MapCluster({ reviewData }: any) {
         <ZoomControl />
         <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
-
-      {showReview &&
-        showReview.map((review: any) => (
-          <ReviewBlock key={review.reviewId} review={review} />
-        ))}
-      {showReview.length === 0 && (
-        <Notice>마커를 클릭하여 리뷰정보를 확인하세요!</Notice>
-      )}
-    </>
+      <ContentDiv>
+        {showReview &&
+          showReview.map((review: any) => (
+            <ReviewBlock key={review.reviewId} review={review} />
+          ))}
+        {showReview.length === 0 && (
+          <Notice>마커를 클릭하여 리뷰정보를 확인하세요!</Notice>
+        )}
+      </ContentDiv>
+    </Container>
   );
 }
+const Container = styled.div`
+  width: 100%;
+  height: calc(100vh - var(--navHeight));
+`;
 
 const CustomDiv = styled.div`
   display: flex;
@@ -618,12 +623,23 @@ const Notice = styled.div`
   border-radius: 20px;
   transition: all 0.7s;
   text-align: center;
-  background-color: rgb(250, 175, 175);
+  background-color: rgb(227, 241, 253);
   &:hover {
     background-color: rgb(255, 241, 195);
     cursor: pointer;
     transform: scale(1.03);
   }
+`;
+const ContentDiv = styled.div`
+  width: 100%;
+  height: 50%;
+  overflow-y: scroll;
+  background: linear-gradient(
+    to bottom,
+    rgb(249, 254, 255),
+    rgb(255, 250, 250),
+    rgb(223, 236, 252)
+  );
 `;
 
 export default MapCluster;
