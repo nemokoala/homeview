@@ -25,7 +25,7 @@ function MapCluster({ reviewData }: any) {
   const [showReview, setShowReview] = useState(loadShowReview);
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
-
+  const [dongs, setDongs] = useState<any>([]);
   const [sido, setSido] = useState([
     { name: "서울", location: [37.5635694, 126.9800083], count: 0 },
     { name: "제주", location: [33.485694444, 126.500333333], count: 0 },
@@ -290,6 +290,7 @@ function MapCluster({ reviewData }: any) {
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   const countSet = () => {
+    //서울특별시, ..도 counting
     reviewDatas.forEach((review: any) => {
       const pattern = /\s/g;
       setSido((prev) =>
@@ -300,6 +301,7 @@ function MapCluster({ reviewData }: any) {
     });
   };
   const sigunguCountSet = () => {
+    //시군구 counting
     reviewDatas.forEach((review: any) => {
       let reviewSigungu = review.sigungu;
       setSigungu((prev) =>
@@ -325,6 +327,7 @@ function MapCluster({ reviewData }: any) {
   };
 
   const reviewReset = () => {
+    //중복 건물을 하나로 통합하고 카운트 갯수만큼 count 증가
     const newReviewData = reviewData.reduce((acc: any, cur: any) => {
       const { building, newAddress } = cur; //cur.building
       const existingData = acc.find(
@@ -339,10 +342,38 @@ function MapCluster({ reviewData }: any) {
       return acc;
     }, []);
     setReviewDatas(newReviewData);
+    setDongPosition();
     console.log(newReviewData);
   };
 
+  const setDongPosition = () => {
+    const review = reviewDatas;
+    const groupByDong = review.reduce((result: any, item: any) => {
+      const { dong, lat, lng } = item;
+      if (!result[dong]) {
+        result[dong] = { lat: lat, lng: lng, count: 1 };
+      } else {
+        result[dong].lat += lat;
+        result[dong].lng += lng;
+        result[dong].count += 1;
+      }
+      return result;
+    }, {});
+
+    const avgLatLongByDong = Object.entries(groupByDong).map(
+      ([dong, value]: any) => {
+        const avgLat = value.lat / value.count;
+        const avgLng = value.lng / value.count;
+        return { dong, lat: avgLat, lng: avgLng, count: value.count };
+      }
+    );
+
+    console.log(avgLatLongByDong);
+    setDongs(avgLatLongByDong);
+  };
+
   const setShow = (reviews: any) => {
+    //오버레이 클릭 시 지도 밑에 건물 목록 표시
     const showReview = reviewData.filter(
       (review: any) => review.building === reviews.building
     );
@@ -388,7 +419,7 @@ function MapCluster({ reviewData }: any) {
           averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
           minLevel={6} // 클러스터 할 최소 지도 레벨
         >
-          {zoomLevel < 8 &&
+          {zoomLevel < 7 &&
             reviewDatas.map((reviewData: any, idx: any): any => (
               <React.Fragment
                 key={`customoverlay_${reviewData.reviewId}-${reviewData.lat}-${reviewData.lng}`}
@@ -508,6 +539,38 @@ function MapCluster({ reviewData }: any) {
               >
                 <div>{returnSigungu(sigungu.name)}</div>{" "}
                 <div style={{ color: "red" }}>{sigungu.count}</div>
+              </CustomDiv>
+            </CustomOverlayMap>
+          ))}
+
+        {7 == zoomLevel &&
+          //동 표시
+          dongs.map((dong: any) => (
+            <CustomOverlayMap
+              key={dong.dong}
+              position={{
+                lat: dong.lat,
+                lng: dong.lng,
+              }}
+            >
+              <CustomDiv
+                onClick={() => {
+                  setCenter({
+                    lat:
+                      dong.lat + Math.random() * (0.000009 - 0.000001) + 0.0001,
+                    lng:
+                      dong.lng + Math.random() * (0.000009 - 0.000001) + 0.0001,
+                  });
+                  setZoomLevel(6);
+                }}
+                style={
+                  dong.count > 0
+                    ? { backgroundColor: "rgb(243, 206, 83, 0.7)" }
+                    : {}
+                }
+              >
+                <div>{dong.dong}</div>{" "}
+                <div style={{ color: "red" }}>{dong.count}</div>
               </CustomDiv>
             </CustomOverlayMap>
           ))}

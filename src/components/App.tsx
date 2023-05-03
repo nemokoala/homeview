@@ -18,6 +18,7 @@ interface Reviews {
   lng: number;
   sido: string;
   sigungu: string;
+  dong: string;
 }
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
       lng: 126.973805773829,
       sido: "전북",
       sigungu: "익산시",
+      dong: "영등동",
     },
     {
       reviewId: "111",
@@ -55,6 +57,7 @@ function App() {
       lng: 126.973805773829,
       sido: "전북",
       sigungu: "익산시",
+      dong: "영등동",
     },
     {
       reviewId: "2",
@@ -72,6 +75,7 @@ function App() {
       lng: 126.971596923903,
       sido: "전북",
       sigungu: "익산시",
+      dong: "영등동",
     },
     {
       reviewId: "3",
@@ -89,6 +93,7 @@ function App() {
       lng: 126.972019488308,
       sido: "전북",
       sigungu: "익산시",
+      dong: "영등동",
     },
     {
       reviewId: "4",
@@ -106,6 +111,7 @@ function App() {
       lng: 128.621712582663,
       sido: "대구",
       sigungu: "수성구",
+      dong: "두산동",
     },
     {
       reviewId: "5",
@@ -123,6 +129,7 @@ function App() {
       lng: 128.574071383549,
       sido: "대구",
       sigungu: "남구",
+      dong: "대명동",
     },
     {
       reviewId: "6",
@@ -140,6 +147,7 @@ function App() {
       lng: 126.957043421827,
       sido: "전북",
       sigungu: "익산시",
+      dong: "동산동",
     },
     {
       reviewId: "7",
@@ -157,6 +165,7 @@ function App() {
       lng: 126.95108210547,
       sido: "서울",
       sigungu: "마포구",
+      dong: "봉천동",
     },
     {
       reviewId: "8",
@@ -174,6 +183,7 @@ function App() {
       lng: 126.94462959649,
       sido: "서울",
       sigungu: "관악구",
+      dong: "염리동",
     },
     {
       reviewId: "5794",
@@ -191,6 +201,7 @@ function App() {
       lng: 126.799099466195,
       sido: "광주",
       sigungu: "광산구",
+      dong: "송정동",
     },
     {
       reviewId: "3793",
@@ -208,6 +219,7 @@ function App() {
       lng: 129.141874959976,
       sido: "부산",
       sigungu: "해운대구",
+      dong: "우동",
     },
   ]);
   const [roomData, setRoomData] = useState([]);
