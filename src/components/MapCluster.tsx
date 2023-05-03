@@ -592,6 +592,8 @@ function MapCluster({ reviewData }: any) {
 const Container = styled.div`
   width: 100%;
   height: calc(100vh - var(--navHeight));
+  height: -webkit-fill-available;
+  height: fill-available;
 `;
 
 const CustomDiv = styled.div`
