@@ -277,6 +277,7 @@ function MapCluster({ reviewData }: any) {
     { name: "제주/제주시", lat: 33.50972, lng: 126.52194, count: 0 },
     { name: "제주/서귀포시", lat: 33.29307, lng: 126.49748, count: 0 },
   ]);
+  const [windowHeight, setWindowHeight] = useState<any>(window.innerHeight);
 
   useEffect(() => {
     countSet();
@@ -287,6 +288,14 @@ function MapCluster({ reviewData }: any) {
         setZoomLevel(loadZoomLevel);
       }, 15);
     }
+
+    function handleResize() {
+      setWindowHeight(window.innerHeight);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   const countSet = () => {
@@ -381,7 +390,7 @@ function MapCluster({ reviewData }: any) {
     setShowReview(showReview);
   };
   return (
-    <Container>
+    <Container wHeight={windowHeight}>
       <Map // 지도를 표시할 Container
         center={center}
         style={{
@@ -589,11 +598,9 @@ function MapCluster({ reviewData }: any) {
     </Container>
   );
 }
-const Container = styled.div`
+const Container = styled.div<any>`
   width: 100%;
-  height: calc(100vh - var(--navHeight));
-  height: -webkit-fill-available;
-  height: fill-available;
+  height: calc(${(props) => props.wHeight}px - var(--navHeight));
 `;
 
 const CustomDiv = styled.div`
