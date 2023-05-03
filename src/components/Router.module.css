@@ -16,7 +16,7 @@ html {
   margin: 0;
   width: 1000px;
   margin: 0 auto;
-  min-height: 100vh;
+
   height: auto;
   --lightBlue: rgb(199, 208, 247);
   --lightRed: rgb(247, 199, 199);
