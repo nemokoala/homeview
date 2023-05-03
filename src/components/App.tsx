@@ -221,6 +221,24 @@ function App() {
       sigungu: "해운대구",
       dong: "우동",
     },
+    {
+      reviewId: "3615",
+      userName: "코알라",
+      building: "고봉로 156",
+      newAddress: "전북 익산시 고봉로 156",
+      oldAddress: "전북 익산시 영등동 548-68",
+      pros: "3",
+      cons: "3",
+      residenceType: "아파트",
+      residenceFloor: "저층",
+      livedYear: 2023,
+      star: 5,
+      lat: 35.9462547669855,
+      lng: 126.966804259277,
+      sido: "전북",
+      sigungu: "익산시",
+      dong: "영등동",
+    },
   ]);
   const [roomData, setRoomData] = useState([]);
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;

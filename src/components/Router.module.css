@@ -4,6 +4,11 @@
   font-family: var(--notoFont);
   font-weight: bold;
   font-size: 16px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none;
 }
 
 html {
