@@ -288,7 +288,7 @@ function MapCluster({ reviewData }: any) {
         setZoomLevel(loadZoomLevel);
       }, 15);
     }
-
+    document.documentElement.style.setProperty("--minHeight", `auto`);
     function handleResize() {
       //ios safari 하단바 문제 해결
       setWindowHeight(window.innerHeight);
@@ -296,6 +296,7 @@ function MapCluster({ reviewData }: any) {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
+      document.documentElement.style.setProperty("--minHeight", `100vh`);
     };
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 

@@ -16,7 +16,7 @@ html {
   margin: 0;
   width: 1000px;
   margin: 0 auto;
-
+  min-height: var(--minHeight);
   height: auto;
   --lightBlue: rgb(199, 208, 247);
   --lightRed: rgb(247, 199, 199);
@@ -24,7 +24,7 @@ html {
   --navLargeHeight: 240px;
   --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
   --notoFont: "Noto Sans KR";
-
+  --minHeight: 100vh;
   box-shadow: 0 0 70px 10px rgba(0, 0, 0, 0.205);
 }
 body {
