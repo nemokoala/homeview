@@ -290,6 +290,7 @@ function MapCluster({ reviewData }: any) {
     }
 
     function handleResize() {
+      //ios safari 하단바 문제 해결
       setWindowHeight(window.innerHeight);
     }
     window.addEventListener("resize", handleResize);
