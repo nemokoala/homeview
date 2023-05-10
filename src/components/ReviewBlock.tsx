@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 function ReviewBlock({ review }: any) {
   const navigate = useNavigate();
   const gotoDetail = (review: any): void => {
@@ -27,13 +27,23 @@ function ReviewBlock({ review }: any) {
   );
 }
 
+const fadein = keyframes`
+  from {
+    opacity: 0;
+    transform:translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform:translateY(0);
+  }
+`;
 const CustomDiv = styled.div`
   margin: 30px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   padding: 20px;
   border-radius: 20px;
   transition: all 0.7s;
-
+  animation: ${fadein} 0.5s ease-out;
   &:hover {
     background-color: rgb(255, 241, 195);
     cursor: pointer;
@@ -79,4 +89,5 @@ const Hr = styled.hr`
   background-color: black;
   margin: 10px 0;
 `;
+
 export default ReviewBlock;

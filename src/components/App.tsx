@@ -26,7 +26,7 @@ function App() {
     {
       reviewId: "1",
       userName: "코알라",
-      building: "제일3차아파트",
+      building: "영등3차제일아파트",
       newAddress: "고봉로34길 35",
       oldAddress: "전북 익산시 영등동 821",
       pros: "시내랑 가까워요",
@@ -44,7 +44,7 @@ function App() {
     {
       reviewId: "111",
       userName: "코알라",
-      building: "제일3차아파트",
+      building: "영등3차제일아파트",
       newAddress: "고봉로34길 35",
       oldAddress: "전북 익산시 영등동 821",
       pros: "222",
