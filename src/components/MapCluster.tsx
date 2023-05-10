@@ -283,7 +283,7 @@ function MapCluster({ reviewData }: any) {
     countSet();
     sigunguCountSet();
     if (zoomLevel <= 5) {
-      setZoomLevel(6);
+      setZoomLevel(10);
       setTimeout(() => {
         setZoomLevel(loadZoomLevel);
       }, 15);
