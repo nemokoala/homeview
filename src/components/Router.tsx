@@ -15,6 +15,7 @@ import Map from "./LegacyMapContainer";
 import Nav from "./Nav";
 import styles from "./Router.module.css";
 import BackButton from "./BackButton";
+import Register from "routes/Register";
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
   return (
@@ -55,6 +56,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
             }
           />
           <Route path="/map" element={<Map />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>

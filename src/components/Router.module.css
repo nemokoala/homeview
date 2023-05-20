@@ -2,6 +2,7 @@
   box-sizing: border-box;
   color: black;
   font-family: var(--notoFont);
+  font-style: normal;
   font-weight: bold;
   font-size: 16px;
   -ms-overflow-style: none; /* IE and Edge */
