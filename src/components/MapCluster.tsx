@@ -395,6 +395,7 @@ function MapCluster({ reviewData }: any) {
     <Container wHeight={windowHeight}>
       <Map // 지도를 표시할 Container
         center={center}
+        isPanto={false}
         style={{
           // 지도의 크기
           width: "100%",
@@ -424,7 +425,6 @@ function MapCluster({ reviewData }: any) {
             );
           }, 100);
         }}
-        isPanto={false}
       >
         <MarkerClusterer
           averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
