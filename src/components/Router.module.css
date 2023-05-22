@@ -26,6 +26,7 @@ html {
   --defaultFont: "Malgun Gothic", dotum, "돋움", sans-serif;
   --notoFont: "Noto Sans KR";
   --minHeight: 100vh;
+  --orange: rgb(255, 202, 44);
   box-shadow: 0 0 70px 10px rgba(0, 0, 0, 0.205);
 }
 body {
