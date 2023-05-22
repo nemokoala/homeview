@@ -85,7 +85,7 @@ function ReviewFac({ setReviewData }: any) {
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); //새로고침 방지
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {
@@ -93,7 +93,6 @@ function ReviewFac({ setReviewData }: any) {
     } = e;
     if (name === "pros") setPros(value);
     if (name === "cons") setCons(value);
-    console.log(pros, cons);
   };
 
   const sendReview = () => {

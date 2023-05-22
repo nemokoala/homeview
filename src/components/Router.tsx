@@ -57,6 +57,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Register />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
