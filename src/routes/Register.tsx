@@ -34,25 +34,40 @@ function Register() {
       if (name && nickname && email && password) {
         //회원가입
         const userData = {
-          "name": name,
-          "nickname": nickname,
-          "email": email,
-          "password": password,
+          name: name,
+          nickname: nickname,
+          email: email,
+          password: password,
         };
         axios
-          .post("http://43.201.86.247:8080/api/join", JSON.stringify(userData))
+          .post("http://43.201.86.247:8080/api/join", {
+            ...userData,
+          })
           .then((response) => {
-            console.log(response.data);
+            console.log("리스폰즈 : " + response.data);
           })
           .catch((error) => {
-            console.error(error);
+            console.error("에러 : " + error);
           });
       } else {
         alert("빈칸을 모두 채워주세요.");
       }
     }
-    if (pathname === "/login") {
-      alert("로그인.");
+    if (pathname === login) {
+      const userData = {
+        email: email,
+        password: password,
+      };
+      axios
+        .post("http://43.201.86.247:8080/api/login", {
+          ...userData,
+        })
+        .then((response) => {
+          console.log("리스폰즈 : " + response.data);
+        })
+        .catch((error) => {
+          console.error("에러 : " + error);
+        });
     }
   };
   return (
