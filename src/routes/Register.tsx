@@ -1,4 +1,5 @@
 import axios from "axios";
+import Modal from "components/Modal";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
@@ -8,7 +9,27 @@ function Register() {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAnimated, setIsAnimated] = useState(false);
+  const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
+
+  const defaultModal = {
+    //모달값 초기화 편의를 위한 기본값
+    open: false,
+    title: "",
+    titleColor: "",
+    text: "",
+    btn1Text: "",
+    btn2Text: "",
+    btn1Color: "",
+    btn2Color: "",
+    btn1Func: function () {},
+    btn2Func: function () {},
+  };
+  const [modal, setModal] = useState({
+    //모달값 컨트롤을 위한 오브젝트 변수
+    ...defaultModal,
+  });
+  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
+
   const navigate = useNavigate();
   const login = "/api/login";
   const register = "/api/join";
@@ -44,16 +65,46 @@ function Register() {
             ...userData,
           })
           .then((response) => {
+            //회원가입 반응
             console.log("리스폰즈 : " + response.data);
+            if (response.data === "확인") {
+              setModal({
+                ...defaultModal,
+                title: "알림",
+                text: "회원가입이 완료되었습니다. 로그인 해주세요.",
+                btn1Func: function () {
+                  navigate("/api/login");
+                },
+              }); // 모달창 오픈
+            }
+            if (response.data === "중복가입") {
+              setModal({
+                ...defaultModal,
+                title: "오류!",
+                titleColor: "red",
+                text: "중복 가입 입니다.",
+                btn1Func: function () {
+                  setEmail(""); //이메일 중복이므로 이메일 칸을 비워줌
+                },
+              }); //모달창  오픈
+            }
           })
           .catch((error) => {
+            const errorText = error.toString();
             console.error("에러 : " + error);
+            setModal({
+              ...defaultModal,
+              title: "에러!",
+              titleColor: "red",
+              text: errorText,
+            });
           });
       } else {
         alert("빈칸을 모두 채워주세요.");
       }
     }
     if (pathname === login) {
+      //로그인
       const userData = {
         email: email,
         password: password,
@@ -64,9 +115,19 @@ function Register() {
         })
         .then((response) => {
           console.log("리스폰즈 : " + response.data);
+          if (response.data === "로그인 성공") {
+            setModal({ ...defaultModal, text: "로그인 성공" }); //모달창 오픈
+          }
         })
         .catch((error) => {
+          const errorText = error.toString();
           console.error("에러 : " + error);
+          setModal({
+            ...defaultModal,
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          });
         });
     }
   };
@@ -134,7 +195,7 @@ function Register() {
           <LoginLink
             onClick={() => {
               setTimeout(() => {
-                navigate("/login");
+                navigate(login);
               }, 250);
 
               setIsAnimated(true);
@@ -155,6 +216,7 @@ function Register() {
           </LoginLink>
         )}
       </Form>
+      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </Container>
   );
 }
