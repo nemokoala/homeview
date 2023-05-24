@@ -34,13 +34,13 @@ function Register() {
       if (name && nickname && email && password) {
         //회원가입
         const userData = {
-          name,
-          nickname,
-          email,
-          password,
+          "name": name,
+          "nickname": nickname,
+          "email": email,
+          "password": password,
         };
         axios
-          .post("http://43.201.86.247:8080/api/join", userData)
+          .post("http://43.201.86.247:8080/api/join", JSON.stringify(userData))
           .then((response) => {
             console.log(response.data);
           })
