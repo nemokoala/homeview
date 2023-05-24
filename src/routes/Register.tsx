@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 function Register() {
@@ -8,13 +9,15 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnimated, setIsAnimated] = useState(false);
-
+  const navigate = useNavigate();
+  const login = "/api/login";
+  const register = "/api/join";
   const { pathname } = useLocation();
   useEffect(() => {
     console.log(pathname);
     setTimeout(() => {
       setIsAnimated(false);
-    }, 250); //애니메이션 종료
+    }, 500); //애니메이션 종료
   }, [pathname]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -26,10 +29,36 @@ function Register() {
     if (id === "nickname") setNickname(value);
     console.log(email, password);
   };
+  const confirm = (e: any) => {
+    if (pathname === register) {
+      if (name && nickname && email && password) {
+        //회원가입
+        const userData = {
+          name,
+          nickname,
+          email,
+          password,
+        };
+        axios
+          .post("http://43.201.86.247:8080/api/join", userData)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        alert("빈칸을 모두 채워주세요.");
+      }
+    }
+    if (pathname === "/login") {
+      alert("로그인.");
+    }
+  };
   return (
     <Container>
       <Form isAnimated={isAnimated}>
-        {pathname === "/register" ? (
+        {pathname === register ? (
           <>
             <Title>회원가입</Title>
             <Label>이름</Label>
@@ -38,7 +67,7 @@ function Register() {
               id="name"
               onChange={onChange}
               value={name}
-              placeholder="Name"
+              placeholder="특수 문자, 숫자 제외"
             ></Input>
             <Label>닉네임</Label>
             <Input
@@ -46,8 +75,8 @@ function Register() {
               id="nickname"
               onChange={onChange}
               value={nickname}
-              placeholder="Nickname"
-            ></Input>{" "}
+              placeholder="특수 문자 제외"
+            ></Input>
           </>
         ) : (
           <Title>로그인</Title>
@@ -59,57 +88,88 @@ function Register() {
           id="email"
           onChange={onChange}
           value={email}
-          placeholder="Email"
+          placeholder="example@ooo.com"
         ></Input>
         <Label>비밀번호</Label>
         <Input
-          type="email"
+          type="password"
           id="password"
           onChange={onChange}
           value={password}
-          placeholder="Password"
+          placeholder={
+            pathname === register
+              ? "8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함"
+              : "Password"
+          }
         ></Input>
         <Buttons>
-          <div>{pathname === "/register" ? "회원가입" : "로그인"}</div>
+          <div
+            onClick={confirm}
+            style={
+              pathname === register
+                ? { backgroundColor: "lightgreen" }
+                : { backgroundColor: "skyblue" }
+            }
+          >
+            {pathname === register ? "회원가입" : "로그인"}
+          </div>
           <div>취소</div>
         </Buttons>
-        {pathname === "/register" ? (
-          <Link to="/login" onClick={() => setIsAnimated(true)}>
-            <LoginLink>계정이 있으면 로그인하기</LoginLink>
-          </Link>
+        {pathname === register ? (
+          <LoginLink
+            onClick={() => {
+              setTimeout(() => {
+                navigate("/login");
+              }, 250);
+
+              setIsAnimated(true);
+            }}
+          >
+            계정이 있으면 로그인하기
+          </LoginLink>
         ) : (
-          <Link to="/register" onClick={() => setIsAnimated(true)}>
-            <LoginLink>계정이 없으면 회원가입하기</LoginLink>
-          </Link>
+          <LoginLink
+            onClick={() => {
+              setTimeout(() => {
+                navigate(register);
+              }, 250);
+              setIsAnimated(true);
+            }}
+          >
+            계정이 없으면 회원가입하기
+          </LoginLink>
         )}
       </Form>
     </Container>
   );
 }
 
-export default Register;
 const fadein = keyframes`
-  from {
-    transform: scaleY(0)
+  0% {
+    transform: scale(1);
   }
-  to {
-    transform: scaleY(1)
+  50%{
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 `;
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - var(--navHeight));
-  background: linear-gradient(to bottom, white, rgb(158, 227, 248));
+  min-height: calc(100vh - var(--navHeight));
+  height: auto;
+  background: linear-gradient(to bottom, white, #d9f4ff);
   margin: 0;
   display: inline-block;
 `;
 const Form = styled.div<any>`
   transition: all 1s ease-in;
   overflow: hidden;
-  animation: ${fadein} 0.5s ease-in;
-  margin: 100px auto;
+  animation: ${(props) => props.isAnimated === true && fadein} 0.5s ease-in;
+  margin: 50px auto;
   /* opacity: ${(props) => (props.isAnimated ? 0 : 1)}; */
-  width: ${(props) => (props.isAnimated ? "1000px" : "500px")};
+  width: 500px;
   height: auto;
   display: flex;
   flex-flow: column wrap;
@@ -176,12 +236,18 @@ const Buttons = styled.div`
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-size: 1.3rem;
   }
-  & div:nth-child(1) {
-    background-color: rgba(236, 208, 49, 0.733);
+  & div:hover {
+    cursor: pointer;
   }
 `;
 const LoginLink = styled.div`
   color: purple;
   width: 100%;
   text-align: center;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
 `;
+
+export default Register;

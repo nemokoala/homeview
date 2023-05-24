@@ -45,10 +45,10 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           x
         </div>
         <div className={styles.buttons}>
-          <Link to="/login">
+          <Link to="/api/login">
             <button className={styles.loginBtn}>로그인</button>
           </Link>
-          <Link to="/register">
+          <Link to="/api/join">
             <button className={styles.registerBtn}>회원가입</button>
           </Link>
         </div>
