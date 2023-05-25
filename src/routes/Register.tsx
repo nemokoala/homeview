@@ -118,6 +118,9 @@ function Register() {
           if (response.data === "로그인 성공") {
             setModal({ ...defaultModal, text: "로그인 성공" }); //모달창 오픈
           }
+          if (response.data === "로그인 실패") {
+            setModal({ ...defaultModal, title:"로그인 실패!", titleColor:"red", text: "이메일과 패스워드를 확인해주세요." }); //모달창 오픈
+          }
         })
         .catch((error) => {
           const errorText = error.toString();
@@ -282,7 +285,8 @@ const Input = styled.input`
   border: 0px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 10px 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:focus {
     outline: 1px solid var(--orange) !important;
     border-color: var(--orange) !important;
@@ -314,7 +318,11 @@ const Buttons = styled.div`
     font-size: 1.3rem;
   }
   & div:hover {
+    filter: contrast(200%);
     cursor: pointer;
+  }
+  & div:active {
+    filter: hue-rotate(90deg);
   }
 `;
 const LoginLink = styled.div`
