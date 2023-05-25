@@ -57,7 +57,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           onClick={toggleHam}
         >
           <img
-            src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/hamburger-menu-icon.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
             alt="hamburger"
             width="100%"
           />

@@ -14,7 +14,7 @@ function Modal({ modal, ...props }: any) {
   return (
     <Container isOpen={isOpen}>
       <Form>
-        <Title titleColor={modal.titleColor}>{modal.title || "공지"}</Title>
+        <Title titleColor={modal.titleColor}>{modal.title || "알림"}</Title>
         <Hr />
         {modal.text || "None-Text"}
         <Buttons
@@ -66,8 +66,11 @@ const Form = styled.div<any>`
   padding: 15px;
   border-radius: 20px;
 
-  @media screen and (min-width: 500px) {
-    transform: scale(1.5);
+  @media screen and (min-width: 500px) { //큰 화면에서 모달창 크기 업
+    transform: scale(1.2);
+  }
+  @media screen and (max-width: 320px) { //작은 화면에서 넓이를 화면에 맞춤
+    width: calc(100% - 20px);
   }
 `;
 const Title = styled.div<any>`
@@ -83,6 +86,7 @@ const Hr = styled.hr`
 const Buttons = styled.div<any>`
   width: 100%;
   height: 40px;
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
