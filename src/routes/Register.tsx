@@ -1,7 +1,9 @@
 import axios from "axios";
 import Modal from "components/Modal";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { saveSession } from "slice/userSlice";
 import styled, { keyframes } from "styled-components";
 
 function Register() {
@@ -10,7 +12,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
-
+  const dispatch = useDispatch<any>();
   const defaultModal = {
     //모달값 초기화 편의를 위한 기본값
     open: false,
@@ -50,7 +52,12 @@ function Register() {
     if (id === "nickname") setNickname(value);
     console.log(email, password);
   };
-  const confirm = (e: any) => {
+  const enterPress = (e: any) => {
+    if (e.key === "Enter") {
+      confirm();
+    }
+  };
+  const confirm = () => {
     if (pathname === register) {
       if (name && nickname && email && password) {
         //회원가입
@@ -64,10 +71,11 @@ function Register() {
           .post("http://43.201.86.247:8080/api/join", {
             ...userData,
           })
-          .then((response) => {
+          .then((response: any) => {
             //회원가입 반응
-            console.log("리스폰즈 : " + response.data);
-            if (response.data === "확인") {
+            console.log("리스폰즈DATAthen : " + response.data);
+            console.log("리스폰즈STATUS : " + response.status);
+            if (response.status === "201") {
               setModal({
                 ...defaultModal,
                 title: "알림",
@@ -90,8 +98,9 @@ function Register() {
             }
           })
           .catch((error) => {
-            const errorText = error.toString();
+            const errorText = error.response.data.toString();
             console.error("에러 : " + error);
+            console.log("리스폰즈data : " + error.response.data);
             setModal({
               ...defaultModal,
               title: "에러!",
@@ -100,7 +109,10 @@ function Register() {
             });
           });
       } else {
-        alert("빈칸을 모두 채워주세요.");
+        setModal({
+          ...defaultModal,
+          text: "빈칸을 모두 채워주세요.",
+        });
       }
     }
     if (pathname === login) {
@@ -115,11 +127,19 @@ function Register() {
         })
         .then((response) => {
           console.log("리스폰즈 : " + response.data);
-          if (response.data === "로그인 성공") {
-            setModal({ ...defaultModal, text: "로그인 성공" }); //모달창 오픈
-          }
+
           if (response.data === "로그인 실패") {
-            setModal({ ...defaultModal, title:"로그인 실패!", titleColor:"red", text: "이메일과 패스워드를 확인해주세요." }); //모달창 오픈
+            setModal({
+              ...defaultModal,
+              title: "로그인 실패!",
+              titleColor: "red",
+              text: "이메일과 패스워드를 확인해주세요.",
+            }); //모달창 오픈
+          } else {
+            //로그인 성공 시
+            sessionStorage.setItem("session", response.data);
+            dispatch(saveSession(response.data));
+            navigate("/");
           }
         })
         .catch((error) => {
@@ -168,6 +188,8 @@ function Register() {
           onChange={onChange}
           value={email}
           placeholder="example@ooo.com"
+          autoComplete="on"
+          onKeyPress={enterPress}
         ></Input>
         <Label>비밀번호</Label>
         <Input
@@ -180,6 +202,8 @@ function Register() {
               ? "8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함"
               : "Password"
           }
+          autoComplete="on"
+          onKeyPress={enterPress}
         ></Input>
         <Buttons>
           <div
@@ -243,7 +267,7 @@ const Container = styled.div`
   margin: 0;
   display: inline-block;
 `;
-const Form = styled.div<any>`
+const Form = styled.form<any>`
   transition: all 1s ease-in;
   overflow: hidden;
   animation: ${(props) => props.isAnimated === true && fadein} 0.5s ease-in;
@@ -286,7 +310,7 @@ const Input = styled.input`
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
-      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:focus {
     outline: 1px solid var(--orange) !important;
     border-color: var(--orange) !important;
