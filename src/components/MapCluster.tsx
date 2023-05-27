@@ -13,7 +13,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ReviewBlock from "./ReviewBlock";
 import { saveZoom, saveCenter, saveShowReview } from "slice/mapSlice";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function MapCluster({ reviewData }: any) {
   const loadZoomLevel = useSelector((state: any) => state.mapSet.zoomLevel);

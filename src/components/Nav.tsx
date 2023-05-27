@@ -1,12 +1,54 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { saveSession } from "slice/userSlice";
+import Modal from "./Modal";
 function Nav({ searchTerm, setSearchTerm }: any) {
   const [hamOn, setHamOn] = useState<Boolean>(false);
   const toggleHam = () => {
     setHamOn((prev) => !prev);
   };
+  const defaultModal = {
+    //모달값 초기화 편의를 위한 기본값
+    open: false,
+    title: "",
+    titleColor: "",
+    text: "",
+    btn1Text: "",
+    btn2Text: "",
+    btn1Color: "",
+    btn2Color: "",
+    btn1Func: function () {},
+    btn2Func: function () {},
+  };
+  const [modal, setModal] = useState({
+    //모달값 컨트롤을 위한 오브젝트 변수
+    ...defaultModal,
+  });
+  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
+  const session = useSelector((state: any) => state.userSet.session);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const logout = () => {
+    axios
+      .post(
+        "http://43.201.86.247:8080/api/logout",
+        sessionStorage.getItem("session")
+      )
+      .then((response) => {
+        console.log(response.data);
+        sessionStorage.removeItem("session");
+        dispatch(saveSession("" as any));
+        setModal({
+          ...defaultModal,
+          text: "로그아웃 되었습니다.",
+        });
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
       <nav className={styles.nav}>
@@ -45,12 +87,23 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           x
         </div>
         <div className={styles.buttons}>
-          <Link to="/api/login">
-            <button className={styles.loginBtn}>로그인</button>
-          </Link>
-          <Link to="/api/join">
-            <button className={styles.registerBtn}>회원가입</button>
-          </Link>
+          {session ? (
+            <>
+              <button className={styles.loginBtn} onClick={logout}>
+                로그아웃
+              </button>
+              <button className={styles.registerBtn}>프로필</button>
+            </>
+          ) : (
+            <>
+              <Link to="/api/login">
+                <button className={styles.loginBtn}>로그인</button>
+              </Link>
+              <Link to="/api/join">
+                <button className={styles.registerBtn}>회원가입</button>
+              </Link>
+            </>
+          )}
         </div>
         <div
           className={`${styles.hamburger} ${hamOn && styles.active}`}
@@ -79,6 +132,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           </Link>
         </ul>
       </div>
+      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </>
   );
 }
