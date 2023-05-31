@@ -61,7 +61,7 @@
   },
   
     
-    "proxy": "https://api.binbinbin.site:8080",
+    "proxy": "https://api.binbinbin.site:80",
     
   
   "homepage": "https://home-view.netlify.app/#"
