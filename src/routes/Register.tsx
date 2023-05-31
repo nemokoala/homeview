@@ -72,7 +72,7 @@ function Register() {
             "https://api.binbinbin.site/api/join",
             {
               ...userData,
-            }
+            },
             { withCredentials: true }
           )
           .then((response: any) => {
@@ -130,7 +130,7 @@ function Register() {
           "https://api.binbinbin.site/api/login",
           {
             ...userData,
-          }
+          },
           { withCredentials: true }
         )
         .then((response) => {
