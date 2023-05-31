@@ -8,7 +8,7 @@ function BackButton() {
     <Div
       onClick={() =>
         axios
-          .get("https://api.binbinbin.site/api/info")
+          .get("https://api.binbinbin.site/api/info", { withCredentials: true })
           .then((response) => response.data)
           .catch((error) => console.log(error))
       }
