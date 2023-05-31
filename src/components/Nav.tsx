@@ -35,7 +35,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
   const logout = () => {
     axios
       .post(
-        "http://43.201.86.247:8080/api/logout",
+        "https://api.binbinbin.site/api/logout",
         sessionStorage.getItem("session")
       )
       .then((response) => {
