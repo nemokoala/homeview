@@ -36,7 +36,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
     axios
       .post(
         "https://api.binbinbin.site/api/logout",
-        sessionStorage.getItem("session")
+        sessionStorage.getItem("session"),{withCredentials : true}
       )
       .then((response) => {
         console.log(response.data);
