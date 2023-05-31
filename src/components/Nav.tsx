@@ -34,20 +34,25 @@ function Nav({ searchTerm, setSearchTerm }: any) {
 
   const logout = () => {
     axios
-      .post(
-        "https://api.binbinbin.site/api/logout",
-        sessionStorage.getItem("session"),{withCredentials : true}
-      )
+      .get("https://api.binbinbin.site/api/logout", { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         sessionStorage.removeItem("session");
         dispatch(saveSession("" as any));
+        if (response.status === 200)
+          setModal({
+            ...defaultModal,
+            text: "로그아웃 되었습니다.",
+          });
+      })
+      .catch((error) => {
+        const errorText = error.toString();
         setModal({
           ...defaultModal,
-          text: "로그아웃 되었습니다.",
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
         });
-      })
-      .catch((error) => console.log(error));
+      });
   };
   return (
     <>
