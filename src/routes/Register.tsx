@@ -135,6 +135,7 @@ function Register() {
         )
         .then((response) => {
           const jsonData = JSON.stringify(response.data);
+          const userData = JSON.parse(jsonData);
           console.log("리스폰즈 : " + jsonData);
           console.log("response.status : " + response.status);
           console.log("토큰 " + response.data.token);
@@ -143,7 +144,7 @@ function Register() {
           if (response.status === 200) {
             //로그인 성공 시
             sessionStorage.setItem("session", "true");
-            dispatch(saveSession("true" as any));
+            dispatch(saveSession(userData as any));
             navigate("/");
           }
         })
