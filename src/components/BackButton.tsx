@@ -6,11 +6,16 @@ function BackButton() {
   const navigate = useNavigate();
   return (
     <Div
-      onClick={() => {
-        axios
-          .get("https://api.binbinbin.site/api/info", { withCredentials: true })
-          .then((response) => console.log(response.data))
-          .catch((error) => console.log(error));
+      onClick={async () => {
+        try {
+          const response = await axios.get(
+            "https://api.binbinbin.site/api/info",
+            { withCredentials: true }
+          );
+          console.log(response.data);
+        } catch (error) {
+          console.log(error);
+        }
       }}
     >
       <img src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="<" />
