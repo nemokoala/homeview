@@ -72,8 +72,8 @@ function Register() {
             "https://api.binbinbin.site/api/join",
             {
               ...userData,
-            },
-            { withCredentials: true }
+            }
+            //{ withCredentials: true }
           )
           .then((response: any) => {
             //회원가입 반응
@@ -130,8 +130,8 @@ function Register() {
           "https://api.binbinbin.site/api/login",
           {
             ...userData,
-          },
-          { withCredentials: true }
+          }
+          //{ withCredentials: true }
         )
         .then((response) => {
           console.log("리스폰즈 : " + response.data);
