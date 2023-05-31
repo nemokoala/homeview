@@ -36,7 +36,6 @@ function Nav({ searchTerm, setSearchTerm }: any) {
     axios
       .get("https://api.binbinbin.site/api/logout", { withCredentials: true })
       .then((response) => {
-        sessionStorage.removeItem("session");
         dispatch(saveSession("" as any));
         if (response.status === 200)
           setModal({
@@ -53,6 +52,13 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           text: errorText,
         });
       });
+  };
+
+  const profile = () => {
+    axios
+      .get("https://api.binbinbin.site/api/info", { withCredentials: true })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
   };
   return (
     <>
