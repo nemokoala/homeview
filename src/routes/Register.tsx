@@ -135,7 +135,8 @@ function Register() {
         )
         .then((response) => {
           console.log("리스폰즈 : " + response.data);
-          console.log("토근 " + response.data.token);
+          console.log("response.status" + response.status);
+          console.log("토큰 " + response.data.token);
           if (response.data === "로그인 실패") {
             setModal({
               ...defaultModal,
