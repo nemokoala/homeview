@@ -58,6 +58,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
           <Route path="/map" element={<Map />} />
           <Route path="/api/join" element={<Register />} />
           <Route path="/api/login" element={<Register />} />
+          <Route path="/api/info" element="<div>하이</div>" />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
