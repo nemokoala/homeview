@@ -134,7 +134,8 @@ function Register() {
           { withCredentials: true }
         )
         .then((response) => {
-          console.log("리스폰즈 : " + response.data);
+          const jsonData = JSON.stringify(response.data);
+          console.log("리스폰즈 : " + jsonData);
           console.log("response.status : " + response.status);
           console.log("토큰 " + response.data.token);
           console.log("headers : " + response.headers);
