@@ -143,7 +143,7 @@ function Register() {
 
           if (response.status === 200) {
             //로그인 성공 시
-            sessionStorage.setItem("session", userData);
+            sessionStorage.setItem("session", JSON.stringify(userData));
             dispatch(saveSession(userData as any));
             navigate("/");
           }
