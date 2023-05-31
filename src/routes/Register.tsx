@@ -68,9 +68,13 @@ function Register() {
           password: password,
         };
         axios
-          .post("http://43.201.86.247:8080/api/join", {
-            ...userData,
-          })
+          .post(
+            "https://api.binbinbin.site/api/join",
+            {
+              ...userData,
+            },
+            { withCredentials: true }
+          )
           .then((response: any) => {
             //회원가입 반응
             console.log("리스폰즈DATAthen : " + response.data);
@@ -122,12 +126,16 @@ function Register() {
         password: password,
       };
       axios
-        .post("http://43.201.86.247:8080/api/login", {
-          ...userData,
-        })
+        .post(
+          "https://api.binbinbin.site/api/login",
+          {
+            ...userData,
+          },
+          { withCredentials: true }
+        )
         .then((response) => {
           console.log("리스폰즈 : " + response.data);
-
+          console.log("토근 " + response.data.token);
           if (response.data === "로그인 실패") {
             setModal({
               ...defaultModal,
