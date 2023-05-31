@@ -89,17 +89,17 @@ function Register() {
                 },
               }); // 모달창 오픈
             }
-            if (response.data === "중복가입") {
-              setModal({
-                ...defaultModal,
-                title: "오류!",
-                titleColor: "red",
-                text: "중복 가입 입니다.",
-                btn1Func: function () {
-                  setEmail(""); //이메일 중복이므로 이메일 칸을 비워줌
-                },
-              }); //모달창  오픈
-            }
+            // if (response.data === "중복가입") {
+            //   setModal({
+            //     ...defaultModal,
+            //     title: "오류!",
+            //     titleColor: "red",
+            //     text: "중복 가입 입니다.",
+            //     btn1Func: function () {
+            //       setEmail(""); //이메일 중복이므로 이메일 칸을 비워줌
+            //     },
+            //   }); //모달창  오픈
+            // }
           })
           .catch((error) => {
             const errorText = error.response.data.toString();
@@ -138,17 +138,11 @@ function Register() {
           console.log("response.status : " + response.status);
           console.log("토큰 " + response.data.token);
           console.log("headers : " + response.headers);
-          if (response.data === "로그인 실패") {
-            setModal({
-              ...defaultModal,
-              title: "로그인 실패!",
-              titleColor: "red",
-              text: "이메일과 패스워드를 확인해주세요.",
-            }); //모달창 오픈
-          } else {
+
+          if (response.status === 200) {
             //로그인 성공 시
-            sessionStorage.setItem("session", response.data);
-            dispatch(saveSession(response.data));
+            sessionStorage.setItem("session", "true");
+            dispatch(saveSession("true" as any));
             navigate("/");
           }
         })
