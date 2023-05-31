@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "userSet",
   initialState: {
-    session: sessionStorage.getItem("session"),
+    session: JSON.parse(sessionStorage.getItem("session") as any),
   },
   reducers: {
     saveSession: (state, action: any): any => {
