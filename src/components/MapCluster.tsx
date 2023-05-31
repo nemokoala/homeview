@@ -354,7 +354,6 @@ function MapCluster({ reviewData }: any) {
     }, []);
     setReviewDatas(newReviewData);
     setDongPosition();
-    console.log(newReviewData);
   };
 
   const setDongPosition = () => {
