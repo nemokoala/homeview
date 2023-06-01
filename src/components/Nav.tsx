@@ -32,33 +32,41 @@ function Nav({ searchTerm, setSearchTerm }: any) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logout = () => {
-    axios
-      .get("https://api.binbinbin.site/api/logout", { withCredentials: true })
-      .then((response) => {
-        dispatch(saveSession("" as any));
-        if (response.status === 200)
-          setModal({
-            ...defaultModal,
-            text: "로그아웃 되었습니다.",
-          });
-      })
-      .catch((error) => {
-        const errorText = error.toString();
+  const logout = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.binbinbin.site/api/logout",
+        { withCredentials: true }
+      );
+      dispatch(saveSession("" as any));
+
+      if (response.status === 200) {
         setModal({
           ...defaultModal,
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
+          text: "로그아웃 되었습니다.",
         });
+      }
+    } catch (error: any) {
+      const errorText = error.toString();
+      setModal({
+        ...defaultModal,
+        title: "에러!",
+        titleColor: "red",
+        text: errorText,
       });
+    }
   };
 
-  const profile = () => {
-    axios
-      .get("https://api.binbinbin.site/api/info", { withCredentials: true })
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
+  const profile = async () => {
+    try {
+      const response = await axios.get("https://api.binbinbin.site/api/info", {
+        withCredentials: true,
+      });
+
+      console.log("profile /info : " + response.data);
+    } catch (error: any) {
+      console.log("/info 에러 : " + error);
+    }
   };
   return (
     <>
