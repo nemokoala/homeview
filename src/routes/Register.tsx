@@ -57,61 +57,45 @@ function Register() {
       confirm();
     }
   };
-  const confirm = () => {
+  const confirm = async () => {
     if (pathname === register) {
       if (name && nickname && email && password) {
-        //회원가입
         const userData = {
           name: name,
           nickname: nickname,
           email: email,
           password: password,
         };
-        axios
-          .post(
+        try {
+          const response = await axios.post(
             "https://api.binbinbin.site/api/join",
-            {
-              ...userData,
-            },
+            { ...userData },
             { withCredentials: true }
-          )
-          .then((response: any) => {
-            //회원가입 반응
-            console.log("리스폰즈DATAthen : " + response.data);
-            console.log("리스폰즈STATUS : " + response.status);
-            if (response.status === "201") {
-              setModal({
-                ...defaultModal,
-                title: "알림",
-                text: "회원가입이 완료되었습니다. 로그인 해주세요.",
-                btn1Func: function () {
-                  navigate("/api/login");
-                },
-              }); // 모달창 오픈
-            }
-            // if (response.data === "중복가입") {
-            //   setModal({
-            //     ...defaultModal,
-            //     title: "오류!",
-            //     titleColor: "red",
-            //     text: "중복 가입 입니다.",
-            //     btn1Func: function () {
-            //       setEmail(""); //이메일 중복이므로 이메일 칸을 비워줌
-            //     },
-            //   }); //모달창  오픈
-            // }
-          })
-          .catch((error) => {
-            const errorText = error.response.data.toString();
-            console.error("에러 : " + error);
-            console.log("리스폰즈data : " + error.response.data);
+          );
+
+          console.log("리스폰즈DATAthen : " + response.data);
+          console.log("리스폰즈STATUS : " + response.status);
+          if (response.status === 201) {
             setModal({
               ...defaultModal,
-              title: "에러!",
-              titleColor: "red",
-              text: errorText,
+              title: "알림",
+              text: "회원가입이 완료되었습니다. 로그인 해주세요.",
+              btn1Func: function () {
+                navigate("/api/login");
+              },
             });
+          }
+        } catch (error: any) {
+          const errorText = error.response.data.toString();
+          console.error("에러 : " + error);
+          console.log("리스폰즈data : " + error.response.data);
+          setModal({
+            ...defaultModal,
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
           });
+        }
       } else {
         setModal({
           ...defaultModal,
@@ -120,44 +104,38 @@ function Register() {
       }
     }
     if (pathname === login) {
-      //로그인
-      const userData = {
+      const formUserData = {
         email: email,
         password: password,
       };
-      axios
-        .post(
+      try {
+        const response = await axios.post(
           "https://api.binbinbin.site/api/login",
-          {
-            ...userData,
-          },
+          { ...formUserData },
           { withCredentials: true }
-        )
-        .then((response) => {
-          const jsonData = JSON.stringify(response.data);
-          const userData = JSON.parse(jsonData);
-          console.log("리스폰즈 : " + jsonData);
-          console.log("response.status : " + response.status);
-          console.log("토큰 " + response.data.token);
-          console.log("headers : " + response.headers);
+        );
 
-          if (response.status === 200) {
-            //로그인 성공 시
-            //sessionStorage.setItem("session", JSON.stringify(userData)); userslice로 옮김
-            dispatch(saveSession(userData as any));
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          const errorText = error.toString();
-          console.error("에러 : " + error);
-          setModal({
-            ...defaultModal,
-            title: "에러!",
-            titleColor: "red",
-            text: errorText,
-          });
+        const jsonData = JSON.stringify(response.data);
+        const userData = JSON.parse(jsonData);
+        console.log("리스폰즈 : " + jsonData);
+        console.log("response.status : " + response.status);
+        console.log("토큰 " + response.data.token);
+        console.log("headers : " + response.headers);
+
+        if (response.status === 200) {
+          dispatch(saveSession(userData as any));
+          navigate("/");
+        }
+      } catch (error: any) {
+        const errorText = error.toString();
+        console.error("에러 : " + error);
+        setModal({
+          ...defaultModal,
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
         });
+      }
     }
   };
   return (
