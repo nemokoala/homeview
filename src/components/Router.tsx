@@ -61,14 +61,11 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
 
-          {session !== "" ? (
-            <Route path="/api/profile" element={<Profile />} />
-          ) : (
-            <>
-              <Route path="/api/join" element={<Register />} />
-              <Route path="/api/login" element={<Register />} />
-            </>
-          )}
+          <Route path="/api/profile" element={<Profile />} />
+
+          <Route path="/api/join" element={<Register />} />
+          <Route path="/api/login" element={<Register />} />
+
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
