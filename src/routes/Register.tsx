@@ -122,7 +122,14 @@ function Register() {
         console.log("토큰 " + response.data.token);
         console.log("headers : " + response.headers);
 
-        if (response.status === 200) {
+        if (response.data === "BAD_REQUEST") {
+          setModal({
+            ...defaultModal,
+            title: "에러!",
+            titleColor: "red",
+            text: "아이디 또는 비밀번호가 올바르지 않습니다.",
+          });
+        } else if (response.status === 200) {
           dispatch(saveSession(userData as any));
           navigate("/");
         }

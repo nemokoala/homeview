@@ -103,10 +103,12 @@ function Profile() {
             title: "알림",
             text: "정보가 업데이트 되었습니다.",
           });
-          dispatch(saveSession(response.data as any));
+          dispatch(saveSession(JSON.parse(response.data as any)));
           navigate("/");
         }
-        console.log(JSON.stringify(response as any));
+        console.log(
+          "업데이트 후 response : " + JSON.stringify(response as any)
+        );
       } catch (error: any) {
         const errorText = error.response.data.toString();
         setModal({
