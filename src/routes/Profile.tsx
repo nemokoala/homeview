@@ -1,17 +1,46 @@
 import axios from "axios";
+import Modal from "components/Modal";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { saveSession } from "slice/userSlice";
 import styled from "styled-components";
 
 function Profile() {
+  const session = useSelector((state: any) => state.userSet.session);
   const [password, setPassword] = useState("");
+  const [newNickname, setNewNickname] = useState(session.nickname);
+  const [newPassword, setNewPassword] = useState("");
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const defaultModal = {
+    //모달값 초기화 편의를 위한 기본값
+    open: false,
+    title: "",
+    titleColor: "",
+    text: "",
+    btn1Text: "",
+    btn2Text: "",
+    btn1Color: "",
+    btn2Color: "",
+    btn1Func: function () {},
+    btn2Func: function () {},
+  };
+  const [modal, setModal] = useState({
+    //모달값 컨트롤을 위한 오브젝트 변수
+    ...defaultModal,
+  });
+  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
+
   const onChange = (e: any) => {
     const {
       target: { id, value },
     } = e;
     if (id === "password") setPassword(value);
     console.log(password);
+    if (id === "newNickname") setNewNickname(value);
+    if (id === "newPassword") setPassword(value);
   };
   const enterPress = (e: any) => {
     if (e.key === "Enter") {
@@ -20,7 +49,8 @@ function Profile() {
   };
 
   const confirm = async () => {
-    if (password.length >= 8) {
+    if (!checked) {
+      //현재 비밀번호 맞나 확인
       try {
         const response = await axios.post(
           "https://api.binbinbin.site/api/checkPW",
@@ -28,34 +58,121 @@ function Profile() {
           { withCredentials: true }
         );
 
+        if (response.data === "OK") {
+          setChecked(true);
+          setModal({
+            ...defaultModal,
+            title: "알림",
+            text: "비밀번호 확인이 완료되었습니다. 수정하실 정보를 수정해 주세요.",
+          });
+        } else if (response.data === "EXPECTATION_FAILED") {
+          setModal({
+            ...defaultModal,
+            title: "에러!",
+            titleColor: "red",
+            text: "비밀번호가 일치하지 않습니다.",
+          });
+        }
         console.log(JSON.stringify(response as any));
       } catch (error: any) {
-        //const errorText = error.response.data.toString();
-        console.error("에러 : " + JSON.stringify(error));
+        const errorText = error.response.data.toString();
+        setModal({
+          ...defaultModal,
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        });
+      }
+    } else if (checked) {
+      //인증 후 바뀐 정보 보낼 때 함수
+      const newData = {
+        nickname: newNickname,
+        password: newPassword === "" ? password : newPassword,
+        email: session.email,
+      };
+      try {
+        const response = await axios.post(
+          "https://api.binbinbin.site/api/update",
+          { ...newData },
+          { withCredentials: true }
+        );
+
+        if (response.status === 200) {
+          setModal({
+            ...defaultModal,
+            title: "알림",
+            text: "정보가 업데이트 되었습니다.",
+          });
+          dispatch(saveSession(response.data as any));
+          navigate("/");
+        }
+        console.log(JSON.stringify(response as any));
+      } catch (error: any) {
+        const errorText = error.response.data.toString();
+        setModal({
+          ...defaultModal,
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        });
       }
     }
   };
+
   return (
     <Container>
-      <Form>
-        <Title>내 프로필 수정</Title>
-        <Label>현재 비밀번호</Label>
-        <Input
-          type="password"
-          id="password"
-          onChange={onChange}
-          value={password}
-          placeholder="현재 비밀번호를 입력해주세요."
-          autoComplete="on"
-          onKeyPress={enterPress}
-        ></Input>
-        <Buttons>
-          <div style={{ background: "var(--orange)" }} onClick={confirm}>
-            비밀번호 확인
-          </div>
-          <div onClick={() => navigate("/")}>취소</div>
-        </Buttons>
-      </Form>
+      {checked ? (
+        <Form>
+          <Title>내 프로필 수정</Title>
+          <Label>닉네임</Label>
+          <Input
+            type="text"
+            id="newNickname"
+            onChange={onChange}
+            value={newNickname}
+            placeholder={newNickname}
+            autoComplete="on"
+            onKeyPress={enterPress}
+          ></Input>
+          <Label>새 비밀번호</Label>
+          <Input
+            type="password"
+            id="newPassword"
+            onChange={onChange}
+            value={newPassword}
+            placeholder="빈칸일 경우 비밀번호를 그대로 유지"
+            autoComplete="on"
+            onKeyPress={enterPress}
+          ></Input>
+          <Buttons>
+            <div style={{ background: "var(--orange)" }} onClick={confirm}>
+              수정 확인
+            </div>
+            <div onClick={() => navigate("/")}>취소</div>
+          </Buttons>
+        </Form>
+      ) : (
+        <Form>
+          <Title>내 프로필 수정</Title>
+          <Label>현재 비밀번호</Label>
+          <Input
+            type="password"
+            id="password"
+            onChange={onChange}
+            value={password}
+            placeholder="현재 비밀번호를 입력해주세요."
+            autoComplete="on"
+            onKeyPress={enterPress}
+          ></Input>
+          <Buttons>
+            <div style={{ background: "var(--orange)" }} onClick={confirm}>
+              비밀번호 확인
+            </div>
+            <div onClick={() => navigate("/")}>취소</div>
+          </Buttons>
+        </Form>
+      )}
+      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </Container>
   );
 }
