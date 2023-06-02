@@ -16,8 +16,12 @@ import Nav from "./Nav";
 import styles from "./Router.module.css";
 import BackButton from "./BackButton";
 import Register from "routes/Register";
+import Profile from "routes/Profile";
+import { useSelector } from "react-redux";
+
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
+  const session = useSelector((state: any) => state.userSet.session);
   return (
     <div className={styles.body}>
       <Router>
@@ -56,10 +60,16 @@ function AppRouter({ reviewData, setReviewData }: any) {
             }
           />
           <Route path="/map" element={<Map />} />
-          <Route path="/api/join" element={<Register />} />
-          <Route path="/api/login" element={<Register />} />
-          <Route path="/api/info" element="<div>하이</div>" />
+
           <Route path="*" element={<Navigate replace to="/" />} />
+          {session ? (
+            <Route path="/api/profile" element={<Profile />} />
+          ) : (
+            <>
+              <Route path="/api/join" element={<Register />} />
+              <Route path="/api/login" element={<Register />} />
+            </>
+          )}
         </Routes>
       </Router>
     </div>

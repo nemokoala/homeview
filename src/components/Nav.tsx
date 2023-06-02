@@ -111,7 +111,11 @@ function Nav({ searchTerm, setSearchTerm }: any) {
               <button className={styles.loginBtn} onClick={logout}>
                 로그아웃
               </button>
-              <button className={styles.registerBtn}>{session.nickname}</button>
+              <Link to="/api/profile">
+                <button className={styles.registerBtn}>
+                  {session.nickname}
+                </button>
+              </Link>
             </>
           ) : (
             <>
