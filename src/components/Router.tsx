@@ -61,7 +61,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
 
-          {session ? (
+          {session !== "" ? (
             <Route path="/api/profile" element={<Profile />} />
           ) : (
             <>
