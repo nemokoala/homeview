@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function Profile() {
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const onChange = (e: any) => {
     const {
       target: { id, value },
@@ -22,7 +24,7 @@ function Profile() {
       try {
         const response = await axios.post(
           "https://api.binbinbin.site/api/checkPW",
-          password,
+          { password: password },
           { withCredentials: true }
         );
 
@@ -48,8 +50,10 @@ function Profile() {
           onKeyPress={enterPress}
         ></Input>
         <Buttons>
-          <div onClick={confirm}>비밀번호 확인</div>
-          <div>취소</div>
+          <div style={{ background: "var(--orange)" }} onClick={confirm}>
+            비밀번호 확인
+          </div>
+          <div onClick={() => navigate("/")}>취소</div>
         </Buttons>
       </Form>
     </Container>
