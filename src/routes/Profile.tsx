@@ -132,7 +132,7 @@ function Profile() {
             onChange={onChange}
             value={newNickname}
             placeholder={newNickname}
-            autoComplete="on"
+            autoComplete="off"
             onKeyPress={enterPress}
           ></Input>
           <Label>새 비밀번호</Label>
@@ -248,6 +248,7 @@ const Buttons = styled.div`
     flex-grow: 1;
     width: 50%;
     height: 100%;
+    padding: 0 10px;
     display: flex;
     justify-content: center;
     align-items: center;
