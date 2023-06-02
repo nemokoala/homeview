@@ -29,7 +29,7 @@ function Profile() {
         console.log(JSON.stringify(response as any));
       } catch (error: any) {
         //const errorText = error.response.data.toString();
-        console.error("에러 : " + JSON.parse(error));
+        console.error("에러 : " + JSON.stringify(error));
       }
     }
   };
