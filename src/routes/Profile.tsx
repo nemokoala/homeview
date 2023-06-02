@@ -27,7 +27,7 @@ function Profile() {
 
         console.log(JSON.parse(response as any));
       } catch (error: any) {
-        const errorText = error.response.data.toString();
+        //const errorText = error.response.data.toString();
         console.error("에러 : " + JSON.parse(error));
       }
     }
