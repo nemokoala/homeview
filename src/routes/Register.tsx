@@ -88,7 +88,9 @@ function Register() {
         } catch (error: any) {
           const errorText = error.response.data.toString();
           console.error("에러 : " + error);
-          console.error("에러 리스폰즈data : " + error.response.data);
+          console.error(
+            "에러 리스폰즈data : " + JSON.parse(error.response.data)
+          );
           setModal({
             ...defaultModal,
             title: "에러!",
