@@ -89,7 +89,7 @@ function Register() {
           const errorText = error.response.data.toString();
           console.error("에러 : " + error);
           console.error(
-            "에러 리스폰즈data : " + JSON.parse(error.response.data)
+            "에러 리스폰즈data : " + JSON.stringify(error.response.data)
           );
           setModal({
             ...defaultModal,
