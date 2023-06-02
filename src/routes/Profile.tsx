@@ -40,7 +40,7 @@ function Profile() {
     if (id === "password") setPassword(value);
     console.log(password);
     if (id === "newNickname") setNewNickname(value);
-    if (id === "newPassword") setPassword(value);
+    if (id === "newPassword") setNewPassword(value);
   };
   const enterPress = (e: any) => {
     if (e.key === "Enter") {
