@@ -109,12 +109,13 @@ function Profile() {
           navigate("/");
         }
       } catch (error: any) {
-        // setModal({
-        //   ...defaultModal,
-        //   title: "에러!",
-        //   titleColor: "red",
-        //   text: error,
-        // });
+        const errorText = error.response.data.toString();
+        setModal({
+          ...defaultModal,
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        });
       }
     }
   };
