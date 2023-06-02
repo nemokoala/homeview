@@ -83,7 +83,8 @@ function Profile() {
           text: errorText,
         });
       }
-    } else if (checked) {
+    }
+    if (checked) {
       //인증 후 바뀐 정보 보낼 때 함수
       const newData = {
         nickname: newNickname,
@@ -104,16 +105,16 @@ function Profile() {
             text: "정보가 업데이트 되었습니다.",
           });
           console.log(response.data);
-          dispatch(saveSession(JSON.parse(response.data as any)));
-          //navigate("/");
+          dispatch(saveSession(response.data));
+          navigate("/");
         }
       } catch (error: any) {
-        setModal({
-          ...defaultModal,
-          title: "에러!",
-          titleColor: "red",
-          text: error,
-        });
+        // setModal({
+        //   ...defaultModal,
+        //   title: "에러!",
+        //   titleColor: "red",
+        //   text: error,
+        // });
       }
     }
   };
