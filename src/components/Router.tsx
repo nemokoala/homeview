@@ -61,7 +61,6 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
 
-          <Route path="*" element={<Navigate replace to="/" />} />
           {session ? (
             <Route path="/api/profile" element={<Profile />} />
           ) : (
@@ -70,6 +69,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
               <Route path="/api/login" element={<Register />} />
             </>
           )}
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </Router>
     </div>
