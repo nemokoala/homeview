@@ -103,7 +103,8 @@ function Profile() {
             title: "알림",
             text: "정보가 업데이트 되었습니다.",
           });
-          dispatch(saveSession(JSON.parse(response.data as any)));
+          console.log(JSON.parse(response.data as any));
+          //dispatch(saveSession(JSON.parse(response.data as any)));
           navigate("/");
         }
         console.log(
