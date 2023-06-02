@@ -110,7 +110,7 @@ function Profile() {
           "업데이트 후 response : " + JSON.stringify(response as any)
         );
       } catch (error: any) {
-        const errorText = error.response.data.toString();
+        const errorText = error.tostring();
         setModal({
           ...defaultModal,
           title: "에러!",
