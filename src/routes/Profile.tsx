@@ -9,6 +9,7 @@ function Profile() {
       target: { id, value },
     } = e;
     if (id === "password") setPassword(value);
+    console.log(password);
   };
   const enterPress = (e: any) => {
     if (e.key === "Enter") {
@@ -25,7 +26,7 @@ function Profile() {
           { withCredentials: true }
         );
 
-        console.log(JSON.parse(response as any));
+        console.log(JSON.stringify(response as any));
       } catch (error: any) {
         //const errorText = error.response.data.toString();
         console.error("에러 : " + JSON.parse(error));
