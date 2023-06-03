@@ -137,10 +137,10 @@ function Profile() {
           ></Input>
           <Label>새 비밀번호</Label>
           <input
-            style={{ display: "none" }}
             type="text"
             name="fakeusernameremembered"
             placeholder="fake"
+            hidden
           />
           <Input
             type="password"
@@ -163,10 +163,10 @@ function Profile() {
           <Title>내 프로필 수정</Title>
           <Label>현재 비밀번호</Label>
           <input
-            style={{ display: "none" }}
             type="text"
             name="fakeusernameremembered"
             placeholder="fake"
+            hidden
           />
           <Input
             type="password"
