@@ -259,6 +259,7 @@ const Input = styled.input`
     (id === "newPassword" || id === "password") &&
     css`
       -webkit-text-security: disc;
+      ime-mode: disabled; //영어만 입력
     `};
 `;
 
