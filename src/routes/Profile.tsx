@@ -123,7 +123,7 @@ function Profile() {
   return (
     <Container>
       {checked ? (
-        <Form>
+        <Form autoComplete="off">
           <Title>내 프로필 수정</Title>
           <Label>닉네임</Label>
           <Input
@@ -142,7 +142,7 @@ function Profile() {
             onChange={onChange}
             value={newPassword}
             placeholder="빈칸일 경우 비밀번호를 그대로 유지"
-            autoComplete="on"
+            autoComplete="off"
             onKeyPress={enterPress}
           ></Input>
           <Buttons>
@@ -186,7 +186,7 @@ const Container = styled.div`
   display: inline-block;
 `;
 
-const Form = styled.form<any>`
+const Form = styled.div<any>`
   transition: all 1s ease-in;
 
   margin: 50px auto;
