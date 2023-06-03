@@ -225,10 +225,11 @@ const Form = styled.div<any>`
 
 const Title = styled.div`
   width: 100%;
-  margin: 15px auto;
+  margin: 15px 0;
   color: black;
   font-size: 1.8rem;
   white-space: wrap;
+  text-align: center;
 `;
 const Label = styled.span`
   color: black;
