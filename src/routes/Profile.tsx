@@ -138,9 +138,9 @@ function Profile() {
           <Label>새 비밀번호</Label>
           <input
             type="text"
-            name="fakeusernameremembered"
+            name="fakeemail"
             placeholder="fake"
-            value="fake"
+            value={session.email}
             tabIndex={-1}
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
@@ -168,7 +168,7 @@ function Profile() {
             type="text"
             name="fakeusernameremembered"
             placeholder="fake"
-            value="fake"
+            value={session.email}
             tabIndex={-1}
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
