@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveSession } from "slice/userSlice";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 function Profile() {
   const session = useSelector((state: any) => state.userSet.session);
@@ -255,10 +255,11 @@ const Input = styled.input`
     border-color: var(--orange) !important;
     box-shadow: 0 0 7px var(--orange);
   }
-  & #newPassword,
-  & #password {
-    -webkit-text-security: square;
-  }
+  ${({ id }) =>
+    (id === "newPassword" || id === "password") &&
+    css`
+      -webkit-text-security: disc;
+    `};
 `;
 
 const Buttons = styled.div`
