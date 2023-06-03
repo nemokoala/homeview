@@ -96,7 +96,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           className={styles.input}
           placeholder="검색"
           type="text"
-          autoComplete="new-password"
+          autoComplete="false"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
