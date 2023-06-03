@@ -137,12 +137,12 @@ function Profile() {
           ></Input>
           <Label>새 비밀번호</Label>
           <Input
-            type="new-password"
+            type="password"
             id="newPassword"
             onChange={onChange}
             value={newPassword}
             placeholder="빈칸일 경우 비밀번호를 그대로 유지"
-            autoComplete="off"
+            autoComplete="new-password"
             onKeyPress={enterPress}
           ></Input>
           <Buttons>
@@ -157,12 +157,12 @@ function Profile() {
           <Title>내 프로필 수정</Title>
           <Label>현재 비밀번호</Label>
           <Input
-            type="new-password"
+            type="password"
             id="password"
             onChange={onChange}
             value={password}
             placeholder="현재 비밀번호를 입력해주세요."
-            autoComplete="on"
+            autoComplete="new-password"
             onKeyPress={enterPress}
           ></Input>
           <Buttons>
@@ -215,8 +215,8 @@ const Title = styled.div`
 const Label = styled.span`
   color: black;
   font-size: 1.2rem;
-  margin-top: 20px;
-  margin-bottom: 5px;
+  margin-top: 23px;
+  margin-bottom: 3px;
 `;
 
 const Input = styled.input`
