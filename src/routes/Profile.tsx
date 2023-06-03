@@ -137,7 +137,7 @@ function Profile() {
           ></Input>
           <Label>새 비밀번호</Label>
           <Input
-            type="password"
+            type="new-password"
             id="newPassword"
             onChange={onChange}
             value={newPassword}
