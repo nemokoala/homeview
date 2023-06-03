@@ -146,7 +146,7 @@ function Profile() {
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
           <Input
-            type="password"
+            type="text"
             id="newPassword"
             onChange={onChange}
             value={newPassword}
@@ -174,7 +174,7 @@ function Profile() {
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
           <Input
-            type="password"
+            type="text"
             id="password"
             onChange={onChange}
             value={password}
@@ -254,6 +254,10 @@ const Input = styled.input`
     outline: 1px solid var(--orange) !important;
     border-color: var(--orange) !important;
     box-shadow: 0 0 7px var(--orange);
+  }
+  & #newPassword,
+  & #password {
+    -webkit-text-security: disc;
   }
 `;
 
