@@ -133,6 +133,7 @@ function Profile() {
             value={newNickname}
             placeholder={newNickname}
             autoComplete="off"
+            autoCapitalize="off"
             onKeyPress={enterPress}
           ></Input>
           <Label>새 비밀번호</Label>
