@@ -141,7 +141,7 @@ function Profile() {
             name="fakeusernameremembered"
             placeholder="fake"
             value="fake"
-            hidden
+            style={{ opacity: "0", pointerEvents: "none" }}
           />
           <Input
             type="password"
@@ -168,7 +168,7 @@ function Profile() {
             name="fakeusernameremembered"
             placeholder="fake"
             value="fake"
-            hidden
+            style={{ opacity: "0", pointerEvents: "none" }}
           />
           <Input
             type="password"
