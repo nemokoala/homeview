@@ -123,7 +123,7 @@ function Profile() {
   return (
     <Container>
       {checked ? (
-        <Form autoComplete="off">
+        <Form autoComplete="false">
           <Title>내 프로필 수정</Title>
           <Label>닉네임</Label>
           <Input
@@ -142,7 +142,7 @@ function Profile() {
             onChange={onChange}
             value={newPassword}
             placeholder="빈칸일 경우 비밀번호를 그대로 유지"
-            autoComplete="new-password"
+            autoComplete="false"
             onKeyPress={enterPress}
           ></Input>
           <Buttons>
@@ -153,7 +153,7 @@ function Profile() {
           </Buttons>
         </Form>
       ) : (
-        <Form>
+        <Form autoComplete="false">
           <Title>내 프로필 수정</Title>
           <Label>현재 비밀번호</Label>
           <Input
@@ -162,7 +162,7 @@ function Profile() {
             onChange={onChange}
             value={password}
             placeholder="현재 비밀번호를 입력해주세요."
-            autoComplete="new-password"
+            autoComplete="false"
             onKeyPress={enterPress}
           ></Input>
           <Buttons>
