@@ -257,7 +257,7 @@ const Input = styled.input`
   }
   & #newPassword,
   & #password {
-    -webkit-text-security: disc;
+    -webkit-text-security: square;
   }
 `;
 
