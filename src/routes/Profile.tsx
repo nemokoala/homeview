@@ -157,7 +157,7 @@ function Profile() {
           <Title>내 프로필 수정</Title>
           <Label>현재 비밀번호</Label>
           <Input
-            type="password"
+            type="new-password"
             id="password"
             onChange={onChange}
             value={password}
@@ -216,6 +216,7 @@ const Label = styled.span`
   color: black;
   font-size: 1.2rem;
   margin-top: 20px;
+  margin-bottom: 5px;
 `;
 
 const Input = styled.input`
