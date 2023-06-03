@@ -140,6 +140,7 @@ function Profile() {
             type="text"
             name="fakeusernameremembered"
             placeholder="fake"
+            value="fake"
             hidden
           />
           <Input
@@ -166,6 +167,7 @@ function Profile() {
             type="text"
             name="fakeusernameremembered"
             placeholder="fake"
+            value="fake"
             hidden
           />
           <Input
