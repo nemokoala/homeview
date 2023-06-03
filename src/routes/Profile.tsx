@@ -183,7 +183,7 @@ function Profile() {
           ></Input>
           <Buttons>
             <div style={{ background: "var(--orange)" }} onClick={confirm}>
-              비밀번호 확인
+              확인
             </div>
             <div onClick={() => navigate("/")}>취소</div>
           </Buttons>
@@ -224,9 +224,11 @@ const Form = styled.div<any>`
 `;
 
 const Title = styled.div`
+  width: 100%;
   margin: 15px auto;
   color: black;
   font-size: 1.8rem;
+  white-space: wrap;
 `;
 const Label = styled.span`
   color: black;
@@ -239,7 +241,7 @@ const Input = styled.input`
   width: 100%;
   height: 50px;
   padding: 10px;
-  margin: 5px auto;
+  margin: 5px 0;
   border-radius: 15px;
   border: 0px;
   backdrop-filter: blur(15px);
