@@ -18,16 +18,18 @@ import BackButton from "./BackButton";
 import Register from "routes/Register";
 import Profile from "routes/Profile";
 import { useSelector } from "react-redux";
+import Modal from "./Modal";
 
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
+  const modal = useSelector((state: any) => state.modalSet.modal);
   return (
     <div className={styles.body}>
       <Router>
         <Nav searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <BackButton />
-
+        {modal.open && <Modal />}
         <Routes>
           <Route path="/" element={<Home reviewData={reviewData} />} />
           <Route

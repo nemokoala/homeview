@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
-function Modal({ modal, ...props }: any) {
-  const [isOpen, setIsOpen] = useState(modal.open);
+import { useDispatch, useSelector } from "react-redux";
+import { setModal } from "slice/modalSlice";
+function Modal({ ...props }: any) {
+  const [isOpen, setIsOpen] = useState(true);
+  const modal = useSelector((state: any) => state.modalSet.modal);
+  const dispatch = useDispatch();
   /* 모달 modal 정리
   modal.isModalOpen<Boolean> : true 일경우 모달 창 표시
   modal.title : 맨위에 나타나는 큰 텍스트
@@ -26,7 +30,7 @@ function Modal({ modal, ...props }: any) {
           <button
             onClick={() => {
               modal.btn1Func();
-              props.setModal((prev: any) => ({ ...prev, open: false }));
+              dispatch(setModal({ open: false } as any));
             }}
           >
             {modal.btn1Text || "확인"}
@@ -34,7 +38,7 @@ function Modal({ modal, ...props }: any) {
           <button
             onClick={() => {
               modal.btn2Func();
-              props.setModal((prev: any) => ({ ...prev, open: false }));
+              dispatch(setModal({ open: false } as any));
             }}
           >
             {modal.btn2Text || "취소"}
@@ -66,10 +70,12 @@ const Form = styled.div<any>`
   padding: 15px;
   border-radius: 20px;
 
-  @media screen and (min-width: 500px) { //큰 화면에서 모달창 크기 업
+  @media screen and (min-width: 500px) {
+    //큰 화면에서 모달창 크기 업
     transform: scale(1.2);
   }
-  @media screen and (max-width: 320px) { //작은 화면에서 넓이를 화면에 맞춤
+  @media screen and (max-width: 320px) {
+    //작은 화면에서 넓이를 화면에 맞춤
     width: calc(100% - 20px);
   }
 `;

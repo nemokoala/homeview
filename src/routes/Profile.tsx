@@ -3,6 +3,7 @@ import Modal from "components/Modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setModal } from "slice/modalSlice";
 import { saveSession } from "slice/userSlice";
 import styled, { css } from "styled-components";
 
@@ -14,24 +15,6 @@ function Profile() {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const defaultModal = {
-    //모달값 초기화 편의를 위한 기본값
-    open: false,
-    title: "",
-    titleColor: "",
-    text: "",
-    btn1Text: "",
-    btn2Text: "",
-    btn1Color: "",
-    btn2Color: "",
-    btn1Func: function () {},
-    btn2Func: function () {},
-  };
-  const [modal, setModal] = useState({
-    //모달값 컨트롤을 위한 오브젝트 변수
-    ...defaultModal,
-  });
-  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
 
   const onChange = (e: any) => {
     const {
@@ -60,28 +43,31 @@ function Profile() {
 
         if (response.data === "OK") {
           setChecked(true);
-          setModal({
-            ...defaultModal,
-            title: "알림",
-            text: "비밀번호 확인이 완료되었습니다. 수정하실 정보를 수정해 주세요.",
-          });
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "비밀번호 확인이 완료되었습니다. 수정하실 정보를 수정해 주세요.",
+            } as any)
+          );
         } else if (response.data === "EXPECTATION_FAILED") {
-          setModal({
-            ...defaultModal,
-            title: "에러!",
-            titleColor: "red",
-            text: "비밀번호가 일치하지 않습니다.",
-          });
+          dispatch(
+            setModal({
+              title: "에러!",
+              titleColor: "red",
+              text: "비밀번호가 일치하지 않습니다.",
+            } as any)
+          );
         }
         console.log(JSON.stringify(response as any));
       } catch (error: any) {
         const errorText = error.response.data.toString();
-        setModal({
-          ...defaultModal,
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
-        });
+        dispatch(
+          setModal({
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          } as any)
+        );
       }
     }
     if (checked) {
@@ -99,23 +85,26 @@ function Profile() {
         );
 
         if (response.status === 200) {
-          setModal({
-            ...defaultModal,
-            title: "알림",
-            text: "정보가 업데이트 되었습니다.",
-          });
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "정보가 업데이트 되었습니다.",
+            } as any)
+          );
+
           console.log(response.data);
           dispatch(saveSession(response.data));
           navigate("/");
         }
       } catch (error: any) {
         const errorText = error.response.data.toString();
-        setModal({
-          ...defaultModal,
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
-        });
+        dispatch(
+          setModal({
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          } as any)
+        );
       }
     }
   };
@@ -146,7 +135,7 @@ function Profile() {
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
           <Input
-            type="text"
+            type="password"
             id="newPassword"
             onChange={onChange}
             value={newPassword}
@@ -174,7 +163,7 @@ function Profile() {
             style={{ opacity: "0", pointerEvents: "none", height: "0px" }}
           />
           <Input
-            type="text"
+            type="password"
             id="password"
             onChange={onChange}
             value={password}
@@ -190,7 +179,6 @@ function Profile() {
           </Buttons>
         </Form>
       )}
-      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </Container>
   );
 }
@@ -256,7 +244,7 @@ const Input = styled.input`
     box-shadow: 0 0 7px var(--orange);
   }
   ${({ id }) =>
-    (id === "newPassword" || id === "password") &&
+    (id === "newPasswordnono" || id === "passwordnono") &&
     css`
       -webkit-text-security: disc;
       ime-mode: disabled; //영어만 입력

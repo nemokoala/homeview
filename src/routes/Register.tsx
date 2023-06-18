@@ -1,9 +1,10 @@
 import axios from "axios";
 import Modal from "components/Modal";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { saveSession } from "slice/userSlice";
+import { setModal } from "slice/modalSlice";
 import styled, { keyframes } from "styled-components";
 
 function Register() {
@@ -13,24 +14,6 @@ function Register() {
   const [password, setPassword] = useState("");
   const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
   const dispatch = useDispatch<any>();
-  const defaultModal = {
-    //모달값 초기화 편의를 위한 기본값
-    open: false,
-    title: "",
-    titleColor: "",
-    text: "",
-    btn1Text: "",
-    btn2Text: "",
-    btn1Color: "",
-    btn2Color: "",
-    btn1Func: function () {},
-    btn2Func: function () {},
-  };
-  const [modal, setModal] = useState({
-    //모달값 컨트롤을 위한 오브젝트 변수
-    ...defaultModal,
-  });
-  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
 
   const navigate = useNavigate();
   const login = "/api/login";
@@ -76,14 +59,15 @@ function Register() {
           console.log("리스폰즈DATAthen : " + response.data);
           console.log("리스폰즈STATUS : " + response.status);
           if (response.status === 201) {
-            setModal({
-              ...defaultModal,
-              title: "알림",
-              text: "회원가입이 완료되었습니다. 로그인 해주세요.",
-              btn1Func: function () {
-                navigate("/api/login");
-              },
-            });
+            dispatch(
+              setModal({
+                title: "알림",
+                text: "회원가입이 완료되었습니다. 로그인 해주세요.",
+                btn1Func: function () {
+                  navigate("/api/login");
+                },
+              } as any)
+            );
           }
         } catch (error: any) {
           const errorText = error.response.data.toString();
@@ -91,18 +75,20 @@ function Register() {
           console.error(
             "에러 리스폰즈data : " + JSON.stringify(error.response.data)
           );
-          setModal({
-            ...defaultModal,
-            title: "에러!",
-            titleColor: "red",
-            text: errorText,
-          });
+          dispatch(
+            setModal({
+              title: "에러!",
+              titleColor: "red",
+              text: errorText,
+            } as any)
+          );
         }
       } else {
-        setModal({
-          ...defaultModal,
-          text: "빈칸을 모두 채워주세요.",
-        });
+        dispatch(
+          setModal({
+            text: "빈칸을 모두 채워주세요.",
+          } as any)
+        );
       }
     }
     if (pathname === login) {
@@ -125,12 +111,13 @@ function Register() {
         console.log("headers : " + response.headers);
 
         if (response.data === "BAD_REQUEST") {
-          setModal({
-            ...defaultModal,
-            title: "에러!",
-            titleColor: "red",
-            text: "아이디 또는 비밀번호가 올바르지 않습니다.",
-          });
+          dispatch(
+            setModal({
+              title: "에러!",
+              titleColor: "red",
+              text: "아이디 또는 비밀번호가 올바르지 않습니다.",
+            } as any)
+          );
         } else if (response.status === 200) {
           dispatch(saveSession(userData as any));
           navigate("/");
@@ -138,12 +125,13 @@ function Register() {
       } catch (error: any) {
         const errorText = error.toString();
         console.error("에러 : " + error);
-        setModal({
-          ...defaultModal,
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
-        });
+        dispatch(
+          setModal({
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          } as any)
+        );
       }
     }
   };
@@ -236,7 +224,6 @@ function Register() {
           </LoginLink>
         )}
       </Form>
-      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </Container>
   );
 }
