@@ -5,29 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { saveSession } from "slice/userSlice";
 import Modal from "./Modal";
+import { setModal } from "slice/modalSlice";
 function Nav({ searchTerm, setSearchTerm }: any) {
   const [hamOn, setHamOn] = useState<Boolean>(false);
   const toggleHam = () => {
     setHamOn((prev) => !prev);
   };
-  const defaultModal = {
-    //모달값 초기화 편의를 위한 기본값
-    open: false,
-    title: "",
-    titleColor: "",
-    text: "",
-    btn1Text: "",
-    btn2Text: "",
-    btn1Color: "",
-    btn2Color: "",
-    btn1Func: function () {},
-    btn2Func: function () {},
-  };
-  const [modal, setModal] = useState({
-    //모달값 컨트롤을 위한 오브젝트 변수
-    ...defaultModal,
-  });
-  defaultModal.open = true; // 처음에 바로 열리면 안되기 떄문에 나중에 open만 true 처리
+
   const session = useSelector((state: any) => state.userSet.session);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,19 +25,21 @@ function Nav({ searchTerm, setSearchTerm }: any) {
       dispatch(saveSession("" as any));
 
       if (response.status === 200) {
-        setModal({
-          ...defaultModal,
-          text: "로그아웃 되었습니다.",
-        });
+        dispatch(
+          setModal({
+            text: "로그아웃 되었습니다.",
+          } as any)
+        );
       }
     } catch (error: any) {
       const errorText = error.toString();
-      setModal({
-        ...defaultModal,
-        title: "에러!",
-        titleColor: "red",
-        text: errorText,
-      });
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
     }
   };
 
@@ -156,7 +142,6 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           </Link>
         </ul>
       </div>
-      {modal.open && <Modal modal={modal} setModal={setModal}></Modal>}
     </>
   );
 }
