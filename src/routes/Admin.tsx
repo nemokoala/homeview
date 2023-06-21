@@ -3,19 +3,46 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Admin.module.css";
 import AdminRoom from "./AdminRoom";
 import AdminUser from "./AdminUser";
+import { useDispatch } from "react-redux";
+import { setModal } from "slice/modalSlice";
+import axios from "axios";
 function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
   const [members, setMembers] = useState<any>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
-    const password = 1234;
-    // const answer: any = prompt(`패스워드를 입력하세요.`);
-
-    // if (answer === password) setUnlock(true);
-    // else if (answer != password) navigate("/");
+    adminCheck();
   }, []);
-
+  const adminCheck = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.binbinbin.site/admin/healthcheck`,
+        { withCredentials: true }
+      );
+      console.log(JSON.stringify(response.data));
+      if (response.data) {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: JSON.stringify(response.data),
+            titleColor: "red",
+          } as any)
+        );
+      } else {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: JSON.stringify(response.data),
+            titleColor: "lightgreen",
+          } as any)
+        );
+      }
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+    }
+  };
   return (
     <div className={styles.container}>
       <aside className={styles.aside}>
