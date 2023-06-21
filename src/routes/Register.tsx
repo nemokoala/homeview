@@ -351,11 +351,11 @@ const DpButton = styled.div<any>`
   align-items: center;
   margin-top: 5px;
   background-color: ${(props) => props.bgColor || "white"};
-  & div:hover {
+  &:hover {
     filter: contrast(200%);
     cursor: pointer;
   }
-  & div:active {
+  &:active {
     filter: hue-rotate(90deg);
   }
 `;
