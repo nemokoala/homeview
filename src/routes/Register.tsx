@@ -13,6 +13,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
+  const [duplication, setDuplication] = useState(0); //이메일 중복체크
   const dispatch = useDispatch<any>();
 
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function Register() {
   };
   const confirm = async () => {
     if (pathname === register) {
-      if (name && nickname && email && password) {
+      if (name && nickname && email && password && duplication === 1) {
         const userData = {
           name: name,
           nickname: nickname,
@@ -86,7 +87,7 @@ function Register() {
       } else {
         dispatch(
           setModal({
-            text: "빈칸을 모두 채워주세요.",
+            text: "이메일 중복 확인을 하거나 빈칸을 모두 채워주세요.",
           } as any)
         );
       }
@@ -143,7 +144,22 @@ function Register() {
         { withCredentials: true }
       );
       if (response.data) {
-        console.log(JSON.stringify(response));
+        setDuplication(-1);
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "이메일이 중복입니다. 다른 이메일을 입력해주세요.",
+            titleColor: "red",
+          } as any)
+        );
+      } else {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "사용 가능한 이메일입니다.",
+            titleColor: "lightgreen",
+          } as any)
+        );
       }
     } catch (error: any) {
       console.log(JSON.stringify(error));
@@ -155,21 +171,23 @@ function Register() {
         {pathname === register ? (
           <>
             <Title>회원가입</Title>
-            <Label>이름</Label>
+            <Label>이름 (2~10자)</Label>
             <Input
               type="text"
               id="name"
               onChange={onChange}
               value={name}
               placeholder="특수 문자, 숫자 제외"
+              maxLength={10}
             ></Input>
-            <Label>닉네임</Label>
+            <Label>닉네임 (2~16자 특수문자X)</Label>
             <Input
               type="text"
               id="nickname"
               onChange={onChange}
               value={nickname}
               placeholder="특수 문자 제외"
+              maxLength={10}
             ></Input>
           </>
         ) : (
@@ -186,7 +204,15 @@ function Register() {
           autoComplete="on"
           onKeyPress={enterPress}
         ></Input>
-        <div onClick={duplicationCheck}>중복확인</div>
+        <DpButton
+          onClick={duplicationCheck}
+          bgColor={
+            (duplication === 1 && "lightgreen") ||
+            (duplication === -1 && "tomato")
+          }
+        >
+          중복 확인
+        </DpButton>
         <Label>비밀번호</Label>
         <Input
           type="password"
@@ -312,7 +338,17 @@ const Input = styled.input`
     box-shadow: 0 0 7px var(--orange);
   }
 `;
-
+const DpButton = styled.div<any>`
+  width: 100px;
+  height: 30px;
+  border: 2px solid black;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  background-color: ${(props) => props.bgColor || "white"};
+`;
 const Buttons = styled.div`
   display: flex;
   width: 100%;
