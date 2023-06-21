@@ -153,6 +153,7 @@ function Register() {
           } as any)
         );
       } else {
+        setDuplication(1);
         dispatch(
           setModal({
             title: "알림",
@@ -350,6 +351,13 @@ const DpButton = styled.div<any>`
   align-items: center;
   margin-top: 5px;
   background-color: ${(props) => props.bgColor || "white"};
+  & div:hover {
+    filter: contrast(200%);
+    cursor: pointer;
+  }
+  & div:active {
+    filter: hue-rotate(90deg);
+  }
 `;
 const Buttons = styled.div`
   display: flex;
