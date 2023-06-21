@@ -21,12 +21,12 @@ function Admin({ reviewData, setReviewData }: any) {
       const response = await axios.get(`${apiAddress}/admin/healthcheck`, {
         withCredentials: true,
       });
-      console.log(JSON.stringify(response.data));
+      console.log(JSON.stringify(response));
       if (response.data) {
         dispatch(
           setModal({
             title: "알림",
-            text: JSON.stringify(response.data),
+            text: JSON.stringify(response),
             titleColor: "red",
           } as any)
         );
@@ -34,7 +34,7 @@ function Admin({ reviewData, setReviewData }: any) {
         dispatch(
           setModal({
             title: "알림",
-            text: JSON.stringify(response.data),
+            text: JSON.stringify(response),
             titleColor: "lightgreen",
           } as any)
         );
