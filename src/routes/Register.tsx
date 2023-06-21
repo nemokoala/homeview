@@ -135,6 +135,20 @@ function Register() {
       }
     }
   };
+
+  const duplicationCheck = async () => {
+    try {
+      const response = await axios.post(
+        `https://api.binbinbin.site/api/join/${email}/exists`,
+        { withCredentials: true }
+      );
+      if (response.data) {
+        console.log(JSON.stringify(response));
+      }
+    } catch (error: any) {
+      console.log(JSON.stringify(error));
+    }
+  };
   return (
     <Container>
       <Form isAnimated={isAnimated}>
@@ -172,6 +186,7 @@ function Register() {
           autoComplete="on"
           onKeyPress={enterPress}
         ></Input>
+        <div onClick={duplicationCheck}>중복확인</div>
         <Label>비밀번호</Label>
         <Input
           type="password"
