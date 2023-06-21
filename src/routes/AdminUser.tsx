@@ -3,16 +3,7 @@ import styles from "./AdminUser.module.css";
 
 function AdminUser() {
   const [users, setUsers] = useState<any>([]);
-  useEffect(() => {
-    const getMembers = async () => {
-      const json = await (
-        await fetch("http://43.200.254.30:8080/members")
-      ).json();
-      setUsers(json);
-      console.log(json);
-    };
-    getMembers();
-  }, []);
+  useEffect(() => {}, []);
 
   const onClickDestroy = (id: any) => {
     const answer = prompt(
