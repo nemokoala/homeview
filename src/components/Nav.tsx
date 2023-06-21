@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Nav.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { saveSession } from "slice/userSlice";
@@ -16,7 +16,9 @@ function Nav({ searchTerm, setSearchTerm }: any) {
   const session = useSelector((state: any) => state.userSet.session);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    console.log("nav바");
+  }, []);
   const logout = async () => {
     try {
       const response = await axios.get(`${apiAddress}/api/logout`, {
@@ -54,6 +56,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
       console.log("/info 에러 : " + error);
     }
   };
+
   return (
     <>
       <nav className={styles.nav}>
