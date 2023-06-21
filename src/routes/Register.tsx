@@ -138,7 +138,7 @@ function Register() {
 
   const duplicationCheck = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `https://api.binbinbin.site/api/join/${email}/exists`,
         { withCredentials: true }
       );
