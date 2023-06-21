@@ -204,15 +204,17 @@ function Register() {
           autoComplete="on"
           onKeyPress={enterPress}
         ></Input>
-        <DpButton
-          onClick={duplicationCheck}
-          bgColor={
-            (duplication === 1 && "lightgreen") ||
-            (duplication === -1 && "tomato")
-          }
-        >
-          중복 확인
-        </DpButton>
+        {pathname === register && (
+          <DpButton
+            onClick={duplicationCheck}
+            bgColor={
+              (duplication === 1 && "lightgreen") ||
+              (duplication === -1 && "tomato")
+            }
+          >
+            중복 확인
+          </DpButton>
+        )}
         <Label>비밀번호</Label>
         <Input
           type="password"
