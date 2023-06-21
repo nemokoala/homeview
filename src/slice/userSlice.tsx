@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let loadData = JSON.parse(localStorage.getItem("session") as any);
 let now = new Date();
 if (loadData) {
-  let diff = now.getTime() - loadData.date.getTime();
+  let diff = now.getTime() - new Date(loadData.date).getTime();
   let diffMinutes = Math.floor(diff / 1000 / 60);
   console.log("시간차이" + diffMinutes);
   if (diffMinutes >= 30) {
