@@ -6,6 +6,7 @@ import AdminUser from "./AdminUser";
 import { useDispatch } from "react-redux";
 import { setModal } from "slice/modalSlice";
 import axios from "axios";
+import { apiAddress } from "value";
 function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
@@ -17,10 +18,9 @@ function Admin({ reviewData, setReviewData }: any) {
   }, []);
   const adminCheck = async () => {
     try {
-      const response = await axios.get(
-        `https://api.binbinbin.site/admin/healthcheck`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${apiAddress}/admin/healthcheck`, {
+        withCredentials: true,
+      });
       console.log(JSON.stringify(response.data));
       if (response.data) {
         dispatch(

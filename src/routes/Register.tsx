@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { saveSession } from "slice/userSlice";
 import { setModal } from "slice/modalSlice";
 import styled, { keyframes } from "styled-components";
+import { apiAddress } from "value";
 
 function Register() {
   const [name, setName] = useState("");
@@ -52,7 +53,7 @@ function Register() {
         };
         try {
           const response = await axios.post(
-            "https://api.binbinbin.site/api/join",
+            `${apiAddress}/api/join`,
             { ...userData },
             { withCredentials: true }
           );
@@ -99,7 +100,7 @@ function Register() {
       };
       try {
         const response = await axios.post(
-          "https://api.binbinbin.site/api/login",
+          `${apiAddress}/api/login`,
           { ...formUserData },
           { withCredentials: true }
         );
@@ -140,7 +141,7 @@ function Register() {
   const duplicationCheck = async () => {
     try {
       const response = await axios.get(
-        `https://api.binbinbin.site/api/join/${email}/exists`,
+        `${apiAddress}/api/join/${email}/exists`,
         { withCredentials: true }
       );
       if (response.data) {
@@ -345,7 +346,7 @@ const DpButton = styled.div<any>`
   width: 100px;
   height: 30px;
   border: 2px solid black;
-  border-radius: 16px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;

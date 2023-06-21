@@ -6,6 +6,7 @@ import axios from "axios";
 import { saveSession } from "slice/userSlice";
 import Modal from "./Modal";
 import { setModal } from "slice/modalSlice";
+import { apiAddress } from "value";
 function Nav({ searchTerm, setSearchTerm }: any) {
   const [hamOn, setHamOn] = useState<Boolean>(false);
   const toggleHam = () => {
@@ -18,10 +19,9 @@ function Nav({ searchTerm, setSearchTerm }: any) {
 
   const logout = async () => {
     try {
-      const response = await axios.get(
-        "https://api.binbinbin.site/api/logout",
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${apiAddress}/api/logout`, {
+        withCredentials: true,
+      });
       dispatch(saveSession("" as any));
 
       if (response.status === 200) {
@@ -45,7 +45,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
 
   const profile = async () => {
     try {
-      const response = await axios.get("https://api.binbinbin.site/api/info", {
+      const response = await axios.get(`${apiAddress}/api/info`, {
         withCredentials: true,
       });
 
