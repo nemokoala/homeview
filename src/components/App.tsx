@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AppRouter from "./Router";
+import { useDispatch } from "react-redux";
+import { saveSession } from "slice/userSlice";
 
 interface Reviews {
   reviewId: string;
@@ -241,7 +243,24 @@ function App() {
     },
   ]);
   const [roomData, setRoomData] = useState([]);
+  const dispatch = useDispatch();
+  let loadData = JSON.parse(localStorage.getItem("session") as any);
+  let now = new Date();
 
+  if (loadData) {
+    let diff = now.getTime() - new Date(loadData.date).getTime();
+    let diffMinutes = Math.floor(diff / 1000 / 60);
+    console.log("시간차이" + diffMinutes);
+    if (diffMinutes >= 30) {
+      localStorage.removeItem("session");
+      loadData = "";
+    } else {
+      setTimeout(() => {
+        alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
+        dispatch(saveSession({ ...loadData }));
+      }, diffMinutes * 60 * 1000);
+    }
+  }
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
 }
 
