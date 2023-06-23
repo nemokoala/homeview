@@ -60,7 +60,7 @@ function Profile() {
         }
         console.log(JSON.stringify(response as any));
       } catch (error: any) {
-        const errorText = error.response.data.toString();
+        const errorText = JSON.stringify(error);
         dispatch(
           setModal({
             title: "에러!",
@@ -97,7 +97,7 @@ function Profile() {
           navigate("/");
         }
       } catch (error: any) {
-        const errorText = error.response.data.toString();
+        const errorText = JSON.stringify(error);
         dispatch(
           setModal({
             title: "에러!",

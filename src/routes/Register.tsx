@@ -72,11 +72,7 @@ function Register() {
             );
           }
         } catch (error: any) {
-          const errorText = error.response.data.toString();
-          console.error("에러 : " + error);
-          console.error(
-            "에러 리스폰즈data : " + JSON.stringify(error.response.data)
-          );
+          const errorText = JSON.stringify(error);
           dispatch(
             setModal({
               title: "에러!",
@@ -125,7 +121,7 @@ function Register() {
           navigate("/");
         }
       } catch (error: any) {
-        const errorText = error.toString();
+        const errorText = JSON.stringify(error);
         console.error("에러 : " + error);
         dispatch(
           setModal({
