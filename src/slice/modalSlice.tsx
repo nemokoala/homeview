@@ -18,6 +18,10 @@ export const modalSlice = createSlice({
   reducers: {
     setModal: (state: any, action: any): any => {
       console.log(action.payload);
+      if (action.payload.text.includes("500")) {
+        action.payload.text =
+          "로그인 세션이 만료되었습니다. 다시 로그인해주세요.";
+      }
       state.modal = { ...defaultModal, ...action.payload };
     },
   },

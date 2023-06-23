@@ -34,7 +34,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
         );
       }
     } catch (error: any) {
-      const errorText = error.toString();
+      const errorText = JSON.stringify(error);
       dispatch(
         setModal({
           title: "에러!",

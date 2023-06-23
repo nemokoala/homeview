@@ -1,9 +1,12 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 
 function BackButton() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <Div
       onClick={async () => {
@@ -14,7 +17,14 @@ function BackButton() {
           );
           console.log(response.data);
         } catch (error) {
-          console.log(error);
+          const errorText = JSON.stringify(error);
+          dispatch(
+            setModal({
+              title: "에러!",
+              titleColor: "red",
+              text: errorText,
+            } as any)
+          );
         }
       }}
     >

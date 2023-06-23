@@ -40,7 +40,15 @@ function Admin({ reviewData, setReviewData }: any) {
         );
       }
     } catch (error: any) {
-      console.log(JSON.stringify(error));
+      const errorText = JSON.stringify(error);
+      console.error("에러 : " + error);
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
     }
   };
   return (
