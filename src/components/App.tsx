@@ -255,9 +255,11 @@ function App() {
       localStorage.removeItem("session");
       loadData = "";
     } else {
+      dispatch(saveSession({ ...loadData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
       setTimeout(() => {
+        //x분뒤 세션 만료
         alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
-        dispatch(saveSession({ ...loadData }));
+        dispatch(saveSession("" as any));
       }, diffMinutes * 60 * 1000);
     }
   }
