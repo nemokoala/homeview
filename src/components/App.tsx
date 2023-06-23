@@ -260,7 +260,7 @@ function App() {
         //x분뒤 세션 만료
         alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
         dispatch(saveSession("" as any));
-      }, 30 - diffMinutes * 60 * 1000);
+      }, 30 * 60 * 1000 - diffMinutes * 60 * 1000);
     }
   }
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
