@@ -3,7 +3,7 @@ let now = new Date();
 export const userSlice = createSlice({
   name: "userSet",
   initialState: {
-    session: {},
+    session: "",
   },
   reducers: {
     saveSession: (state, action: any): any => {
