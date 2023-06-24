@@ -42,7 +42,7 @@ function AdminUser() {
       `해당 유저의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
     if (answer === null) alert("유저 삭제를 취소하였습니다.");
-    else if (answer === id) {
+    else if (answer == id) {
       alert("유저를 삭제합니다.");
       deleteUserData(id);
     } else if (answer != id)
