@@ -17,6 +17,7 @@ function AdminUser() {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
+      setUsers(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
@@ -49,13 +50,13 @@ function AdminUser() {
     });
     setUsers(sortedName);
   };
-  const sortCreatedAt = (n: number) => {
-    const sortedCreatedAt = [...users].sort((a, b) => {
-      if (a.createdAt < b.createdAt) return n;
-      if (a.createdAt > b.createdAt) return -n;
+  const sortEmail = (n: number) => {
+    const sortedEmail = [...users].sort((a, b) => {
+      if (a.email < b.email) return n;
+      if (a.email > b.email) return -n;
       return 0;
     });
-    setUsers(sortedCreatedAt);
+    setUsers(sortedEmail);
   };
 
   return (
@@ -75,11 +76,11 @@ function AdminUser() {
             </th>
             <th>
               이메일
-              <button onClick={() => sortCreatedAt(-1)}>▲</button>
-              <button onClick={() => sortCreatedAt(1)}>▼</button>
+              <button onClick={() => sortEmail(-1)}>▲</button>
+              <button onClick={() => sortEmail(1)}>▼</button>
             </th>
-            <th>비밀번호</th>
-            <th>관심 지역</th>
+            <th>닉네임</th>
+            <th>권한</th>
             <th>삭제</th>
           </tr>
           {users.map((user: any) => (
@@ -87,8 +88,8 @@ function AdminUser() {
               <td>{user.id}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.password}</td>
-              <td>관심지역</td>
+              <td>{user.nickname}</td>
+              <td>{user.role}</td>
               {/*<td>
                 {user.interestArea.map((area: any, index: any) => (
                   <span key={`${user.id}${index}_inter`}>

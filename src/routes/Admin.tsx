@@ -22,19 +22,20 @@ function Admin({ reviewData, setReviewData }: any) {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
-      if (response.data) {
+      if (response.data !== 200) {
         dispatch(
           setModal({
             title: "알림",
-            text: JSON.stringify(response),
+            text: "권한이 없습니다.",
             titleColor: "red",
           } as any)
         );
+        navigate("/");
       } else {
         dispatch(
           setModal({
             title: "알림",
-            text: JSON.stringify(response),
+            text: "어드민 확인이 완료되었습니다.",
             titleColor: "lightgreen",
           } as any)
         );
