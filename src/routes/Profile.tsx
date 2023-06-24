@@ -98,6 +98,7 @@ function Profile() {
         }
       } catch (error: any) {
         const errorText = JSON.stringify(error);
+        console.error(error.status);
         dispatch(
           setModal({
             title: "에러!",
