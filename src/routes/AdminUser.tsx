@@ -13,10 +13,12 @@ function AdminUser() {
   }, []);
   const getUserData = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/list`);
-      dispatch(setModal({ text: JSON.stringify(response) } as any));
+      const response = await axios.get(`${apiAddress}/admin/list`);
+      console.log(JSON.stringify(response));
+      // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
-      dispatch(setModal({ text: JSON.stringify(error) } as any));
+      // dispatch(setModal({ text: JSON.stringify(error) } as any));
+      console.error(JSON.stringify(error));
     }
   };
   const onClickDestroy = (id: any) => {
