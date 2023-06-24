@@ -386,6 +386,7 @@ const DpButton = styled.button<any>`
     filter: hue-rotate(90deg);
   }
   &:focus {
+    color: orange;
     border: 2px solid orange !important;
   }
 `;
