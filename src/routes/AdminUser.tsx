@@ -30,7 +30,6 @@ function AdminUser() {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
-      setUsers(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
@@ -115,7 +114,7 @@ function AdminUser() {
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => deleteUserData(user.id)}
+                  onClick={() => onClickDestroy(user.id)}
                 >
                   삭제
                 </button>
