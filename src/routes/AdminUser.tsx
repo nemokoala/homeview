@@ -115,7 +115,7 @@ function AdminUser() {
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => onClickDestroy(user.id)}
+                  onClick={() => deleteUserData(user.id)}
                 >
                   삭제
                 </button>
