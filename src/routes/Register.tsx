@@ -249,7 +249,7 @@ function Register() {
               type="password"
               id="passwordConfirm"
               onChange={onChange}
-              value={password}
+              value={passwordConfirm}
               placeholder="입력한 비밀번호와 똑같이 입력해주세요."
               autoComplete="off"
               onKeyPress={enterPress}
