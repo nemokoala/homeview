@@ -93,7 +93,7 @@ function Register() {
       } else if (password !== passwordConfirm) {
         dispatch(
           setModal({
-            text: "비밀번호와 비밀번호 확인란을 동일하게 입력해주세요.",
+            text: '"비밀번호"와 "비밀번호 확인"란을 동일하게 입력해주세요.',
           } as any)
         );
       } else {
@@ -368,7 +368,7 @@ const Input = styled.input`
     box-shadow: 0 0 7px var(--orange);
   }
 `;
-const DpButton = styled.div<any>`
+const DpButton = styled.button<any>`
   width: 100px;
   height: 30px;
   border: 2px solid black;
