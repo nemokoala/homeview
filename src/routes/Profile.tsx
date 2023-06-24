@@ -12,6 +12,7 @@ function Profile() {
   const [password, setPassword] = useState("");
   const [newNickname, setNewNickname] = useState(session.nickname);
   const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function Profile() {
     console.log(password);
     if (id === "newNickname") setNewNickname(value);
     if (id === "newPassword") setNewPassword(value);
+    if (id === "newPasswordConfirm") setNewPasswordConfirm(value);
   };
   const enterPress = (e: any) => {
     if (e.key === "Enter") {
@@ -72,6 +74,16 @@ function Profile() {
     }
     if (checked) {
       //인증 후 바뀐 정보 보낼 때 함수
+      if (newPassword !== newPasswordConfirm) {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: '"새로운 비밀번호"와 "비밀번호 확인"란을 동일하게 입력해주세요.',
+          } as any)
+        );
+        return;
+      }
+
       const newData = {
         nickname: newNickname,
         password: newPassword === "" ? password : newPassword,
@@ -129,7 +141,9 @@ function Profile() {
             autoCapitalize="off"
             onKeyPress={enterPress}
           ></Input>
-          <Label>새 비밀번호</Label>
+          <Label>
+            새 비밀번호 (8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함)
+          </Label>
           <input
             type="text"
             name="fakeemail"
@@ -147,6 +161,20 @@ function Profile() {
             autoComplete="new-password"
             onKeyPress={enterPress}
           ></Input>
+          {newPassword.length > 0 && (
+            <>
+              <Label>새 비밀번호 확인</Label>
+              <Input
+                type="password"
+                id="newPasswordConfirm"
+                onChange={onChange}
+                value={newPasswordConfirm}
+                placeholder=""
+                autoComplete="new-password"
+                onKeyPress={enterPress}
+              ></Input>
+            </>
+          )}
           <Buttons>
             <div style={{ background: "var(--orange)" }} onClick={confirm}>
               수정 확인
