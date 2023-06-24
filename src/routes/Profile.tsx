@@ -141,9 +141,7 @@ function Profile() {
             autoCapitalize="off"
             onKeyPress={enterPress}
           ></Input>
-          <Label>
-            새 비밀번호 (8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함)
-          </Label>
+          <Label>새로운 비밀번호 (빈 칸일 경우 기존 비밀번호 유지)</Label>
           <input
             type="text"
             name="fakeemail"
@@ -157,19 +155,19 @@ function Profile() {
             id="newPassword"
             onChange={onChange}
             value={newPassword}
-            placeholder="빈칸일 경우 비밀번호를 그대로 유지"
+            placeholder="8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함"
             autoComplete="new-password"
             onKeyPress={enterPress}
           ></Input>
           {newPassword.length > 0 && (
             <>
-              <Label>새 비밀번호 확인</Label>
+              <Label>새로운 비밀번호 확인</Label>
               <Input
                 type="password"
                 id="newPasswordConfirm"
                 onChange={onChange}
                 value={newPasswordConfirm}
-                placeholder=""
+                placeholder="비밀번호 확인"
                 autoComplete="new-password"
                 onKeyPress={enterPress}
               ></Input>
