@@ -13,6 +13,7 @@ function Register() {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
   const [duplication, setDuplication] = useState(0); //이메일 중복체크
   const dispatch = useDispatch<any>();
@@ -33,6 +34,7 @@ function Register() {
     } = e;
     if (id === "email") setEmail(value);
     if (id === "password") setPassword(value);
+    if (id === "passwordConfirm") setPasswordConfirm(value);
     if (id === "name") setName(value);
     if (id === "nickname") setNickname(value);
     console.log(email, password);
@@ -44,7 +46,14 @@ function Register() {
   };
   const confirm = async () => {
     if (pathname === register) {
-      if (name && nickname && email && password && duplication === 1) {
+      if (
+        name &&
+        nickname &&
+        email &&
+        password &&
+        duplication === 1 &&
+        password === passwordConfirm
+      ) {
         const userData = {
           name: name,
           nickname: nickname,
@@ -81,6 +90,12 @@ function Register() {
             } as any)
           );
         }
+      } else if (password !== passwordConfirm) {
+        dispatch(
+          setModal({
+            text: "비밀번호와 비밀번호 확인란을 동일하게 입력해주세요.",
+          } as any)
+        );
       } else {
         dispatch(
           setModal({
@@ -227,6 +242,21 @@ function Register() {
           autoComplete="on"
           onKeyPress={enterPress}
         ></Input>
+        {pathname === register && (
+          <>
+            <Label>비밀번호 확인</Label>
+            <Input
+              type="password"
+              id="passwordConfirm"
+              onChange={onChange}
+              value={password}
+              placeholder="입력한 비밀번호와 똑같이 입력해주세요."
+              autoComplete="off"
+              onKeyPress={enterPress}
+            ></Input>
+          </>
+        )}
+
         <Buttons>
           <div
             onClick={confirm}

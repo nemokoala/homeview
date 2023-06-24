@@ -97,8 +97,11 @@ function Profile() {
           navigate("/");
         }
       } catch (error: any) {
-        const errorText = JSON.stringify(error);
+        let errorText = JSON.stringify(error);
         console.error(error.response.status);
+        if (error.response.status === 400)
+          errorText =
+            "비밀번호 양식을 맞춰주세요 (8~16자리 대소문자, 숫자, 특수문자 1개 이상 포함)";
         dispatch(
           setModal({
             title: "에러!",
