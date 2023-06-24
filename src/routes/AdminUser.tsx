@@ -24,13 +24,14 @@ function AdminUser() {
       console.error(JSON.stringify(error));
     }
   };
-  const deleteUserData = async (id: number) => {
+  const deleteUserData = async (id: any) => {
     try {
       const response = await axios.delete(`${apiAddress}/admin/${id}`, {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
+      getUserData();
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
       console.error(JSON.stringify(error));
@@ -42,8 +43,8 @@ function AdminUser() {
     );
     if (answer === null) alert("유저 삭제를 취소하였습니다.");
     else if (answer === id) {
+      alert("유저를 삭제합니다.");
       deleteUserData(id);
-      getUserData();
     } else if (answer != id)
       alert("id값을 잘못 입력하여서 유저저 삭제가 취소 되었습니다.");
   };
