@@ -1,10 +1,24 @@
 import { useState, useEffect } from "react";
 import styles from "./AdminUser.module.css";
+import { apiAddress } from "value";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setModal } from "slice/modalSlice";
 
 function AdminUser() {
   const [users, setUsers] = useState<any>([]);
-  useEffect(() => {}, []);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getUserData();
+  }, []);
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/admin/list`);
+      dispatch(setModal({ text: JSON.stringify(response) } as any));
+    } catch (error: any) {
+      dispatch(setModal({ text: JSON.stringify(error) } as any));
+    }
+  };
   const onClickDestroy = (id: any) => {
     const answer = prompt(
       `해당 유저의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
