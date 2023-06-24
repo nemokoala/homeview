@@ -13,7 +13,7 @@ function AdminUser() {
   }, []);
   const getUserData = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/admin/list`);
+      const response = await axios.get(`${apiAddress}/list`);
       dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       dispatch(setModal({ text: JSON.stringify(error) } as any));
