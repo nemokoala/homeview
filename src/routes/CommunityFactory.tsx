@@ -52,7 +52,7 @@ const Label = styled.div`
   color: black;
   font-size: 1.5rem;
   margin-top: 23px;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.input`
