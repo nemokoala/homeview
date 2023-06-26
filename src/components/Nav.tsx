@@ -103,7 +103,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
               <button className={styles.loginBtn} onClick={logout}>
                 로그아웃
               </button>
-              <Link to="/api/profile">
+              <Link to="/profile">
                 <button className={styles.registerBtn}>
                   {session.nickname}
                 </button>
@@ -111,10 +111,10 @@ function Nav({ searchTerm, setSearchTerm }: any) {
             </>
           ) : (
             <>
-              <Link to="/api/login">
+              <Link to="/login">
                 <button className={styles.loginBtn}>로그인</button>
               </Link>
-              <Link to="/api/join">
+              <Link to="/join">
                 <button className={styles.registerBtn}>회원가입</button>
               </Link>
             </>
