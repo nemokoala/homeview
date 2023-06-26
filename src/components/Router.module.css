@@ -48,12 +48,9 @@ body {
 }
 
 input,
-textarea,
-button {
-  appearance: none;
-  -moz-appearance: none;
+textarea {
   -webkit-appearance: none;
-  border-radius: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid black; /* 원하는 테두리 색상으로 변경하세요. */
 }
