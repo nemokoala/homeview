@@ -74,7 +74,6 @@ const Container = styled.div<any>`
 const Form = styled.div<any>`
   width: 300px;
   height: auto;
-  margin: auto auto;
   background-color: white;
   display: flex;
   flex-direction: column;
