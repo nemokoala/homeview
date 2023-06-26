@@ -19,6 +19,7 @@ import Register from "routes/Register";
 import Profile from "routes/Profile";
 import { useSelector } from "react-redux";
 import Modal from "./Modal";
+import Community from "routes/Community";
 
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,12 +63,13 @@ function AppRouter({ reviewData, setReviewData }: any) {
             }
           />
           <Route path="/map" element={<Map />} />
+          <Route path="/community" element={<Community />} />
           {session ? (
-            <Route path="/api/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
           ) : (
             <>
-              <Route path="/api/join" element={<Register />} />
-              <Route path="/api/login" element={<Register />} />
+              <Route path="/join" element={<Register />} />
+              <Route path="/login" element={<Register />} />
             </>
           )}
 

@@ -19,8 +19,8 @@ function Register() {
   const dispatch = useDispatch<any>();
 
   const navigate = useNavigate();
-  const login = "/api/login";
-  const register = "/api/join";
+  const login = "/login";
+  const register = "/join";
   const { pathname } = useLocation();
   useEffect(() => {
     console.log(pathname);

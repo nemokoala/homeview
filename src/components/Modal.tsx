@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "slice/modalSlice";
 function Modal({ ...props }: any) {
-  const [isOpen, setIsOpen] = useState(true);
   const modal = useSelector((state: any) => state.modalSet.modal);
   const dispatch = useDispatch();
   /* 모달 modal 정리
@@ -13,10 +12,22 @@ function Modal({ ...props }: any) {
   modal.btn2Text : 오른쪽버튼 텍스트 내용, 미지정시 버튼 안보임
   modal.btn1Color : 왼쪽버튼 색, 미지정시 skyblue
   modal.btn2Color : 오른쪽버튼 색, 미지정시 tomato
-
   */
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  });
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      if (modal.open) {
+        dispatch(setModal({ open: false } as any));
+      }
+    }
+  };
   return (
-    <Container isOpen={isOpen}>
+    <Container>
       <Form>
         <Title titleColor={modal.titleColor}>{modal.title || "알림"}</Title>
         <Hr />
@@ -51,7 +62,7 @@ function Modal({ ...props }: any) {
 const Container = styled.div<any>`
   width: 100vw;
   height: 100vh;
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  display: "flex";
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
