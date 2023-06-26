@@ -62,7 +62,7 @@ function Modal({ ...props }: any) {
 const Container = styled.div<any>`
   width: 100vw;
   height: 100vh;
-  display: "flex";
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
