@@ -77,6 +77,9 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           <Link to="/reviewfac">
             <li>리뷰 작성</li>
           </Link>
+          <Link to="/community">
+            <li>커뮤니티</li>
+          </Link>
           {session.role === "ADMIN" && (
             <Link to="/admin">
               <li>관리 페이지</li>
@@ -141,6 +144,9 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           </Link>
           <Link to="/reviewfac" onClick={() => setHamOn(false)}>
             <li>리뷰 작성</li>
+          </Link>
+          <Link to="/community" onClick={() => setHamOn(false)}>
+            <li>커뮤니티</li>
           </Link>
           {session.role === "ADMIN" && (
             <Link to="/admin" onClick={() => setHamOn(false)}>
