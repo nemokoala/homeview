@@ -77,9 +77,11 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           <Link to="/reviewfac">
             <li>리뷰 작성</li>
           </Link>
-          <Link to="/admin">
-            <li>관리 페이지</li>
-          </Link>
+          {session.role === "ADMIN" && (
+            <Link to="/admin">
+              <li>관리 페이지</li>
+            </Link>
+          )}
         </ul>
         <input
           className={styles.input}
@@ -140,9 +142,11 @@ function Nav({ searchTerm, setSearchTerm }: any) {
           <Link to="/reviewfac" onClick={() => setHamOn(false)}>
             <li>리뷰 작성</li>
           </Link>
-          <Link to="/admin" onClick={() => setHamOn(false)}>
-            <li>관리 페이지</li>
-          </Link>
+          {session.role === "ADMIN" && (
+            <Link to="/admin" onClick={() => setHamOn(false)}>
+              <li>관리 페이지</li>
+            </Link>
+          )}
         </ul>
       </div>
     </>

@@ -8,26 +8,7 @@ function BackButton() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <Div
-      onClick={async () => {
-        try {
-          const response = await axios.get(
-            "https://api.binbinbin.site/api/info",
-            { withCredentials: true }
-          );
-          console.log(response.data);
-        } catch (error) {
-          const errorText = JSON.stringify(error);
-          dispatch(
-            setModal({
-              title: "에러!",
-              titleColor: "red",
-              text: errorText,
-            } as any)
-          );
-        }
-      }}
-    >
+    <Div onClick={() => navigate(-1)}>
       <img src="https://cdn-icons-png.flaticon.com/512/93/93634.png" alt="<" />
     </Div>
   );
