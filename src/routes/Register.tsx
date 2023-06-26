@@ -360,6 +360,7 @@ const Input = styled.input`
   border: 0px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
+  filter: drop-shadow(0px 0px 20px 5px rgba(50, 50, 93, 0.25));
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:focus {

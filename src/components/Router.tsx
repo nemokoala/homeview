@@ -20,6 +20,7 @@ import Profile from "routes/Profile";
 import { useSelector } from "react-redux";
 import Modal from "./Modal";
 import Community from "routes/Community";
+import CommunityFactory from "routes/CommunityFactory";
 
 function AppRouter({ reviewData, setReviewData }: any) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,6 +65,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/community/post" element={<CommunityFactory />} />
           {session ? (
             <Route path="/profile" element={<Profile />} />
           ) : (

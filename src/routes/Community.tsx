@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Community() {
@@ -24,7 +25,12 @@ function Community() {
   ]);
   return (
     <Container>
-      <Button>글 작성</Button>
+      <Link
+        to="/community/post"
+        style={{ width: "80%", marginTop: "20px", textDecoration: "none" }}
+      >
+        <Button>글 작성</Button>
+      </Link>
       <TableContainer>
         <thead>
           <tr>
@@ -58,7 +64,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
 `;
 
 const TableContainer = styled.table`
@@ -100,7 +105,7 @@ const TableCell = styled.td`
 `;
 
 const Button = styled.button`
-  width: 80%;
+  width: 100%;
   height: 50px;
   margin: 10px 0;
   background-color: var(--orange);
