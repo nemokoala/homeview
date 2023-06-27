@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
@@ -9,6 +10,7 @@ function CommunityFactory() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const textareaRef = useRef(null); //textarea 높이 자동조절
   const handleInput = useCallback((event: any) => {
     event.target.style.height = "auto";
@@ -38,6 +40,7 @@ function CommunityFactory() {
           setModal({
             title: "알림",
             text: "글 작성을 완료했습니다.",
+            btn1Func: navigate("/community"),
           } as any)
         );
       }

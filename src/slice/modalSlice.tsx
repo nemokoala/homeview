@@ -23,7 +23,7 @@ export const modalSlice = createSlice({
         action.payload.text.includes("500")
       ) {
         action.payload.text =
-          "로그인 세션이 만료되었습니다. 다시 로그인해주세요.";
+          "로그인 세션이 유효하지 않습니다. 다시 로그인 해주세요.";
       }
       state.modal = { ...defaultModal, ...action.payload };
     },
