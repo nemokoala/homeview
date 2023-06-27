@@ -41,6 +41,7 @@ function CommunityFactory() {
 
       console.log("리스폰즈DATAthen : " + response.data);
       console.log("리스폰즈STATUS : " + response.status);
+      console.log(session.id + " // " + session.nickname);
       if (response.status === 201) {
         dispatch(
           setModal({
