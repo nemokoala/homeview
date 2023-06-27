@@ -33,8 +33,14 @@ function CommunityFactory() {
         {
           title: title,
           content: content,
-          member_id: session.id,
-          member_name: session.nickname,
+          member: {
+            id: session.id,
+            name: session.name,
+            nickname: session.nickname,
+            email: session.email,
+            password: session.password,
+            role: session.role,
+          },
         },
         { withCredentials: true }
       );
