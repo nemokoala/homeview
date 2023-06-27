@@ -24,7 +24,7 @@ interface Reviews {
   dong: string;
 }
 
-function App() {
+async function App() {
   const [reviewData, setReviewData] = useState<Reviews[]>([
     {
       reviewId: "1",
@@ -260,6 +260,7 @@ function App() {
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
       console.error(JSON.stringify(error));
+      return "";
     }
   };
 
@@ -271,7 +272,7 @@ function App() {
       localStorage.removeItem("session");
       loadData = "";
     } else {
-      let userData = getUserData();
+      let userData = await getUserData();
       console.log("유저데이터 ", userData);
       dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
       setTimeout(() => {
