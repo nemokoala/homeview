@@ -41,6 +41,7 @@ function CommunityFactory() {
             password: session.password,
             role: session.role,
           },
+          member_name: session.nickname,
         },
         { withCredentials: true }
       );
