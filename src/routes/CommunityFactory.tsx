@@ -28,23 +28,18 @@ function CommunityFactory() {
 
   const confirm = async () => {
     try {
-      const response = await axios.post(
-        `${apiAddress}/api/posting/add`,
-        {
-          title: title,
-          content: content,
-          member: {
-            id: session.id,
-            name: session.name,
-            nickname: session.nickname,
-            email: session.email,
-            password: session.password,
-            role: session.role,
-          },
-          member_name: session.nickname,
+      const response = await axios.post(`${apiAddress}/api/posting/add`, {
+        title: title,
+        content: content,
+        member: {
+          id: session.id,
+          name: session.name,
+          nickname: session.nickname,
+          email: session.email,
+          password: session.password,
+          role: session.role,
         },
-        { withCredentials: true }
-      );
+      });
 
       console.log("리스폰즈DATAthen : " + response.data);
       console.log("리스폰즈STATUS : " + response.status);
