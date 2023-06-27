@@ -254,7 +254,8 @@ function App() {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
-      return response.data;
+      const userData = response.data;
+      return userData;
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
