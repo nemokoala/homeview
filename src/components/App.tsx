@@ -24,7 +24,7 @@ interface Reviews {
   dong: string;
 }
 
-async function App() {
+function App() {
   const [reviewData, setReviewData] = useState<Reviews[]>([
     {
       reviewId: "1",
@@ -263,25 +263,29 @@ async function App() {
       return "";
     }
   };
-
-  if (loadData) {
-    let diff = now.getTime() - new Date(loadData.date).getTime();
-    let diffMinutes = Math.floor(diff / 1000 / 60);
-    console.log("시간차이" + diffMinutes);
-    if (diffMinutes >= 30) {
-      localStorage.removeItem("session");
-      loadData = "";
-    } else {
-      let userData = await getUserData();
-      console.log("유저데이터 ", userData);
-      dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
-      setTimeout(() => {
-        //x분뒤 세션 만료
-        alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
-        dispatch(saveSession("" as any));
-      }, 30 * 60 * 1000 - diffMinutes * 60 * 1000);
+  const loadUserData = async () => {
+    if (loadData) {
+      let diff = now.getTime() - new Date(loadData.date).getTime();
+      let diffMinutes = Math.floor(diff / 1000 / 60);
+      console.log("시간차이" + diffMinutes);
+      if (diffMinutes >= 30) {
+        localStorage.removeItem("session");
+        loadData = "";
+      } else {
+        let userData = await getUserData();
+        console.log("유저데이터 ", userData);
+        dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
+        setTimeout(() => {
+          //x분뒤 세션 만료
+          alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
+          dispatch(saveSession("" as any));
+        }, 30 * 60 * 1000 - diffMinutes * 60 * 1000);
+      }
     }
-  }
+  };
+  useEffect(() => {
+    loadUserData();
+  }, []);
 
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
 }
