@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AppRouter from "./Router";
 import { useDispatch } from "react-redux";
 import { saveSession } from "slice/userSlice";
+import { apiAddress } from "value";
 
 interface Reviews {
   reviewId: string;
@@ -247,6 +248,20 @@ function App() {
   let loadData = JSON.parse(localStorage.getItem("session") as any);
   let now = new Date();
 
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/api/info`, {
+        withCredentials: true,
+      });
+      console.log(JSON.stringify(response));
+      return response.data;
+      // dispatch(setModal({ text: JSON.stringify(response) } as any));
+    } catch (error: any) {
+      // dispatch(setModal({ text: JSON.stringify(error) } as any));
+      console.error(JSON.stringify(error));
+    }
+  };
+
   if (loadData) {
     let diff = now.getTime() - new Date(loadData.date).getTime();
     let diffMinutes = Math.floor(diff / 1000 / 60);
@@ -255,7 +270,8 @@ function App() {
       localStorage.removeItem("session");
       loadData = "";
     } else {
-      dispatch(saveSession({ ...loadData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
+      const userData = getUserData();
+      dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
       setTimeout(() => {
         //x분뒤 세션 만료
         alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");
@@ -263,6 +279,7 @@ function App() {
       }, 30 * 60 * 1000 - diffMinutes * 60 * 1000);
     }
   }
+
   return <AppRouter reviewData={reviewData} setReviewData={setReviewData} />;
 }
 
