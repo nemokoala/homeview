@@ -1,9 +1,14 @@
+import axios from "axios";
 import { useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
+import { apiAddress } from "value";
 
 function CommunityFactory() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const dispatch = useDispatch();
   const textareaRef = useRef(null); //textarea 높이 자동조절
   const handleInput = useCallback((event: any) => {
     event.target.style.height = "auto";
@@ -16,6 +21,36 @@ function CommunityFactory() {
     } = e;
     if (id === "title") setTitle(value);
     if (id === "content") setContent(value);
+  };
+
+  const confirm = async () => {
+    try {
+      const response = await axios.post(
+        `${apiAddress}/api/posting/add`,
+        { title: title, content: content },
+        { withCredentials: true }
+      );
+
+      console.log("리스폰즈DATAthen : " + response.data);
+      console.log("리스폰즈STATUS : " + response.status);
+      if (response.status === 201) {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "글 작성을 완료했습니다.",
+          } as any)
+        );
+      }
+    } catch (error: any) {
+      const errorText = error.response.data.toString();
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
+    }
   };
 
   return (
@@ -31,8 +66,11 @@ function CommunityFactory() {
         onChange={onChange}
         value={content}
         rows={1}
+        onKeyUp={(e) => {
+          if (e.key === "Enter") confirm();
+        }}
       />
-      <Button>작성 완료</Button>
+      <Button onClick={confirm}>작성 완료</Button>
     </Container>
   );
 }
