@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
@@ -11,6 +11,7 @@ function CommunityFactory() {
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const session = useSelector((state: any) => state.userSet.session);
   const textareaRef = useRef(null); //textarea 높이 자동조절
   const handleInput = useCallback((event: any) => {
     event.target.style.height = "auto";
@@ -29,7 +30,12 @@ function CommunityFactory() {
     try {
       const response = await axios.post(
         `${apiAddress}/api/posting/add`,
-        { title: title, content: content },
+        {
+          title: title,
+          content: content,
+          member_id: session.id,
+          member_name: session.nickname,
+        },
         { withCredentials: true }
       );
 
