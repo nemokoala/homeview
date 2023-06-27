@@ -270,7 +270,8 @@ function App() {
       localStorage.removeItem("session");
       loadData = "";
     } else {
-      const userData = getUserData();
+      let userData = getUserData();
+      console.log("유저데이터 ", userData);
       dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
       setTimeout(() => {
         //x분뒤 세션 만료
