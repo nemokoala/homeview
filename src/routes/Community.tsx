@@ -32,10 +32,9 @@ function Community() {
 
   const getPostingData = async () => {
     try {
-      const response = await axios.get(
-        `${apiAddress}/api/posting/list/?page=0`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`${apiAddress}/api/posting/list/`, {
+        withCredentials: true,
+      });
       console.log(JSON.stringify(response));
 
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
