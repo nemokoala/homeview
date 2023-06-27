@@ -40,7 +40,9 @@ function CommunityFactory() {
           setModal({
             title: "알림",
             text: "글 작성을 완료했습니다.",
-            btn1Func: navigate("/community"),
+            btn1Func: function () {
+              navigate("/community");
+            },
           } as any)
         );
       }
