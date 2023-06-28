@@ -32,12 +32,9 @@ function Community() {
 
   const getPostingData = async () => {
     try {
-      const response = await axios.get(
-        `${apiAddress}/api/posting/list/?page=0`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${apiAddress}/api/posting/`, {
+        withCredentials: true,
+      });
       console.log(JSON.stringify(response));
 
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
@@ -79,7 +76,7 @@ const Container = styled.div`
 
 const ContentBlock = styled.div`
   width: 90%;
-  margin: 20px 0;
+  margin: 10px 0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   padding: 20px;
   border-radius: 20px;
@@ -97,7 +94,7 @@ const ContentText = styled.div<any>`
 const Button = styled.button`
   width: 100%;
   height: 50px;
-  margin: 10px 0;
+  margin: 15px 0;
   background-color: var(--orange);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   border: 0px;
