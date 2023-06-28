@@ -14,6 +14,9 @@ function Community() {
       postTime: "",
       postHits: 0,
       likes: 0,
+      member: {
+        id: 0,
+      },
     },
   ]);
   const navigate = useNavigate();
