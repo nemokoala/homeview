@@ -27,44 +27,45 @@ function CommunityFactory() {
   };
 
   const confirm = async () => {
-    try {
-      const response = await axios.post(`${apiAddress}/api/posting/add`, {
-        title: title,
-        content: content,
-        member: {
-          id: session.id,
-          name: session.name,
-          nickname: session.nickname,
-          email: session.email,
-          password: session.password,
-          role: session.role,
-        },
-      });
+    if (title.length < 2 || title.length > 50)
+      try {
+        const response = await axios.post(`${apiAddress}/api/posting/add`, {
+          title: title,
+          content: content,
+          member: {
+            id: session.id,
+            name: session.name,
+            nickname: session.nickname,
+            email: session.email,
+            password: session.password,
+            role: session.role,
+          },
+        });
 
-      console.log("리스폰즈DATAthen : " + response.data);
-      console.log("리스폰즈STATUS : " + response.status);
-      console.log(session.id + " // " + session.nickname);
-      if (response.status === 201) {
+        console.log("리스폰즈DATAthen : " + response.data);
+        console.log("리스폰즈STATUS : " + response.status);
+        console.log(session.id + " // " + session.nickname);
+        if (response.status === 201) {
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "글 작성을 완료했습니다.",
+              btn1Func: function () {
+                navigate("/community");
+              },
+            } as any)
+          );
+        }
+      } catch (error: any) {
+        const errorText = JSON.stringify(error);
         dispatch(
           setModal({
-            title: "알림",
-            text: "글 작성을 완료했습니다.",
-            btn1Func: function () {
-              navigate("/community");
-            },
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
           } as any)
         );
       }
-    } catch (error: any) {
-      const errorText = error.response.data.toString();
-      dispatch(
-        setModal({
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
-        } as any)
-      );
-    }
   };
 
   return (
@@ -80,8 +81,8 @@ function CommunityFactory() {
         onChange={onChange}
         value={content}
         rows={1}
-        onKeyUp={(e) => {
-          if (e.key === "Enter") confirm();
+        onKeyDown={(e) => {
+          if (e.shiftKey && e.keyCode === 13) confirm();
         }}
       />
       <Button onClick={confirm}>작성 완료</Button>
@@ -140,6 +141,11 @@ const Content = styled.textarea`
   background-color: rgba(255, 255, 255, 0.712);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  &:focus {
+    outline: 1px solid var(--orange) !important;
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 7px var(--orange);
+  }
 `;
 
 const Button = styled.button`
