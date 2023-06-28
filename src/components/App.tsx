@@ -253,13 +253,13 @@ function App() {
       const response = await axios.get(`${apiAddress}/api/info`, {
         withCredentials: true,
       });
-      console.log(JSON.stringify(response));
+      console.log("App.tsx(getUserData): " + JSON.stringify(response));
       const userData = response.data;
       return userData;
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
-      console.error(JSON.stringify(error));
+      console.error("App.tsx(getUserData): " + JSON.stringify(error));
       return "";
     }
   };
@@ -274,10 +274,8 @@ function App() {
       } else {
         let userData = await getUserData();
         console.log("유저데이터 ", userData);
-        if (userData !== "")
-          dispatch(
-            saveSession({ ...userData } as any)
-          ); //만료되지 않았다면 localstorage정보를 redux에 업데이트
+        if (userData !== "") dispatch(saveSession({ ...userData } as any));
+        //만료되지 않았다면 localstorage정보를 redux에 업데이트
         else if (userData === "") dispatch(saveSession("" as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
         setTimeout(() => {
           //x분뒤 세션 만료
