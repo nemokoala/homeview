@@ -47,7 +47,7 @@ function Community() {
     <Container>
       <Link
         to="/community/post"
-        style={{ width: "80%", marginTop: "20px", textDecoration: "none" }}
+        style={{ width: "80%", margin: "20px 0", textDecoration: "none" }}
       >
         <Button>글 작성</Button>
       </Link>
@@ -76,7 +76,7 @@ const Container = styled.div`
 
 const ContentBlock = styled.div`
   width: 90%;
-  margin: 10px 0;
+  margin: 15px 0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   padding: 20px;
   border-radius: 20px;
