@@ -99,12 +99,6 @@ function CommunityFactory() {
         onChange={onChange}
         value={content}
         rows={1}
-        onKeyDown={(e) => {
-          if (e.shiftKey && e.keyCode === 13) {
-            e.preventDefault();
-            confirm();
-          }
-        }}
       />
       <Button onClick={confirm}>작성 완료</Button>
     </Container>
