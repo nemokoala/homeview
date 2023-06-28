@@ -27,45 +27,68 @@ function CommunityFactory() {
   };
 
   const confirm = async () => {
-    if (title.length < 2 || title.length > 50)
-      try {
-        const response = await axios.post(`${apiAddress}/api/posting/add`, {
-          title: title,
-          content: content,
-          member: {
-            id: session.id,
-            name: session.name,
-            nickname: session.nickname,
-            email: session.email,
-            password: session.password,
-            role: session.role,
+    if (title.length < 2 || title.length > 50) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "글 제목은 2~50자리 사이로 입력해주세요.",
+          btn1Func: function () {
+            navigate("/community");
           },
-        });
+        } as any)
+      );
+      return;
+    }
+    if (content.length < 2 || content.length > 500) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "글 내용은 2~500자리 사이로 입력해주세요.",
+          btn1Func: function () {
+            navigate("/community");
+          },
+        } as any)
+      );
+      return;
+    }
+    try {
+      const response = await axios.post(`${apiAddress}/api/posting/add`, {
+        title: title,
+        content: content,
+        member: {
+          id: session.id,
+          name: session.name,
+          nickname: session.nickname,
+          email: session.email,
+          password: session.password,
+          role: session.role,
+        },
+      });
 
-        console.log("리스폰즈DATAthen : " + response.data);
-        console.log("리스폰즈STATUS : " + response.status);
-        console.log(session.id + " // " + session.nickname);
-        if (response.status === 201) {
-          dispatch(
-            setModal({
-              title: "알림",
-              text: "글 작성을 완료했습니다.",
-              btn1Func: function () {
-                navigate("/community");
-              },
-            } as any)
-          );
-        }
-      } catch (error: any) {
-        const errorText = JSON.stringify(error);
+      console.log("리스폰즈DATAthen : " + response.data);
+      console.log("리스폰즈STATUS : " + response.status);
+      console.log(session.id + " // " + session.nickname);
+      if (response.status === 201) {
         dispatch(
           setModal({
-            title: "에러!",
-            titleColor: "red",
-            text: errorText,
+            title: "알림",
+            text: "글 작성을 완료했습니다.",
+            btn1Func: function () {
+              navigate("/community");
+            },
           } as any)
         );
       }
+    } catch (error: any) {
+      const errorText = JSON.stringify(error);
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
+    }
   };
 
   return (
