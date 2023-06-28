@@ -7,7 +7,7 @@ import { apiAddress } from "value";
 function Community() {
   const [posts, setPosts] = useState<any>([
     {
-      id: 1,
+      post_id: 1,
       title: "글 정보 불러오는 중...",
       content: "첫번쨰 글",
       nickname: "로딩중...",
@@ -43,7 +43,7 @@ function Community() {
       {posts.map((post: any) => (
         <ContentBlock
           key={post.post_id}
-          onClick={() => navigate(`/community/${post.id}`)}
+          onClick={() => navigate(`/community/${post.post_id}`)}
         >
           <ContentText fontSize={1.3}>{post.title}</ContentText>
           <Hr></Hr>
