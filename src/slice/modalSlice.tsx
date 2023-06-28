@@ -17,12 +17,12 @@ export const modalSlice = createSlice({
   },
   reducers: {
     setModal: (state: any, action: any): any => {
-      const errorJson = JSON.parse(action.payload);
-      const status = errorJson.status;
-      console.log(
-        "modalslice의 action.payload : " + JSON.stringify(action.payload)
-      );
-      if (status === 500) {
+      console.log(JSON.stringify(action.payload));
+      if (
+        typeof action.payload.text === "string" &&
+        action.payload.text.includes("500") &&
+        action.payload.text.includes("failed")
+      ) {
         action.payload.text =
           "로그인 세션이 유효하지 않습니다. 다시 로그인 해주세요.";
       }
