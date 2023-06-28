@@ -75,7 +75,7 @@ function Register() {
                 title: "알림",
                 text: "회원가입이 완료되었습니다. 로그인 해주세요.",
                 btn1Func: function () {
-                  navigate("/api/login");
+                  navigate("/login");
                 },
               } as any)
             );

@@ -112,6 +112,7 @@ const Buttons = styled.div<any>`
     height: 100%;
     border: 0px;
     border-radius: 10px;
+    transition: 0.5s all;
   }
   & button:nth-child(1) {
     background-color: ${(props) => props.btn1Color};
