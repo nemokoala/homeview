@@ -54,8 +54,7 @@ function Community() {
             ❤️{0} 👀{post.postHits}
           </ContentText>
           <ContentText>
-            {post.nickname}({post.member.id}) &nbsp;|&nbsp;{" "}
-            {post.postHits.toLocaleString()}
+            {post.nickname}({post.member.id}) &nbsp;|&nbsp; {post.postTime}
           </ContentText>
         </ContentBlock>
       ))}
