@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
@@ -25,14 +25,14 @@ function Community() {
       likes: 2,
     },
   ]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     getPostingData();
   }, []);
 
   const getPostingData = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/api/posting/`);
+      const response = await axios.get(`${apiAddress}/api/posting/list`);
       console.log(JSON.stringify(response));
 
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
@@ -50,7 +50,10 @@ function Community() {
         <Button>글 작성</Button>
       </Link>
       {posts.map((post) => (
-        <ContentBlock key={post.id}>
+        <ContentBlock
+          key={post.id}
+          onClick={() => navigate(`/community/${post.id}`)}
+        >
           <ContentText fontSize={1.3}>{post.title}</ContentText>
           <Hr></Hr>
           <ContentText fontSize={1.1}>

@@ -66,7 +66,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
           />
           <Route path="/map" element={<Map />} />
           <Route path="/community" element={<Community />} />
-
+          <Route path="/community/:id" element={<Post />} />
           <Route path="/community/post" element={<CommunityFactory />} />
           {session ? (
             <Route path="/profile" element={<Profile />} />
