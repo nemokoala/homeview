@@ -5,24 +5,15 @@ import styled from "styled-components";
 import { apiAddress } from "value";
 
 function Community() {
-  const [posts, setPosts] = useState([
+  const [posts, setPosts] = useState<any>([
     {
       id: 1,
-      title: "자취 필수 용품 알려드립니다..",
+      title: "글 정보 불러오는 중...",
       content: "첫번쨰 글",
-      writer: "알라",
-      createdAt: new Date(),
-      views: 10,
-      likes: 2,
-    },
-    {
-      id: 2,
-      title: "심심하다",
-      content: "두번째 글",
-      writer: "만보",
-      createdAt: new Date(),
-      views: 6,
-      likes: 2,
+      nickname: "로딩중...",
+      postTime: "",
+      postHits: 0,
+      likes: 0,
     },
   ]);
   const navigate = useNavigate();
@@ -33,12 +24,12 @@ function Community() {
   const getPostingData = async () => {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/list`);
-      console.log(JSON.stringify(response));
-
+      console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
+      setPosts(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
-      console.error(JSON.stringify(error));
+      console.error("Community.tsx(getPostingData): " + JSON.stringify(error));
     }
   };
   return (
@@ -49,19 +40,19 @@ function Community() {
       >
         <Button>글 작성</Button>
       </Link>
-      {posts.map((post) => (
+      {posts.map((post: any) => (
         <ContentBlock
-          key={post.id}
+          key={post.post_id}
           onClick={() => navigate(`/community/${post.id}`)}
         >
           <ContentText fontSize={1.3}>{post.title}</ContentText>
           <Hr></Hr>
           <ContentText fontSize={1.1}>
-            ❤️{post.likes} 👀{post.views}
+            ❤️{0} 👀{post.postHits}
           </ContentText>
           <ContentText>
-            {post.writer}({post.id}) &nbsp;|&nbsp;{" "}
-            {post.createdAt.toLocaleString()}
+            {post.nickname}({post.member.id}) &nbsp;|&nbsp;{" "}
+            {post.postHits.toLocaleString()}
           </ContentText>
         </ContentBlock>
       ))}
