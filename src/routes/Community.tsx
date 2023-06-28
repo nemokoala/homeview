@@ -54,7 +54,7 @@ function Community() {
       {posts.map((post) => (
         <ContentBlock key={post.id}>
           <ContentText fontSize={1.3}>{post.title}</ContentText>
-          <hr></hr>
+          <Hr></Hr>
           <ContentText fontSize={1.1}>
             ❤️{post.likes} 👀{post.views}
           </ContentText>
@@ -116,5 +116,13 @@ const Button = styled.button`
     color: orange;
     border: 2px solid orange !important;
   }
+`;
+
+const Hr = styled.hr`
+  width: 98%;
+  height: 1px;
+  border: 0px;
+  background-color: black;
+  margin: 10px 0;
 `;
 export default Community;
