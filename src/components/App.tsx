@@ -274,7 +274,11 @@ function App() {
       } else {
         let userData = await getUserData();
         console.log("유저데이터 ", userData);
-        dispatch(saveSession({ ...userData } as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
+        if (userData !== "")
+          dispatch(
+            saveSession({ ...userData } as any)
+          ); //만료되지 않았다면 localstorage정보를 redux에 업데이트
+        else if (userData === "") dispatch(saveSession("" as any)); //만료되지 않았다면 localstorage정보를 redux에 업데이트
         setTimeout(() => {
           //x분뒤 세션 만료
           alert("로그인 세션이 만료되었습니다. 다시 로그인 해주세요.");

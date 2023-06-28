@@ -54,30 +54,18 @@ function Community() {
       >
         <Button>글 작성</Button>
       </Link>
-      <TableContainer>
-        <thead>
-          <tr>
-            <TableHeader>글번호</TableHeader>
-            <TableHeader>제목</TableHeader>
-            <TableHeader>작성자</TableHeader>
-            <TableHeader>작성일</TableHeader>
-            <TableHeader>조회</TableHeader>
-            <TableHeader>추천</TableHeader>
-          </tr>
-        </thead>
-        <tbody>
-          {posts.map((post) => (
-            <PostTr key={post.id}>
-              <TableCell>{post.id}</TableCell>
-              <TableCell>{post.title}</TableCell>
-              <TableCell>{post.writer}</TableCell>
-              <TableCell>{post.createdAt.toLocaleString()}</TableCell>
-              <TableCell>{post.views}</TableCell>
-              <TableCell>{post.likes}</TableCell>
-            </PostTr>
-          ))}
-        </tbody>
-      </TableContainer>
+      {posts.map((post) => (
+        <ContentBlock key={post.id}>
+          <ContentText fontSize={1.3}>{post.title}</ContentText>
+          <hr></hr>
+          <ContentText fontSize={1.1}>
+            ❤️{post.likes} 👀{post.views}
+          </ContentText>
+          <ContentText>
+            {post.writer} &nbsp;|&nbsp; {post.createdAt.toLocaleString()}
+          </ContentText>
+        </ContentBlock>
+      ))}
     </Container>
   );
 }
@@ -89,50 +77,32 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const TableContainer = styled.table`
-  border-collapse: collapse;
-  width: 80%;
-  margin-top: 30px;
-`;
-
-const TableHeader = styled.th`
-  background-color: #c3ec53;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  &:nth-child(1) {
-    border-radius: 20px 0 0 20px;
-  }
-  &:nth-last-child(1) {
-    border-radius: 0 20px 20px 0;
-  }
-`;
-const PostTr = styled.tr`
-  &:hover > td {
+const ContentBlock = styled.div`
+  width: 90%;
+  margin: 20px 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  padding: 20px;
+  border-radius: 20px;
+  transition: all 0.7s;
+  &:hover {
+    background-color: rgb(255, 241, 195);
     cursor: pointer;
-    color: #ca55ca;
+    transform: scale(1.03);
   }
 `;
-const TableCell = styled.td`
-  font-size: 16px;
-  text-align: center;
-  padding: 10px;
-  border: 0px solid #c5c5c5;
-  &:nth-child(1) {
-    border-radius: 20px 0 0 20px;
-  }
-  &:nth-last-child(1) {
-    border-radius: 0 20px 20px 0;
-  }
+const ContentText = styled.div<any>`
+  font-size: ${(props) => props.fontSize + "rem"};
+  color: ${(props) => props.fontColor};
 `;
-
 const Button = styled.button`
   width: 100%;
   height: 50px;
   margin: 10px 0;
   background-color: var(--orange);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  border: 0px;
   border-radius: 20px;
+  transition: all 0.7s;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
