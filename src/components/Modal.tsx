@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "slice/modalSlice";
+import { saveSession } from "slice/userSlice";
 function Modal({ ...props }: any) {
   const modal = useSelector((state: any) => state.modalSet.modal);
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ function Modal({ ...props }: any) {
       window.removeEventListener("keydown", handleKeyDown);
     };
   });
+  useEffect(() => {
+    if (modal.text == "로그인 세션이 유효하지 않습니다. 다시 로그인 해주세요.")
+      dispatch(saveSession("" as any));
+  }, [modal]);
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       if (modal.open) {
