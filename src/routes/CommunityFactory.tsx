@@ -49,6 +49,7 @@ function CommunityFactory() {
       const response = await axios.post(`${apiAddress}/api/posting/add`, {
         title: title,
         content: content,
+        nickname: session.nickname,
         member: {
           id: session.id,
           name: session.name,
@@ -99,7 +100,10 @@ function CommunityFactory() {
         value={content}
         rows={1}
         onKeyDown={(e) => {
-          if (e.shiftKey && e.keyCode === 13) confirm();
+          if (e.shiftKey && e.keyCode === 13) {
+            e.preventDefault();
+            confirm();
+          }
         }}
       />
       <Button onClick={confirm}>작성 완료</Button>
