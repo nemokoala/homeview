@@ -59,7 +59,8 @@ function Community() {
             ❤️{post.likes} 👀{post.views}
           </ContentText>
           <ContentText>
-            {post.writer} &nbsp;|&nbsp; {post.createdAt.toLocaleString()}
+            {post.writer}({post.id}) &nbsp;|&nbsp;{" "}
+            {post.createdAt.toLocaleString()}
           </ContentText>
         </ContentBlock>
       ))}
