@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiAddress } from "value";
@@ -19,6 +20,7 @@ function Community() {
       },
     },
   ]);
+  const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
     getPostingData();
@@ -35,6 +37,31 @@ function Community() {
       console.error("Community.tsx(getPostingData): " + JSON.stringify(error));
     }
   };
+
+  const deletePostingData = async (id: any) => {
+    const answer = prompt(
+      `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
+    );
+    if (answer === null) {
+      alert("게시글 삭제를 취소하였습니다.");
+      return;
+    } else if (parseInt(answer) !== id) {
+      alert("id를 잘못 입력하였습니다.");
+      return;
+    } else if (parseInt(answer) === id) alert("유저를 삭제합니다.");
+    try {
+      const response = await axios.delete(`${apiAddress}/api/posting/${id}`);
+      console.log(
+        "Community.tsx(deletePostingData): " + JSON.stringify(response)
+      );
+      // dispatch(setModal({ text: JSON.stringify(response) } as any));
+    } catch (error: any) {
+      // dispatch(setModal({ text: JSON.stringify(error) } as any));
+      console.error(
+        "Community.tsx(deletePostingData): " + JSON.stringify(error)
+      );
+    }
+  };
   return (
     <Container>
       <Link
@@ -48,8 +75,15 @@ function Community() {
           key={post.post_id}
           onClick={() => navigate(`/community/${post.post_id}`)}
         >
-          <ContentText fontSize={1.3}>{post.title}</ContentText>
-          <Hr></Hr>
+          <ContentText fontSize={1.3}>
+            {post.title}{" "}
+            {session.role === "ADMIN" && (
+              <DeleteBtn onClick={() => deletePostingData(post.post_id)}>
+                삭제
+              </DeleteBtn>
+            )}
+          </ContentText>
+          <Hr />
           <ContentText fontSize={1.1}>
             ❤️{0} 👀{post.postHits}
           </ContentText>
@@ -79,10 +113,12 @@ const ContentBlock = styled.div`
   &:hover {
     background-color: rgb(255, 241, 195);
     cursor: pointer;
-    transform: scale(1.03);
   }
 `;
 const ContentText = styled.div<any>`
+  display: flex;
+  align-items: center;
+  height: auto;
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
 `;
@@ -114,10 +150,30 @@ const Button = styled.button`
 `;
 
 const Hr = styled.hr`
-  width: 98%;
+  width: 100%;
   height: 1px;
   border: 0px;
   background-color: black;
   margin: 10px 0;
 `;
+
+const DeleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  color: white;
+  background-color: tomato;
+  margin-left: auto;
+  &:hover {
+    filter: contrast(200%);
+    cursor: pointer;
+  }
+  &:active {
+    filter: hue-rotate(90deg);
+  }
+`;
+
 export default Community;
