@@ -68,8 +68,6 @@ function Admin({ reviewData, setReviewData }: any) {
           방 관리
         </div>
         <div onClick={() => console.log(members)}>리뷰 관리</div>
-        <div>게시물 관리</div>
-        <div>댓글 관리</div>
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
