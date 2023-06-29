@@ -57,6 +57,7 @@ function Community() {
       console.log(
         "Community.tsx(deletePostingData): " + JSON.stringify(response)
       );
+      getPostingData();
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
