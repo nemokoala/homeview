@@ -46,6 +46,8 @@ function CommunityFactory() {
       return;
     }
     try {
+      const contentFix = content.replace(/\n/g, "<br>"); //줄바꿈 문제해결
+      setContent(contentFix);
       const response = await axios.post(`${apiAddress}/api/posting/add`, {
         title: title,
         content: content,
