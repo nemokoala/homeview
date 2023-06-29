@@ -51,7 +51,7 @@ function Community() {
       return;
     } else if (parseInt(answer) === id) alert("게시글을 삭제합니다.");
     try {
-      const response = await axios.delete(`${apiAddress}/api/posting/${id}`, {
+      const response = await axios.delete(`${apiAddress}/admin/posting/${id}`, {
         withCredentials: true,
       });
       console.log(
