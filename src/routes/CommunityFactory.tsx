@@ -23,10 +23,7 @@ function CommunityFactory() {
       target: { id, value },
     } = e;
     if (id === "title") setTitle(value);
-    if (id === "content") {
-      const contentWithLineBreaks = value.replace(/\n/g, "<br>");
-      setContent(contentWithLineBreaks);
-    }
+    if (id === "content") setContent(value);
   };
 
   const confirm = async () => {
@@ -51,7 +48,7 @@ function CommunityFactory() {
     try {
       const response = await axios.post(`${apiAddress}/api/posting/add`, {
         title: title,
-        content: content,
+        content: content.replace(/\n/g, "<br>"),
         nickname: session.nickname,
         member: {
           id: session.id,
