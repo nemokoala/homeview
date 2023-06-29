@@ -38,7 +38,8 @@ function Community() {
     }
   };
 
-  const deletePostingData = async (id: any) => {
+  const deletePostingData = async (event: any, id: number) => {
+    event.stopPropagation();
     const answer = prompt(
       `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
     );
@@ -48,9 +49,11 @@ function Community() {
     } else if (parseInt(answer) !== id) {
       alert("id를 잘못 입력하였습니다.");
       return;
-    } else if (parseInt(answer) === id) alert("유저를 삭제합니다.");
+    } else if (parseInt(answer) === id) alert("게시글을 삭제합니다.");
     try {
-      const response = await axios.delete(`${apiAddress}/api/posting/${id}`);
+      const response = await axios.delete(`${apiAddress}/api/posting/${id}`, {
+        withCredentials: true,
+      });
       console.log(
         "Community.tsx(deletePostingData): " + JSON.stringify(response)
       );
@@ -78,7 +81,9 @@ function Community() {
           <ContentText fontSize={1.3}>
             {post.title}{" "}
             {session.role === "ADMIN" && (
-              <DeleteBtn onClick={() => deletePostingData(post.post_id)}>
+              <DeleteBtn
+                onClick={(event: any) => deletePostingData(event, post.post_id)}
+              >
                 삭제
               </DeleteBtn>
             )}
