@@ -1,16 +1,46 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { apiAddress } from "value";
 
 function Post() {
   const params = useParams();
   const postId = params.id;
-  const [postData, setPostData] = useState({});
+  const [postData, setPostData] = useState<any>("");
+  useEffect(() => {
+    getPostDetail();
+  }, []);
+  const getPostDetail = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/api/posting/${postId}`);
+      console.log("Post.tsx(getPostDetail): " + JSON.stringify(response));
+      setPostData(response.data);
+    } catch (error: any) {
+      console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
+    }
+  };
   return (
     <Container>
-      <ContentBlock>
-        <ContentText>게시글 : {postId}</ContentText>
-      </ContentBlock>
+      {postData ? (
+        <ContentBlock>
+          <ContentText fontSize={1.2}>
+            {postData.title}({postData.postId})
+          </ContentText>
+          <ContentText fontSize={0.9}>
+            {postData.memberNickname}({postData.memberId})
+          </ContentText>
+          <hr />
+          <ContentText>{postData.content}</ContentText>
+          <ContentText>
+            ❤️{postData.postLikes} 👀{postData.postHits}
+          </ContentText>
+        </ContentBlock>
+      ) : (
+        <ContentBlock>
+          <ContentText>로딩중...</ContentText>
+        </ContentBlock>
+      )}
     </Container>
   );
 }
