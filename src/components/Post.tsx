@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
 function Post() {
   const params = useParams();
+  const navigate = useNavigate();
   const postId = params.id;
   const [postData, setPostData] = useState<any>("");
   // const example = {
@@ -64,6 +65,30 @@ function Post() {
       console.error("Post.tsx(likeUp): " + JSON.stringify(error));
     }
   };
+
+  const deletePostingData = async (id: number) => {
+    const answer = prompt(
+      `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
+    );
+    if (answer === null) {
+      alert("게시글 삭제를 취소하였습니다.");
+      return;
+    } else if (parseInt(answer) !== id) {
+      alert("id를 잘못 입력하였습니다.");
+      return;
+    } else if (parseInt(answer) === id) alert("게시글을 삭제합니다.");
+    try {
+      const response = await axios.delete(`${apiAddress}/admin/posting/${id}`, {
+        withCredentials: true,
+      });
+      console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
+      navigate("/community");
+      // dispatch(setModal({ text: JSON.stringify(response) } as any));
+    } catch (error: any) {
+      // dispatch(setModal({ text: JSON.stringify(error) } as any));
+      console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
+    }
+  };
   return (
     <Container>
       {postData ? (
@@ -77,9 +102,14 @@ function Post() {
           <ContentText fontSize={0.9} fontColor="gray">
             {postData.postTime}
           </ContentText>
+          {session.role === "ADMIN" && (
+            <RedBtn onClick={() => deletePostingData(postData.postId)}>
+              삭제
+            </RedBtn>
+          )}
           <hr />
           <ContentText>{postData.content}</ContentText>
-          <LikeBtn onClick={likeUp}>❤️{postData.postLikes}</LikeBtn>
+          <RedBtn onClick={likeUp}>❤️{postData.postLikes}</RedBtn>
         </ContentBlock>
       ) : (
         <ContentBlock>
@@ -109,7 +139,7 @@ const ContentText = styled.div<any>`
   color: ${(props) => props.fontColor};
   white-space: pre-wrap;
 `;
-const LikeBtn = styled.div`
+const RedBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
