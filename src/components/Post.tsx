@@ -7,16 +7,7 @@ import { apiAddress } from "value";
 function Post() {
   const params = useParams();
   const postId = params.id;
-  const [postData, setPostData] = useState<any>({
-    postId: 8,
-    memberId: 2,
-    memberNickname: "어드민계정",
-    title: "줄바꿈2",
-    content: "안녕\n줄바꿈테스트\n세번째줄",
-    postTime: "2023-06-29T13:34:55.820+00:00",
-    postHits: 1,
-    postLikes: 0,
-  });
+  const [postData, setPostData] = useState<any>("");
   useEffect(() => {
     getPostDetail();
   }, []);
@@ -41,6 +32,7 @@ function Post() {
           <ContentText fontSize={0.9}>
             {postData.memberNickname}({postData.memberId})
           </ContentText>
+          <ContentText fontSize={0.9}>{postData.postTime}</ContentText>
           <hr />
           <ContentText>{postData.content}</ContentText>
           <ContentText>
