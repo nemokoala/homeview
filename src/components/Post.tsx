@@ -8,6 +8,16 @@ function Post() {
   const params = useParams();
   const postId = params.id;
   const [postData, setPostData] = useState<any>("");
+  // const example = {
+  //   postId: 12,
+  //   memberId: 2,
+  //   memberNickname: "어드민계정",
+  //   title: "하이",
+  //   content: "안녕하세요<br/>hi<br/>33",
+  //   postTime: "2023-07-01T10:49:10.162+00:00",
+  //   postHits: 1,
+  //   postLikes: 0,
+  // };
   useEffect(() => {
     getPostDetail();
   }, []);
@@ -17,6 +27,11 @@ function Post() {
       console.log("Post.tsx(getPostDetail): " + JSON.stringify(response));
       const updatedData = response.data;
       updatedData.content = updatedData.content.split("<br/>").join("\n");
+      const dateObj = new Date(updatedData.postTime);
+      updatedData.postTime =
+        dateObj.toLocaleDateString("ko-KR") +
+        " " +
+        dateObj.toLocaleTimeString("ko-KR");
       setPostData(updatedData);
     } catch (error: any) {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
@@ -26,7 +41,7 @@ function Post() {
     <Container>
       {postData ? (
         <ContentBlock>
-          <ContentText fontSize={1.2}>
+          <ContentText fontSize={1.3}>
             {postData.title}({postData.postId})
           </ContentText>
           <ContentText fontSize={0.9}>

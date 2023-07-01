@@ -28,7 +28,13 @@ function Community() {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/list`);
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
-      setPosts(response.data);
+      const updatedData = response.data;
+      const dateObj = new Date(updatedData.postTime);
+      updatedData.postTime =
+        dateObj.toLocaleDateString("ko-KR") +
+        " " +
+        dateObj.toLocaleTimeString("ko-KR");
+      setPosts(updatedData);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
