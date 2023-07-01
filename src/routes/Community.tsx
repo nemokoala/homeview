@@ -70,7 +70,11 @@ function Community() {
     const changedTime =
       dateObj.toLocaleDateString("ko-KR") +
       " " +
-      dateObj.toLocaleTimeString("ko-KR");
+      dateObj.toLocaleTimeString("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "numeric",
+      });
     return changedTime;
   };
   return (

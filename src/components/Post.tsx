@@ -31,7 +31,11 @@ function Post() {
       updatedData.postTime =
         dateObj.toLocaleDateString("ko-KR") +
         " " +
-        dateObj.toLocaleTimeString("ko-KR");
+        dateObj.toLocaleTimeString("ko-KR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "numeric",
+        });
       setPostData(updatedData);
     } catch (error: any) {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
