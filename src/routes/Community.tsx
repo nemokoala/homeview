@@ -8,16 +8,14 @@ import { apiAddress } from "value";
 function Community() {
   const [posts, setPosts] = useState<any>([
     {
-      post_id: 1,
+      postId: 1,
       title: "글 정보 불러오는 중...",
       content: "첫번쨰 글",
-      nickname: "로딩중...",
+      memberNickname: "로딩중...",
       postTime: "",
       postHits: 0,
-      likes: 0,
-      member: {
-        id: 0,
-      },
+      postLikes: 0,
+      memberId: 0,
     },
   ]);
   const session = useSelector((state: any) => state.userSet.session);
@@ -76,14 +74,14 @@ function Community() {
       </Link>
       {posts.map((post: any) => (
         <ContentBlock
-          key={post.post_id}
-          onClick={() => navigate(`/community/${post.post_id}`)}
+          key={post.postId}
+          onClick={() => navigate(`/community/${post.postId}`)}
         >
           <ContentText fontSize={1.3}>
             {post.title}{" "}
             {session.role === "ADMIN" && (
               <DeleteBtn
-                onClick={(event: any) => deletePostingData(event, post.post_id)}
+                onClick={(event: any) => deletePostingData(event, post.postId)}
               >
                 삭제
               </DeleteBtn>
@@ -91,10 +89,10 @@ function Community() {
           </ContentText>
           <Hr />
           <ContentText fontSize={1.1}>
-            ❤️{0} 👀{post.postHits}
+            ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
           <ContentText>
-            {post.nickname}({post.member.id}) &nbsp;|&nbsp; {post.postTime}
+            {post.memberNickname}({post.memberId}) &nbsp;|&nbsp; {post.postTime}
           </ContentText>
         </ContentBlock>
       ))}
