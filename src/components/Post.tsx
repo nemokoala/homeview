@@ -7,7 +7,16 @@ import { apiAddress } from "value";
 function Post() {
   const params = useParams();
   const postId = params.id;
-  const [postData, setPostData] = useState<any>("");
+  const [postData, setPostData] = useState<any>({
+    postId: 8,
+    memberId: 2,
+    memberNickname: "어드민계정",
+    title: "줄바꿈2",
+    content: "안녕\n줄바꿈테스트\n세번째줄",
+    postTime: "2023-06-29T13:34:55.820+00:00",
+    postHits: 1,
+    postLikes: 0,
+  });
   useEffect(() => {
     getPostDetail();
   }, []);
@@ -15,7 +24,9 @@ function Post() {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/${postId}`);
       console.log("Post.tsx(getPostDetail): " + JSON.stringify(response));
-      setPostData(response.data);
+      const updatedData = response.data;
+      updatedData.content = updatedData.content.split("<br/>").join("\n");
+      setPostData(updatedData);
     } catch (error: any) {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
     }
@@ -62,6 +73,6 @@ const ContentBlock = styled.div`
 const ContentText = styled.div<any>`
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
-  white-space: pre-line;
+  white-space: pre-wrap;
 `;
 export default Post;
