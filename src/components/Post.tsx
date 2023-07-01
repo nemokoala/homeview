@@ -62,5 +62,6 @@ const ContentBlock = styled.div`
 const ContentText = styled.div<any>`
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
+  white-space: pre-wrap;
 `;
 export default Post;
