@@ -48,7 +48,7 @@ function CommunityFactory() {
     try {
       const response = await axios.post(`${apiAddress}/api/posting/add`, {
         title: title,
-        content: content.replace(/\n/g, "<br>"),
+        content: content.replace(/\n/g, "{<br/>}"),
         nickname: session.nickname,
         member: {
           id: session.id,
