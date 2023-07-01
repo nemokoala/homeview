@@ -32,9 +32,9 @@ function Post() {
         dateObj.toLocaleDateString("ko-KR") +
         " " +
         dateObj.toLocaleTimeString("ko-KR", {
+          hour12: true,
           hour: "2-digit",
           minute: "2-digit",
-          second: "numeric",
         });
       setPostData(updatedData);
     } catch (error: any) {
