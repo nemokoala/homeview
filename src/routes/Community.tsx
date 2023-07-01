@@ -105,7 +105,7 @@ function Community() {
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
           <ContentText>
-            {post.memberNickname}({post.memberId}) &nbsp;|&nbsp;{" "}
+            {post.memberNickname}#{post.memberId} &nbsp;|&nbsp;{" "}
             {changeDate(post.postTime)}
           </ContentText>
         </ContentBlock>
