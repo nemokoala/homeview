@@ -28,13 +28,7 @@ function Community() {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/list`);
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
-      const updatedData = response.data;
-      const dateObj = new Date(updatedData.postTime);
-      updatedData.postTime =
-        dateObj.toLocaleDateString("ko-KR") +
-        " " +
-        dateObj.toLocaleTimeString("ko-KR");
-      setPosts(updatedData);
+      setPosts(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
@@ -70,6 +64,15 @@ function Community() {
       );
     }
   };
+
+  const changeDate = (time: any) => {
+    const dateObj = new Date(time);
+    const changedTime =
+      dateObj.toLocaleDateString("ko-KR") +
+      " " +
+      dateObj.toLocaleTimeString("ko-KR");
+    return changedTime;
+  };
   return (
     <Container>
       <Link
@@ -98,7 +101,8 @@ function Community() {
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
           <ContentText>
-            {post.memberNickname}({post.memberId}) &nbsp;|&nbsp; {post.postTime}
+            {post.memberNickname}({post.memberId}) &nbsp;|&nbsp;{" "}
+            {changeDate(post.postTime)}
           </ContentText>
         </ContentBlock>
       ))}
