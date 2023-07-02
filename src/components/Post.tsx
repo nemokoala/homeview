@@ -149,6 +149,7 @@ const RedBtn = styled.div`
   color: white;
   background-color: #fdadad;
   margin-top: 7px;
+  transition: all 0.7s;
   &:hover {
     filter: contrast(200%);
     cursor: pointer;
