@@ -125,7 +125,7 @@ function Community() {
           id="search"
           onChange={onChange}
           onKeyUp={enterPress}
-          placeholder="게시판 제목 검색"
+          placeholder="게시글 제목 검색"
         />
         <div onClick={searching}>검색</div>
       </SearchContainer>
@@ -257,6 +257,7 @@ const SearchContainer = styled.div`
     justify-content: center;
     align-items: center;
     background: lightgreen;
+    transition: all 0.7s;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 15px 3px,
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   }
