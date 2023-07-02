@@ -19,6 +19,7 @@ function Community() {
     },
   ]);
   const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -57,9 +58,7 @@ function Community() {
         "Community.tsx(deletePostingData): " + JSON.stringify(response)
       );
       getPostingData();
-      // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
-      // dispatch(setModal({ text: JSON.stringify(error) } as any));
       console.error(
         "Community.tsx(deletePostingData): " + JSON.stringify(error)
       );
@@ -92,9 +91,13 @@ function Community() {
         `${apiAddress}/api/posting/search?keyword=${search}&page=0`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
-      // dispatch(setModal({ text: JSON.stringify(response) } as any));
+      if (response.data.content.length === 0)
+        setSearchResult("검색 결과가 없습니다.");
+      else {
+        setPosts(response.data.content);
+        setSearchResult(`▽ ${search}에 대한 검색 결과 ▽`);
+      }
     } catch (error: any) {
-      // dispatch(setModal({ text: JSON.stringify(error) } as any));
       console.error("Community.tsx(searching): " + JSON.stringify(error));
     }
   };
@@ -107,9 +110,11 @@ function Community() {
         <Button>글 작성</Button>
       </Link>
       <SearchContainer>
-        <Input id="search" onChange={onChange} placeholder="게시판 제목+내용" />
+        <Input id="search" onChange={onChange} placeholder="게시판 제목 검색" />
         <div onClick={searching}>검색</div>
       </SearchContainer>
+      <Hr style={{ width: "90%" }} />
+      {searchResult && <SearchResult>{searchResult}</SearchResult>}
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
@@ -259,5 +264,8 @@ const Input = styled.input`
     box-shadow: 0 0 7px var(--orange);
   }
 `;
-
+const SearchResult = styled.div`
+  font-size: 1.5rem;
+  margin: 10px auto;
+`;
 export default Community;
