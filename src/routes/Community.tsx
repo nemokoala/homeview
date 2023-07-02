@@ -108,6 +108,10 @@ function Community() {
     setSearchResult("");
     setPosts(searchTemp);
   };
+
+  const enterPress = (e: any) => {
+    if (e.key === "Enter") searching();
+  };
   return (
     <Container>
       <Link
@@ -117,11 +121,16 @@ function Community() {
         <Button>글 작성</Button>
       </Link>
       <SearchContainer>
-        <Input id="search" onChange={onChange} placeholder="게시판 제목 검색" />
+        <Input
+          id="search"
+          onChange={onChange}
+          onKeyUp={enterPress}
+          placeholder="게시판 제목 검색"
+        />
         <div onClick={searching}>검색</div>
       </SearchContainer>
       {searchResult && (
-        <SearchResult>
+        <SearchResult onClick={deleteSearch}>
           {searchResult}
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
