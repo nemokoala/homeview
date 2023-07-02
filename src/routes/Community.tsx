@@ -20,6 +20,7 @@ function Community() {
   ]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
+  let searchTemp = [] as any;
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -94,12 +95,18 @@ function Community() {
       if (response.data.content.length === 0)
         setSearchResult("검색 결과가 없습니다.");
       else {
+        searchTemp = posts;
         setPosts(response.data.content);
-        setSearchResult(`▽ ${search}에 대한 검색 결과 ▽`);
+        setSearchResult(`${search}에 대한 검색 결과`);
       }
     } catch (error: any) {
       console.error("Community.tsx(searching): " + JSON.stringify(error));
     }
+  };
+
+  const deleteSearch = () => {
+    setSearchResult("");
+    setPosts(searchTemp);
   };
   return (
     <Container>
@@ -113,8 +120,12 @@ function Community() {
         <Input id="search" onChange={onChange} placeholder="게시판 제목 검색" />
         <div onClick={searching}>검색</div>
       </SearchContainer>
-      <Hr style={{ width: "90%" }} />
-      {searchResult && <SearchResult>{searchResult}</SearchResult>}
+      {searchResult && (
+        <SearchResult>
+          {searchResult}
+          <div>&nbsp;&nbsp;x</div>
+        </SearchResult>
+      )}
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
@@ -228,7 +239,7 @@ const SearchContainer = styled.div`
   height: 50px;
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   & div {
     width: 90px;
     height: 50px;
@@ -237,7 +248,7 @@ const SearchContainer = styled.div`
     justify-content: center;
     align-items: center;
     background: lightgreen;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 15px 3px,
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   }
   & div:hover {
@@ -256,7 +267,7 @@ const Input = styled.input`
   border: 0px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 15px 3px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:focus {
     outline: 1px solid var(--orange) !important;
@@ -265,7 +276,27 @@ const Input = styled.input`
   }
 `;
 const SearchResult = styled.div`
-  font-size: 1.5rem;
-  margin: 10px auto;
+  display: flex;
+  font-size: 1.3rem;
+  margin: 5px auto;
+  transition: 0.5s all;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 5px 4px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  & div {
+    display: flex;
+    align-items: center;
+    transition: 0.5s all;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: tomato;
+    color: white;
+  }
+  &:hover div {
+    cursor: pointer;
+    color: white;
+  }
 `;
 export default Community;
