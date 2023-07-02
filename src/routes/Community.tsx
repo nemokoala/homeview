@@ -32,6 +32,7 @@ function Community() {
       const response = await axios.get(`${apiAddress}/api/posting/list`);
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
       setPosts(response.data);
+      setSearchTemp(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
@@ -95,7 +96,6 @@ function Community() {
       if (response.data.content.length === 0)
         setSearchResult("검색 결과가 없습니다.");
       else {
-        setSearchTemp(posts);
         setPosts(response.data.content);
         setSearchResult(`"${search}"에 대한 검색 결과`);
       }
