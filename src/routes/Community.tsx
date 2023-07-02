@@ -92,7 +92,6 @@ function Community() {
         `${apiAddress}/api/posting/search?keyword=${search}&page=0`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
-      setPosts(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
       // dispatch(setModal({ text: JSON.stringify(error) } as any));
