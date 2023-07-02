@@ -18,6 +18,7 @@ function Community() {
       memberId: 0,
     },
   ]);
+  const [search, setSearch] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -77,6 +78,27 @@ function Community() {
       });
     return changedTime;
   };
+
+  const onChange = (e: any) => {
+    const {
+      target: { id, value },
+    } = e;
+    if (id === "search") setSearch(value);
+  };
+
+  const searching = async () => {
+    try {
+      const response = await axios.get(
+        `${apiAddress}/api/posting/search?keyword=${search}&page=0`
+      );
+      console.log("Community.tsx(searching): " + JSON.stringify(response));
+      setPosts(response.data);
+      // dispatch(setModal({ text: JSON.stringify(response) } as any));
+    } catch (error: any) {
+      // dispatch(setModal({ text: JSON.stringify(error) } as any));
+      console.error("Community.tsx(searching): " + JSON.stringify(error));
+    }
+  };
   return (
     <Container>
       <Link
@@ -85,6 +107,10 @@ function Community() {
       >
         <Button>글 작성</Button>
       </Link>
+      <SearchContainer>
+        <Input id="search" onChange={onChange} placeholder="게시판 제목+내용" />
+        <div onClick={searching}>검색</div>
+      </SearchContainer>
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
@@ -191,6 +217,47 @@ const DeleteBtn = styled.div`
   }
   &:active {
     filter: hue-rotate(90deg);
+  }
+`;
+const SearchContainer = styled.div`
+  width: 80%;
+  height: 50px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  & div {
+    width: 90px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: lightgreen;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  }
+  & div:hover {
+    filter: contrast(200%);
+    cursor: pointer;
+  }
+  & div:active {
+    filter: hue-rotate(90deg);
+  }
+`;
+const Input = styled.input`
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 0px;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.712);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  &:focus {
+    outline: 1px solid var(--orange) !important;
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 7px var(--orange);
   }
 `;
 
