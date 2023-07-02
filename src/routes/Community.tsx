@@ -95,7 +95,7 @@ function Community() {
       if (response.data.content.length === 0)
         setSearchResult("검색 결과가 없습니다.");
       else {
-        searchTemp = posts;
+        searchTemp = [...posts];
         setPosts(response.data.content);
         setSearchResult(`${search}에 대한 검색 결과`);
       }
