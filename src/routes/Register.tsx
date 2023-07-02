@@ -215,7 +215,7 @@ function Register() {
           value={email}
           placeholder="example@ooo.com"
           autoComplete="on"
-          onKeyPress={enterPress}
+          onKeyUp={enterPress}
         ></Input>
         {pathname === register && (
           <DpButton
@@ -240,7 +240,7 @@ function Register() {
               : "Password"
           }
           autoComplete="on"
-          onKeyPress={enterPress}
+          onKeyUp={enterPress}
         ></Input>
         {pathname === register && (
           <>
@@ -252,7 +252,7 @@ function Register() {
               value={passwordConfirm}
               placeholder="입력한 비밀번호와 똑같이 입력해주세요."
               autoComplete="off"
-              onKeyPress={enterPress}
+              onKeyUp={enterPress}
             ></Input>
           </>
         )}
