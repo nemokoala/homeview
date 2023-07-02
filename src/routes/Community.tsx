@@ -20,7 +20,7 @@ function Community() {
   ]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
-  let searchTemp = [] as any;
+  const [searchTemp, setSearchTemp] = useState([]);
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -95,9 +95,9 @@ function Community() {
       if (response.data.content.length === 0)
         setSearchResult("검색 결과가 없습니다.");
       else {
-        searchTemp = [...posts];
+        setSearchTemp(posts);
         setPosts(response.data.content);
-        setSearchResult(`${search}에 대한 검색 결과`);
+        setSearchResult(`"${search}"에 대한 검색 결과`);
       }
     } catch (error: any) {
       console.error("Community.tsx(searching): " + JSON.stringify(error));
