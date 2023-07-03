@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
@@ -10,6 +11,9 @@ function Post() {
   const navigate = useNavigate();
   const postId = params.id;
   const [postData, setPostData] = useState<any>("");
+  const [comments, setComments] = useState<any>([]);
+  const [likeToggle, setLikeToggle] = useState(false);
+  const dispatch = useDispatch();
   // const example = {
   //   postId: 12,
   //   memberId: 2,
@@ -23,6 +27,8 @@ function Post() {
   const session = useSelector((state: any) => state.userSet.session);
   useEffect(() => {
     getPostDetail();
+    getComment();
+    getLike();
   }, []);
   const getPostDetail = async () => {
     try {
@@ -44,18 +50,82 @@ function Post() {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
     }
   };
-  const likeUp = async () => {
+  const getComment = async () => {
     try {
-      const response = await axios.post(`${apiAddress}/api/posting/like/save`, {
-        memberId: session.id,
-        postId: postId,
-      });
-      console.log("Post.tsx(likeUp): " + JSON.stringify(response));
+      const response = await axios.get(
+        `${apiAddress}/api/comment/list/${postId}`
+      );
+      setComments(response.data);
+    } catch (error: any) {
+      console.error("Post.tsx(getComment): " + JSON.stringify(error));
+    }
+  };
+  const likeUp = async () => {
+    if (!likeToggle) {
+      try {
+        const response = await axios.post(
+          `${apiAddress}/api/posting/like/save`,
+          {
+            memberId: session.id,
+            postId: postId,
+          }
+        );
+        if (response.status === 201) {
+          setLikeToggle(true);
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "좋아요가 반영되었습니다.",
+            } as any)
+          );
+        }
+        //202 는 이미 눌러져있음
+        console.log("Post.tsx(likeUp): " + JSON.stringify(response));
+      } catch (error: any) {
+        console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+      }
+    }
+
+    if (likeToggle) {
+      try {
+        const response = await axios.post(
+          `${apiAddress}/api/posting/like/delete`,
+          {
+            memberId: session.id,
+            postId: postId,
+          }
+        );
+        if (response.status === 201) {
+          setLikeToggle(false);
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "좋아요 취소가 반영되었습니다.",
+            } as any)
+          );
+        }
+        //202 는 이미 눌러져있음
+        console.log("Post.tsx(likeUp): " + JSON.stringify(response));
+      } catch (error: any) {
+        console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+      }
+    }
+  };
+  const getLike = async () => {
+    try {
+      const response = await axios.post(
+        `${apiAddress}/api/posting/like/check`,
+        {
+          memberId: session.id,
+          postId: postId,
+        }
+      );
+      if (response.status === 201) setLikeToggle(false);
+      if (response.status === 202) setLikeToggle(true);
     } catch (error: any) {
       console.error("Post.tsx(likeUp): " + JSON.stringify(error));
     }
   };
-
   const deletePostingData = async (id: number) => {
     const answer = prompt(
       `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
@@ -82,25 +152,46 @@ function Post() {
   return (
     <Container>
       {postData ? (
-        <ContentBlock>
-          <ContentText fontSize={1.3}>
-            {postData.title} 👀{postData.postHits}
-          </ContentText>
-          <ContentText fontSize={0.9} fontColor="gray">
-            {postData.memberNickname}#{postData.memberId}
-          </ContentText>
-          <ContentText fontSize={0.9} fontColor="gray">
-            {postData.postTime}
-          </ContentText>
-          {session.role === "ADMIN" && (
-            <RedBtn onClick={() => deletePostingData(postData.postId)}>
-              삭제
+        <>
+          <ContentBlock>
+            <ContentText fontSize={1.3}>
+              {postData.title} 👀{postData.postHits}
+            </ContentText>
+            <ContentText fontSize={0.9} fontColor="gray">
+              {postData.memberNickname}#{postData.memberId}
+            </ContentText>
+            <ContentText fontSize={0.9} fontColor="gray">
+              {postData.postTime}
+            </ContentText>
+            {session.role === "ADMIN" && (
+              <RedBtn onClick={() => deletePostingData(postData.postId)}>
+                삭제
+              </RedBtn>
+            )}
+            <hr />
+            <ContentText>{postData.content}</ContentText>
+            <RedBtn
+              onClick={likeUp}
+              style={
+                likeToggle ? { background: "tomato" } : { background: "pink" }
+              }
+            >
+              ❤️{postData.postLikes}
             </RedBtn>
-          )}
-          <hr />
-          <ContentText>{postData.content}</ContentText>
-          <RedBtn onClick={likeUp}>❤️{postData.postLikes}</RedBtn>
-        </ContentBlock>
+          </ContentBlock>
+          <ContentBlock>
+            <ContentText fontSize={1.3}>댓글</ContentText>
+          </ContentBlock>
+          {comments.length > 0 &&
+            comments.map((comment: any) => (
+              <ContentBlock key={comment.commentId}>
+                <ContentText fontSize={1.2}>
+                  {comment.memberNickName}
+                </ContentText>
+                <ContentText>{comment.content}</ContentText>
+              </ContentBlock>
+            ))}
+        </>
       ) : (
         <ContentBlock>
           <ContentText>로딩중...</ContentText>
