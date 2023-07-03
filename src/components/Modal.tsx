@@ -82,7 +82,7 @@ const Container = styled.div<any>`
 const Form = styled.div<any>`
   width: 300px;
   height: auto;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   padding: 15px;

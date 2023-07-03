@@ -140,7 +140,7 @@ function Community() {
       )}
       <ContentBlock
         style={{
-          padding: "0 0 20px 0",
+          padding: "0 0 25px 0",
           backgroundColor: "white",
         }}
       >
