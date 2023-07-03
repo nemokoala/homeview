@@ -189,30 +189,34 @@ function Post() {
             <ContentText fontSize={0.9} fontColor="gray">
               {postData.postTime}
             </ContentText>
-            {session.id === postData.memberId && (
-              <Btn
-                backgroundColor={fixToggle ? "pink" : "skyblue"}
-                onClick={() => {
-                  setFixToggle((prev) => !prev);
-                }}
-              >
-                {fixToggle ? "수정 취소" : "글 수정"}
-              </Btn>
-            )}
+            <Btns>
+              {session.id === postData.memberId && (
+                <Btn
+                  backgroundColor={fixToggle ? "pink" : "skyblue"}
+                  onClick={() => {
+                    setFixToggle((prev) => !prev);
+                  }}
+                >
+                  {fixToggle ? "수정 취소" : "글 수정"}
+                </Btn>
+              )}
 
-            {session.role === "ADMIN" && (
-              <Btn onClick={() => deletePostingData(postData.postId)}>삭제</Btn>
-            )}
-            <hr />
-            <ContentText>{postData.content}</ContentText>
-            <Btn
-              onClick={likeUp}
-              style={
-                likeToggle ? { background: "tomato" } : { background: "pink" }
-              }
-            >
-              ❤️{postData.postLikes}
-            </Btn>
+              {session.role === "ADMIN" && (
+                <Btn onClick={() => deletePostingData(postData.postId)}>
+                  삭제
+                </Btn>
+              )}
+              <hr />
+              <ContentText>{postData.content}</ContentText>
+              <Btn
+                onClick={likeUp}
+                style={
+                  likeToggle ? { background: "tomato" } : { background: "pink" }
+                }
+              >
+                ❤️{postData.postLikes}
+              </Btn>
+            </Btns>
           </ContentBlock>
           {fixToggle && (
             <ContentBlock>
@@ -259,6 +263,10 @@ const ContentText = styled.div<any>`
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
   white-space: pre-wrap;
+`;
+const Btns = styled.div`
+  display: flex;
+  gap: 15px;
 `;
 const Btn = styled.div<any>`
   display: flex;
