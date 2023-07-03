@@ -230,7 +230,7 @@ function Post() {
       {postData ? (
         <>
           <ContentBlock>
-            <ContentText fontSize={1.3}>
+            <ContentText fontSize={1.4}>
               {postData.title} 👀{postData.postHits}
             </ContentText>
             <ContentText fontSize={0.9} fontColor="gray">
@@ -261,7 +261,7 @@ function Post() {
               )}
             </Btns>
             <hr />
-            <ContentText>{postData.content}</ContentText>
+            <ContentText fontSize={1.2}>{postData.content}</ContentText>
             <Btn
               onClick={likeUp}
               style={
@@ -281,7 +281,7 @@ function Post() {
               댓글
             </ContentText>
             <div style={{ display: "flex", gap: "13px", alignItems: "center" }}>
-              <CommandInput
+              <CommentInput
                 id="comment"
                 value={commentContent}
                 onChange={onChange}
@@ -370,6 +370,7 @@ const Btn = styled.div<any>`
   border-radius: 20px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   margin-top: 7px;
   transition: all 0.7s;
   &:hover {
@@ -381,10 +382,10 @@ const Btn = styled.div<any>`
   }
 `;
 
-const CommandInput = styled.input`
+const CommentInput = styled.input`
   width: 87%;
   height: 50px;
-  padding: 10px;
+  padding: 13px;
   margin: 0;
   border-radius: 15px;
   border: 0px;
