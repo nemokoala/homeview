@@ -15,9 +15,9 @@ function Modal({ ...props }: any) {
   modal.btn2Color : 오른쪽버튼 색, 미지정시 tomato
   */
   useEffect(() => {
-    window.addEventListener("keyup", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keyup", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   });
   useEffect(() => {

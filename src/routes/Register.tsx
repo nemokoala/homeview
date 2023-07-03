@@ -225,7 +225,9 @@ function Register() {
         ></Input>
         {pathname === register && (
           <DpButton
-            onClick={duplicationCheck}
+            onClick={() => {
+              if (!modal.open) duplicationCheck();
+            }}
             bgColor={
               (duplication === 1 && "lightgreen") ||
               (duplication === -1 && "tomato")
