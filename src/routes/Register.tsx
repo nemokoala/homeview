@@ -180,7 +180,12 @@ function Register() {
   };
   return (
     <Container>
-      <Form isAnimated={isAnimated}>
+      <Form
+        isAnimated={isAnimated}
+        onSubmit={(e: any) => {
+          e.preventDefault();
+        }}
+      >
         {pathname === register ? (
           <>
             <Title>회원가입</Title>
