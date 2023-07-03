@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiAddress } from "value";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 function Community() {
   const [posts, setPosts] = useState<any>([
@@ -311,6 +312,3 @@ const SearchResult = styled.div`
   }
 `;
 export default Community;
-function useAutoAnimate(): [any] {
-  throw new Error("Function not implemented.");
-}
