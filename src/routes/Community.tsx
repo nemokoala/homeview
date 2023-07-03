@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { apiAddress } from "value";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 function Community() {
   const [posts, setPosts] = useState<any>([
@@ -22,7 +21,6 @@ function Community() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchTemp, setSearchTemp] = useState([]);
-  const [animationParent] = useAutoAnimate();
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -139,7 +137,6 @@ function Community() {
       )}
       {posts.map((post: any) => (
         <ContentBlock
-          ref={animationParent}
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
