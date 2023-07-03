@@ -47,18 +47,8 @@ function Post() {
   const likeUp = async () => {
     try {
       const response = await axios.post(`${apiAddress}/api/posting/like/save`, {
-        member: {
-          id: session.id,
-          name: session.name,
-          nickname: session.nickname,
-          email: session.email,
-          password: session.password,
-          role: session.role,
-        },
-        title: postData.title,
-        content: postData.content,
-        postHits: postData.postHits,
-        postLikes: postData.postLikes,
+        memberId: session.id,
+        posId: postId,
       });
       console.log("Post.tsx(likeUp): " + JSON.stringify(response));
     } catch (error: any) {
