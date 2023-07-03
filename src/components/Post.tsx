@@ -16,6 +16,7 @@ function Post() {
   const [likeToggle, setLikeToggle] = useState(false);
   const [fixToggle, setFixToggle] = useState(false);
   const dispatch = useDispatch();
+  const session = useSelector((state: any) => state.userSet.session);
   // const example = {
   //   postId: 12,
   //   memberId: 2,
@@ -26,11 +27,12 @@ function Post() {
   //   postHits: 1,
   //   postLikes: 0,
   // };
-  const session = useSelector((state: any) => state.userSet.session);
+
   useEffect(() => {
     getPostDetail();
     getComment();
-    getLike();
+    if (session) getLike();
+    getEdit();
   }, []);
   const getPostDetail = async () => {
     try {
@@ -86,6 +88,13 @@ function Post() {
         console.log("Post.tsx(likeUp): " + JSON.stringify(response));
       } catch (error: any) {
         console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+        if (error.response.status === 500)
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "500 failed",
+            } as any)
+          );
       }
     }
 
@@ -131,6 +140,18 @@ function Post() {
       console.error("Post.tsx(getLike): " + JSON.stringify(error));
     }
   };
+
+  const getEdit = async () => {
+    try {
+      const response = await axios.get(
+        `${apiAddress}/api/posting/${postId}/edit`
+      );
+      console.log("Post.tsx(getEdit): " + JSON.stringify(response));
+    } catch (error: any) {
+      console.error("Post.tsx(getEdit): " + JSON.stringify(error));
+    }
+  };
+
   const deletePostingData = async (id: number) => {
     const answer = prompt(
       `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
@@ -168,7 +189,14 @@ function Post() {
             <ContentText fontSize={0.9} fontColor="gray">
               {postData.postTime}
             </ContentText>
-            <Btn>수정</Btn>
+            <Btn
+              backgroundColor={fixToggle ? "pink" : "skyblue"}
+              onClick={() => {
+                setFixToggle((prev) => !prev);
+              }}
+            >
+              {fixToggle ? "수정 취소" : "글 수정"}
+            </Btn>
             {session.role === "ADMIN" && (
               <Btn onClick={() => deletePostingData(postData.postId)}>삭제</Btn>
             )}
@@ -183,9 +211,11 @@ function Post() {
               ❤️{postData.postLikes}
             </Btn>
           </ContentBlock>
-          <ContentBlock>
-            <CommunityFactory />
-          </ContentBlock>
+          {fixToggle && (
+            <ContentBlock>
+              <CommunityFactory />
+            </ContentBlock>
+          )}
           <ContentBlock>
             <ContentText fontSize={1.3}>댓글</ContentText>
           </ContentBlock>
