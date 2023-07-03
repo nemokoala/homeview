@@ -18,6 +18,7 @@ function Register() {
   const [duplication, setDuplication] = useState(0); //이메일 중복체크
   const dispatch = useDispatch<any>();
   const modal = useSelector((state: any) => state.modalSet.modal);
+  let enterEnable = true;
   const navigate = useNavigate();
   const login = "/login";
   const register = "/join";
@@ -179,6 +180,14 @@ function Register() {
       console.log(JSON.stringify(error));
     }
   };
+  useEffect(() => {
+    if (!modal.open) {
+      enterEnable = false;
+      setTimeout(() => {
+        enterEnable = true;
+      }, 500);
+    }
+  }, [modal]);
   return (
     <Container>
       <Form
@@ -226,7 +235,7 @@ function Register() {
         {pathname === register && (
           <DpButton
             onClick={() => {
-              if (!modal.open) duplicationCheck();
+              if (enterEnable) duplicationCheck();
             }}
             bgColor={
               (duplication === 1 && "lightgreen") ||
