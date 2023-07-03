@@ -132,13 +132,14 @@ function Community() {
         <div onClick={searching}>검색</div>
       </SearchContainer>
       {searchResult && (
-        <SearchResult ref={animationParent} onClick={deleteSearch}>
+        <SearchResult onClick={deleteSearch}>
           {searchResult}
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
       )}
       {posts.map((post: any) => (
         <ContentBlock
+          ref={animationParent}
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
