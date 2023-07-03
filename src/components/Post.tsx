@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import CommunityFactory from "routes/CommunityFactory";
 import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
@@ -13,6 +14,7 @@ function Post() {
   const [postData, setPostData] = useState<any>("");
   const [comments, setComments] = useState<any>([]);
   const [likeToggle, setLikeToggle] = useState(false);
+  const [fixToggle, setFixToggle] = useState(false);
   const dispatch = useDispatch();
   // const example = {
   //   postId: 12,
@@ -166,21 +168,23 @@ function Post() {
             <ContentText fontSize={0.9} fontColor="gray">
               {postData.postTime}
             </ContentText>
+            <Btn>수정</Btn>
             {session.role === "ADMIN" && (
-              <RedBtn onClick={() => deletePostingData(postData.postId)}>
-                삭제
-              </RedBtn>
+              <Btn onClick={() => deletePostingData(postData.postId)}>삭제</Btn>
             )}
             <hr />
             <ContentText>{postData.content}</ContentText>
-            <RedBtn
+            <Btn
               onClick={likeUp}
               style={
                 likeToggle ? { background: "tomato" } : { background: "pink" }
               }
             >
               ❤️{postData.postLikes}
-            </RedBtn>
+            </Btn>
+          </ContentBlock>
+          <ContentBlock>
+            <CommunityFactory />
           </ContentBlock>
           <ContentBlock>
             <ContentText fontSize={1.3}>댓글</ContentText>
@@ -223,7 +227,7 @@ const ContentText = styled.div<any>`
   color: ${(props) => props.fontColor};
   white-space: pre-wrap;
 `;
-const RedBtn = styled.div`
+const Btn = styled.div<any>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,7 +235,7 @@ const RedBtn = styled.div`
   height: 30px;
   border-radius: 5px;
   color: white;
-  background-color: #fdadad;
+  background-color: ${(props) => props.backgroundColor || "pink"};
   margin-top: 7px;
   transition: all 0.7s;
   &:hover {

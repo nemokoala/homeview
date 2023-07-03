@@ -17,7 +17,7 @@ function Register() {
   const [isAnimated, setIsAnimated] = useState(false); //로그인 회원가입 전환시 애니메이션
   const [duplication, setDuplication] = useState(0); //이메일 중복체크
   const dispatch = useDispatch<any>();
-
+  const modal = useSelector((state: any) => state.modalSet.modal);
   const navigate = useNavigate();
   const login = "/login";
   const register = "/join";
@@ -150,6 +150,7 @@ function Register() {
   };
 
   const duplicationCheck = async () => {
+    if (modal.open) return; //엔터 중복입력방지
     try {
       const response = await axios.get(
         `${apiAddress}/api/join/${email}/exists`,
