@@ -277,7 +277,7 @@ function Post() {
             <ContentText fontSize={1.3} margin="0 0 10px 0">
               댓글
             </ContentText>
-            <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "13px", alignItems: "center" }}>
               <CommandInput
                 id="comment"
                 value={commentContent}
@@ -289,9 +289,10 @@ function Post() {
               />
               <Btn
                 style={{
+                  flexGrow: 1,
                   margin: 0,
                   height: "50px",
-                  borderRadius: "15px",
+                  borderRadius: "17px",
                   backgroundColor: "skyblue",
                 }}
                 onClick={postComment}
