@@ -48,7 +48,7 @@ function Post() {
     try {
       const response = await axios.post(`${apiAddress}/api/posting/like/save`, {
         memberId: session.id,
-        posId: postId,
+        postId: postId,
       });
       console.log("Post.tsx(likeUp): " + JSON.stringify(response));
     } catch (error: any) {
