@@ -70,7 +70,10 @@ const Container = styled.div<any>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: transparent;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0px;
   left: 0px;
@@ -79,7 +82,12 @@ const Container = styled.div<any>`
 const Form = styled.div<any>`
   width: 300px;
   height: auto;
-  background-color: white;
+  background: transparent;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -127,11 +135,11 @@ const Buttons = styled.div<any>`
     background-color: ${(props) => props.btn2Color};
   }
   & button:hover {
-    filter: contrast(200%);
+    filter: contrast(130%);
     cursor: pointer;
   }
   & button:active {
-    filter: hue-rotate(90deg);
+    filter: hue-rotate(340deg);
   }
 `;
 export default Modal;
