@@ -119,7 +119,7 @@ function Community() {
     <Container>
       <Link
         to="/community/post"
-        style={{ width: "80%", margin: "20px 0", textDecoration: "none" }}
+        style={{ width: "90%", margin: "10px 0", textDecoration: "none" }}
       >
         <Button>글 작성</Button>
       </Link>
@@ -138,9 +138,16 @@ function Community() {
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
       )}
-      <div style={{ width: "100%", margin: "0 0 10px 10%" }}>
-        <Category category={category} setCategory={setCategory} />
-      </div>
+      <ContentBlock
+        style={{
+          padding: "0 10px 20px 10px",
+          backgroundColor: "white",
+        }}
+      >
+        <CategoryContainer>
+          <Category category={category} setCategory={setCategory} />
+        </CategoryContainer>
+      </ContentBlock>
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
@@ -250,7 +257,7 @@ const DeleteBtn = styled.div`
   }
 `;
 const SearchContainer = styled.div`
-  width: 80%;
+  width: 90%;
   height: 50px;
   display: flex;
   gap: 10px;
@@ -313,5 +320,13 @@ const SearchResult = styled.div`
     cursor: pointer;
     color: white;
   }
+`;
+const CategoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 `;
 export default Community;
