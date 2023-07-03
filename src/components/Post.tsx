@@ -252,7 +252,10 @@ function Post() {
               )}
 
               {session.role === "ADMIN" && (
-                <Btn onClick={() => deletePostingData(postData.postId)}>
+                <Btn
+                  color="tomato"
+                  onClick={() => deletePostingData(postData.postId)}
+                >
                   삭제
                 </Btn>
               )}
@@ -364,7 +367,7 @@ const Btn = styled.div<any>`
   align-items: center;
   width: 80px;
   height: ${(props) => props.height || "35px"};
-  border-radius: 5px;
+  border-radius: 20px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
   margin-top: 7px;

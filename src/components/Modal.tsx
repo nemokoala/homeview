@@ -71,8 +71,8 @@ const Container = styled.div<any>`
   justify-content: center;
   align-items: center;
   background: transparent;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
   background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0px;
@@ -82,7 +82,7 @@ const Container = styled.div<any>`
 const Form = styled.div<any>`
   width: 300px;
   height: auto;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.8);
   display: flex;
   flex-direction: column;
   padding: 15px;
