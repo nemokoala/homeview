@@ -88,13 +88,14 @@ function Community() {
   };
 
   const searching = async () => {
+    if (!search) return;
     try {
       const response = await axios.get(
         `${apiAddress}/api/posting/search?keyword=${search}&page=0`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
       if (response.data.content.length === 0)
-        setSearchResult("검색 결과가 없습니다.");
+        setSearchResult(`${search}에 대한 검색 결과가 없습니다.`);
       else {
         setPosts(response.data.content);
         setSearchResult(`"${search}"에 대한 검색 결과`);

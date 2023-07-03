@@ -6,9 +6,9 @@ import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
-function CommunityFactory() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+function CommunityFactory({ postData }: any) {
+  const [title, setTitle] = useState(postData?.title || "");
+  const [content, setContent] = useState(postData?.content || "");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const session = useSelector((state: any) => state.userSet.session);
@@ -45,44 +45,84 @@ function CommunityFactory() {
       );
       return;
     }
-    try {
-      const response = await axios.post(`${apiAddress}/api/posting/add`, {
-        title: title,
-        content: content.replace(/\n/g, "<br/>"),
-        nickname: session.nickname,
-        member: {
-          id: session.id,
-          name: session.name,
+    if (!postData) {
+      //글 작성일 경우
+      try {
+        const response = await axios.post(`${apiAddress}/api/posting/add`, {
+          title: title,
+          content: content.replace(/\n/g, "<br/>"),
           nickname: session.nickname,
-          email: session.email,
-          password: session.password,
-          role: session.role,
-        },
-      });
 
-      console.log("리스폰즈DATAthen : " + response.data);
-      console.log("리스폰즈STATUS : " + response.status);
-      console.log(session.id + " // " + session.nickname);
-      if (response.status === 201) {
+          member: {
+            id: session.id,
+            name: session.name,
+            nickname: session.nickname,
+            email: session.email,
+            password: session.password,
+            role: session.role,
+          },
+        });
+
+        console.log("리스폰즈DATAthen : " + response.data);
+        console.log("리스폰즈STATUS : " + response.status);
+        console.log(session.id + " // " + session.nickname);
+        if (response.status === 201) {
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "글 작성을 완료했습니다.",
+              btn1Func: function () {
+                navigate("/community");
+              },
+            } as any)
+          );
+        }
+      } catch (error: any) {
+        const errorText = JSON.stringify(error);
         dispatch(
           setModal({
-            title: "알림",
-            text: "글 작성을 완료했습니다.",
-            btn1Func: function () {
-              navigate("/community");
-            },
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
           } as any)
         );
       }
-    } catch (error: any) {
-      const errorText = JSON.stringify(error);
-      dispatch(
-        setModal({
-          title: "에러!",
-          titleColor: "red",
-          text: errorText,
-        } as any)
-      );
+    }
+    if (postData) {
+      //글 수정일경우
+      try {
+        const response = await axios.post(
+          `${apiAddress}/api/${postData.postId}/edit`,
+          {
+            title: title,
+            content: content.replace(/\n/g, "<br/>"),
+          }
+        );
+
+        console.log("글수정 response : " + response.data);
+        console.log("글수정 STATUS : " + response.status);
+        console.log(session.id + " // " + session.nickname);
+        if (response.status === 201) {
+          dispatch(
+            setModal({
+              title: "알림",
+              text: "글 수정을 완료했습니다.",
+              btn1Func: function () {
+                navigate("/community");
+              },
+            } as any)
+          );
+        }
+      } catch (error: any) {
+        const errorText = JSON.stringify(error);
+        dispatch(
+          setModal({
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          } as any)
+        );
+      }
     }
   };
 
@@ -100,7 +140,7 @@ function CommunityFactory() {
         value={content}
         rows={1}
       />
-      <Button onClick={confirm}>작성 완료</Button>
+      <Button onClick={confirm}>{postData ? "수정 완료" : "작성 완료"}</Button>
     </Container>
   );
 }
