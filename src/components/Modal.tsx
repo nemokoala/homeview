@@ -82,12 +82,7 @@ const Container = styled.div<any>`
 const Form = styled.div<any>`
   width: 300px;
   height: auto;
-  background: transparent;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   padding: 15px;
