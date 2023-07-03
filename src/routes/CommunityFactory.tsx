@@ -9,6 +9,7 @@ import { apiAddress } from "value";
 function CommunityFactory({ postData }: any) {
   const [title, setTitle] = useState(postData?.title || "");
   const [content, setContent] = useState(postData?.content || "");
+  const [category, setCategory] = useState(postData?.category || 0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const session = useSelector((state: any) => state.userSet.session);
@@ -45,6 +46,15 @@ function CommunityFactory({ postData }: any) {
       );
       return;
     }
+    if (!category) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "게시판 종류를 선택해주세요.",
+        } as any)
+      );
+      return;
+    }
     if (!postData) {
       //글 작성일 경우
       try {
@@ -52,7 +62,7 @@ function CommunityFactory({ postData }: any) {
           title: title,
           content: content.replace(/\n/g, "<br/>"),
           nickname: session.nickname,
-
+          category: category,
           member: {
             id: session.id,
             name: session.name,
@@ -92,7 +102,7 @@ function CommunityFactory({ postData }: any) {
       //글 수정일경우
       try {
         const response = await axios.post(
-          `${apiAddress}/api/${postData.postId}/edit`,
+          `${apiAddress}/api/posting/${postData.postId}/edit`,
           {
             title: title,
             content: content.replace(/\n/g, "<br/>"),
@@ -128,8 +138,48 @@ function CommunityFactory({ postData }: any) {
 
   return (
     <Container>
+      <Label>게시판 종류 선택</Label>
+      <CategoryBtns>
+        <div
+          style={category === 1 ? { background: "var(--orange)" } : {}}
+          onClick={() => {
+            setCategory(1);
+          }}
+        >
+          자유게시판
+        </div>
+        <div
+          style={category === 2 ? { background: "var(--orange)" } : {}}
+          onClick={() => {
+            setCategory(2);
+          }}
+        >
+          질문게시판
+        </div>
+        <div
+          style={category === 3 ? { background: "var(--orange)" } : {}}
+          onClick={() => {
+            setCategory(3);
+          }}
+        >
+          유머게시판
+        </div>
+        <div
+          style={category === 4 ? { background: "var(--orange)" } : {}}
+          onClick={() => {
+            setCategory(4);
+          }}
+        >
+          정보게시판
+        </div>
+      </CategoryBtns>
       <Label>글 제목</Label>
-      <Title id="title" onChange={onChange} value={title} />
+      <Title
+        id="title"
+        onChange={onChange}
+        value={title}
+        placeholder="2~50자리 글자 수"
+      />
       <Label>글 내용</Label>
       <Content
         id="content"
@@ -139,6 +189,7 @@ function CommunityFactory({ postData }: any) {
         onChange={onChange}
         value={content}
         rows={1}
+        placeholder="2~500자리 글자 수"
       />
       <Button onClick={confirm}>{postData ? "수정 완료" : "작성 완료"}</Button>
     </Container>
@@ -154,12 +205,38 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-
+const CategoryBtns = styled.div`
+  width: 90%;
+  margin: 0px;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  & div {
+    min-width: 40%;
+    padding: 10px 30px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+    transition: all 0.3s;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+      background: rgb(250, 241, 203);
+    }
+    @media screen and (min-width: 768px) {
+      min-width: 15%;
+    }
+  }
+`;
 const Label = styled.div`
   width: 90%;
   color: black;
   font-size: 1.5rem;
-  margin-top: 23px;
+  margin-top: 25px;
   margin-bottom: 10px;
 `;
 
@@ -167,13 +244,12 @@ const Title = styled.input`
   width: 90%;
   height: 50px;
   padding: 10px;
-  margin: 5px 0;
+  margin: 0;
   border-radius: 15px;
   border: 0px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   &:focus {
     outline: 1px solid var(--orange) !important;
     border-color: var(--orange) !important;
@@ -194,8 +270,7 @@ const Content = styled.textarea`
   border: 0px;
   backdrop-filter: blur(15px);
   background-color: rgba(255, 255, 255, 0.712);
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 5px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   &:focus {
     outline: 1px solid var(--orange) !important;
     border-color: var(--orange) !important;
@@ -214,10 +289,10 @@ const Button = styled.button`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 15px 5px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:hover {
-    filter: contrast(200%);
+    filter: contrast(140%);
     cursor: pointer;
   }
   &:active {
-    filter: hue-rotate(90deg);
+    filter: hue-rotate(330deg);
   }
 `;
