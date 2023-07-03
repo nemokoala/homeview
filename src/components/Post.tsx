@@ -283,6 +283,9 @@ function Post() {
                 value={commentContent}
                 onChange={onChange}
                 placeholder="댓글 내용을 입력해주세요."
+                onKeyUp={(e: any) => {
+                  if (e.key === "Enter") postComment();
+                }}
               />
               <Btn
                 style={{
@@ -291,6 +294,7 @@ function Post() {
                   borderRadius: "15px",
                   backgroundColor: "skyblue",
                 }}
+                onClick={postComment}
               >
                 작성
               </Btn>

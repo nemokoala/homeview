@@ -1,4 +1,5 @@
 import axios from "axios";
+import Category from "components/Category";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -138,41 +139,7 @@ function CommunityFactory({ postData }: any) {
 
   return (
     <Container>
-      <Label>게시판 종류 선택</Label>
-      <CategoryBtns>
-        <div
-          style={category === 1 ? { background: "var(--orange)" } : {}}
-          onClick={() => {
-            setCategory(1);
-          }}
-        >
-          자유게시판
-        </div>
-        <div
-          style={category === 2 ? { background: "var(--orange)" } : {}}
-          onClick={() => {
-            setCategory(2);
-          }}
-        >
-          질문게시판
-        </div>
-        <div
-          style={category === 3 ? { background: "var(--orange)" } : {}}
-          onClick={() => {
-            setCategory(3);
-          }}
-        >
-          유머게시판
-        </div>
-        <div
-          style={category === 4 ? { background: "var(--orange)" } : {}}
-          onClick={() => {
-            setCategory(4);
-          }}
-        >
-          정보게시판
-        </div>
-      </CategoryBtns>
+      <Category category={category} setCategory={setCategory} />
       <Label>글 제목</Label>
       <Title
         id="title"

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Category from "components/Category";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ function Community() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchTemp, setSearchTemp] = useState([]);
+  const [category, setCategory] = useState(0);
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -136,6 +138,7 @@ function Community() {
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
       )}
+      <Category category={category} setCategory={setCategory} />
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
