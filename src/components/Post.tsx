@@ -277,7 +277,7 @@ function Post() {
             <ContentText fontSize={1.3} margin="0 0 10px 0">
               댓글
             </ContentText>
-            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
               <CommandInput
                 id="comment"
                 value={commentContent}
@@ -355,14 +355,14 @@ const ContentText = styled.div<any>`
 const Btns = styled.div`
   width: auto;
   display: flex;
-  gap: 15px;
+  gap: 10px;
 `;
 const Btn = styled.div<any>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: ${(props) => props.height || "30px"};
+  height: ${(props) => props.height || "35px"};
   border-radius: 5px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
@@ -378,7 +378,7 @@ const Btn = styled.div<any>`
 `;
 
 const CommandInput = styled.input`
-  width: 90%;
+  width: 87%;
   height: 50px;
   padding: 10px;
   margin: 0;
