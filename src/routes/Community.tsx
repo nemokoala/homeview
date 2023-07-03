@@ -254,7 +254,7 @@ const SearchContainer = styled.div`
   height: 50px;
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   & div {
     width: 90px;
     height: 50px;
@@ -264,8 +264,7 @@ const SearchContainer = styled.div`
     align-items: center;
     background: lightgreen;
     transition: all 0.7s;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 15px 3px,
-      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   }
   & div:hover {
     filter: contrast(200%);
