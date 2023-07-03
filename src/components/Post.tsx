@@ -15,6 +15,7 @@ function Post() {
   const [comments, setComments] = useState<any>([]);
   const [likeToggle, setLikeToggle] = useState(false);
   const [fixToggle, setFixToggle] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
   const dispatch = useDispatch();
   const session = useSelector((state: any) => state.userSet.session);
   // const example = {
@@ -60,6 +61,7 @@ function Post() {
         `${apiAddress}/api/comment/list/${postId}`
       );
       setComments(response.data);
+      console.log("Post.tsx(getComment): " + JSON.stringify(response));
     } catch (error: any) {
       console.error("Post.tsx(getComment): " + JSON.stringify(error));
     }
@@ -175,6 +177,54 @@ function Post() {
       console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
     }
   };
+  const postComment = async () => {
+    try {
+      const response = await axios.post(`${apiAddress}/api/comment/add/`, {
+        postId: postId,
+        memberId: session.id,
+        content: commentContent,
+      });
+      if (response.status === 201) {
+        setLikeToggle(true);
+        getLike();
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "좋아요가 반영되었습니다.",
+          } as any)
+        );
+      }
+      //202 는 이미 눌러져있음
+      console.log("Post.tsx(likeUp): " + JSON.stringify(response));
+    } catch (error: any) {
+      console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+      if (error.response.status === 500)
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "500 failed",
+          } as any)
+        );
+    }
+  };
+  const onChange = (e: any) => {
+    const {
+      target: { id, value },
+    } = e;
+    if (id === "comment") setCommentContent(value);
+  };
+  const changeDate = (time: any) => {
+    const dateObj = new Date(time);
+    const changedTime =
+      dateObj.toLocaleDateString("ko-KR") +
+      " " +
+      dateObj.toLocaleTimeString("ko-KR", {
+        hour12: true,
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    return changedTime;
+  };
   return (
     <Container>
       {postData ? (
@@ -206,17 +256,17 @@ function Post() {
                   삭제
                 </Btn>
               )}
-              <hr />
-              <ContentText>{postData.content}</ContentText>
-              <Btn
-                onClick={likeUp}
-                style={
-                  likeToggle ? { background: "tomato" } : { background: "pink" }
-                }
-              >
-                ❤️{postData.postLikes}
-              </Btn>
             </Btns>
+            <hr />
+            <ContentText>{postData.content}</ContentText>
+            <Btn
+              onClick={likeUp}
+              style={
+                likeToggle ? { background: "tomato" } : { background: "pink" }
+              }
+            >
+              ❤️{postData.postLikes}
+            </Btn>
           </ContentBlock>
           {fixToggle && (
             <ContentBlock>
@@ -224,7 +274,40 @@ function Post() {
             </ContentBlock>
           )}
           <ContentBlock>
-            <ContentText fontSize={1.3}>댓글</ContentText>
+            <ContentText fontSize={1.3} margin="0 0 10px 0">
+              댓글
+            </ContentText>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <CommandInput
+                id="comment"
+                value={commentContent}
+                onChange={onChange}
+                placeholder="댓글 내용을 입력해주세요."
+              />
+              <Btn
+                style={{
+                  margin: 0,
+                  height: "50px",
+                  borderRadius: "15px",
+                  backgroundColor: "skyblue",
+                }}
+              >
+                작성
+              </Btn>
+            </div>
+
+            {comments.map((comment: any) => (
+              <ContentBlock key={comment.commentId}>
+                <ContentText fontSize={1.2}>
+                  {comment.memberNickName}#{comment.memberId}
+                </ContentText>
+                <ContentText fontsize={0.9} color="lightgray">
+                  {changeDate(comment.commentTime)}
+                </ContentText>
+                <hr></hr>
+                <ContentText>{comment.content}</ContentText>
+              </ContentBlock>
+            ))}
           </ContentBlock>
           {comments.length > 0 &&
             comments.map((comment: any) => (
@@ -262,9 +345,11 @@ const ContentBlock = styled.div`
 const ContentText = styled.div<any>`
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
+  margin: ${(props) => props.margin};
   white-space: pre-wrap;
 `;
 const Btns = styled.div`
+  width: auto;
   display: flex;
   gap: 15px;
 `;
@@ -273,7 +358,7 @@ const Btn = styled.div<any>`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: 30px;
+  height: ${(props) => props.height || "30px"};
   border-radius: 5px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
@@ -284,7 +369,24 @@ const Btn = styled.div<any>`
     cursor: pointer;
   }
   &:active {
-    filter: hue-rotate(90deg);
+    filter: hue-rotate(340deg);
+  }
+`;
+
+const CommandInput = styled.input`
+  width: 90%;
+  height: 50px;
+  padding: 10px;
+  margin: 0;
+  border-radius: 15px;
+  border: 0px;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.712);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  &:focus {
+    outline: 1px solid var(--orange) !important;
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 7px var(--orange);
   }
 `;
 export default Post;
