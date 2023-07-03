@@ -253,7 +253,7 @@ function Post() {
 
               {session.role === "ADMIN" && (
                 <Btn
-                  color="tomato"
+                  backgroundColor="tomato"
                   onClick={() => deletePostingData(postData.postId)}
                 >
                   삭제
