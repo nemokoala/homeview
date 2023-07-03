@@ -72,6 +72,7 @@ function Post() {
         );
         if (response.status === 201) {
           setLikeToggle(true);
+          getLike();
           dispatch(
             setModal({
               title: "알림",
@@ -95,8 +96,9 @@ function Post() {
             postId: postId,
           }
         );
-        if (response.status === 201) {
+        if (response.status === 202) {
           setLikeToggle(false);
+          getLike();
           dispatch(
             setModal({
               title: "알림",
