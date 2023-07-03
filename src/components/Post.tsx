@@ -189,14 +189,17 @@ function Post() {
             <ContentText fontSize={0.9} fontColor="gray">
               {postData.postTime}
             </ContentText>
-            <Btn
-              backgroundColor={fixToggle ? "pink" : "skyblue"}
-              onClick={() => {
-                setFixToggle((prev) => !prev);
-              }}
-            >
-              {fixToggle ? "수정 취소" : "글 수정"}
-            </Btn>
+            {session.id === postData.memberId && (
+              <Btn
+                backgroundColor={fixToggle ? "pink" : "skyblue"}
+                onClick={() => {
+                  setFixToggle((prev) => !prev);
+                }}
+              >
+                {fixToggle ? "수정 취소" : "글 수정"}
+              </Btn>
+            )}
+
             {session.role === "ADMIN" && (
               <Btn onClick={() => deletePostingData(postData.postId)}>삭제</Btn>
             )}
@@ -213,7 +216,7 @@ function Post() {
           </ContentBlock>
           {fixToggle && (
             <ContentBlock>
-              <CommunityFactory />
+              <CommunityFactory postData={postData} />
             </ContentBlock>
           )}
           <ContentBlock>
@@ -269,7 +272,7 @@ const Btn = styled.div<any>`
   margin-top: 7px;
   transition: all 0.7s;
   &:hover {
-    filter: contrast(200%);
+    filter: contrast(130%);
     cursor: pointer;
   }
   &:active {

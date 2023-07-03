@@ -18,3 +18,12 @@ export const userSlice = createSlice({
 
 export const { saveSession } = userSlice.actions;
 export default userSlice.reducer;
+
+// const example = {
+//   id: 2,
+//   name: "mmm",
+//   nickname: "mmm",
+//   email: "mmm@naver.com",
+//   password: "mmmm",
+//   role: "mmm",
+// };

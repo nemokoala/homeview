@@ -181,11 +181,12 @@ function Register() {
     }
   };
   useEffect(() => {
+    //모달창 enter로 종료후 바로 onclick되는 현상 수정
     if (!modal.open) {
       enterEnable = false;
       setTimeout(() => {
         enterEnable = true;
-      }, 500);
+      }, 300);
     }
   }, [modal]);
   return (
