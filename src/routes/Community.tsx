@@ -21,6 +21,7 @@ function Community() {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchTemp, setSearchTemp] = useState([]);
+  const [animationParent] = useAutoAnimate();
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   useEffect(() => {
@@ -130,7 +131,7 @@ function Community() {
         <div onClick={searching}>검색</div>
       </SearchContainer>
       {searchResult && (
-        <SearchResult onClick={deleteSearch}>
+        <SearchResult ref={animationParent} onClick={deleteSearch}>
           {searchResult}
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
@@ -310,3 +311,6 @@ const SearchResult = styled.div`
   }
 `;
 export default Community;
+function useAutoAnimate(): [any] {
+  throw new Error("Function not implemented.");
+}
