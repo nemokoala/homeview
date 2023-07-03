@@ -124,7 +124,7 @@ function Post() {
       if (response.status === 202) setLikeToggle(true);
       setPostData((prev: any) => ({ ...prev, postLikes: response.data }));
     } catch (error: any) {
-      console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+      console.error("Post.tsx(getLike): " + JSON.stringify(error));
     }
   };
   const deletePostingData = async (id: number) => {
