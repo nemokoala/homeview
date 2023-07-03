@@ -140,7 +140,7 @@ function Community() {
       )}
       <ContentBlock
         style={{
-          padding: "0 5px 20px 5px",
+          padding: "0 0 20px 0",
           backgroundColor: "white",
         }}
       >
@@ -218,11 +218,11 @@ const Button = styled.button`
   justify-content: center;
 
   &:hover {
-    filter: contrast(200%);
+    filter: contrast(130%);
     cursor: pointer;
   }
   &:active {
-    filter: hue-rotate(90deg);
+    filter: hue-rotate(340deg);
   }
   &:focus {
     color: orange;
