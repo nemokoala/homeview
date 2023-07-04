@@ -319,15 +319,6 @@ function Post() {
               </ContentBlock>
             ))}
           </ContentBlock>
-          {comments.length > 0 &&
-            comments.map((comment: any) => (
-              <ContentBlock key={comment.commentId}>
-                <ContentText fontSize={1.2}>
-                  {comment.memberNickName}
-                </ContentText>
-                <ContentText>{comment.content}</ContentText>
-              </ContentBlock>
-            ))}
         </>
       ) : (
         <ContentBlock>
