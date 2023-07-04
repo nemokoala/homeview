@@ -155,26 +155,41 @@ function Post() {
   };
 
   const deletePostingData = async (id: number) => {
-    const answer = prompt(
-      `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
-    );
-    if (answer === null) {
-      alert("게시글 삭제를 취소하였습니다.");
-      return;
-    } else if (parseInt(answer) !== id) {
-      alert("id를 잘못 입력하였습니다.");
-      return;
-    } else if (parseInt(answer) === id) alert("게시글을 삭제합니다.");
-    try {
-      const response = await axios.delete(`${apiAddress}/admin/posting/${id}`, {
-        withCredentials: true,
-      });
-      console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
-      navigate("/community");
-      // dispatch(setModal({ text: JSON.stringify(response) } as any));
-    } catch (error: any) {
-      // dispatch(setModal({ text: JSON.stringify(error) } as any));
-      console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
+    if (session.role === "ADMIN") {
+      const answer = prompt(
+        `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
+      );
+      if (answer === null) {
+        alert("게시글 삭제를 취소하였습니다.");
+        return;
+      } else if (parseInt(answer) !== id) {
+        alert("id를 잘못 입력하였습니다.");
+        return;
+      } else if (parseInt(answer) === id) alert("게시글을 삭제합니다.");
+      try {
+        const response = await axios.delete(
+          `${apiAddress}/admin/posting/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
+        navigate("/community");
+        // dispatch(setModal({ text: JSON.stringify(response) } as any));
+      } catch (error: any) {
+        // dispatch(setModal({ text: JSON.stringify(error) } as any));
+        console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
+      }
+    } else if (session.id === postData.memberId) {
+      try {
+        const response = await axios.get(
+          `${apiAddress}/admin/posting/${postId}/delete`
+        );
+        console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
+        navigate("/community");
+      } catch (error: any) {
+        console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
+      }
     }
   };
   const postComment = async () => {
@@ -251,7 +266,8 @@ function Post() {
                 </Btn>
               )}
 
-              {session.role === "ADMIN" && (
+              {(session.role === "ADMIN" ||
+                session.id === postData.memberId) && (
                 <Btn
                   backgroundColor="rgb(255,159,159)"
                   onClick={() => deletePostingData(postData.postId)}
