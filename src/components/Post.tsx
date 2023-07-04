@@ -190,14 +190,14 @@ function Post() {
         dispatch(
           setModal({
             title: "알림",
-            text: "좋아요가 반영되었습니다.",
+            text: "댓글 작성을 완료하였습니다.",
           } as any)
         );
       }
       //202 는 이미 눌러져있음
-      console.log("Post.tsx(likeUp): " + JSON.stringify(response));
+      console.log("Post.tsx(postComment): " + JSON.stringify(response));
     } catch (error: any) {
-      console.error("Post.tsx(likeUp): " + JSON.stringify(error));
+      console.error("Post.tsx(postComment): " + JSON.stringify(error));
       if (error.response.status === 500)
         dispatch(
           setModal({
@@ -307,7 +307,7 @@ function Post() {
             </div>
 
             {comments.map((comment: any) => (
-              <ContentBlock key={comment.commentId}>
+              <ContentBlock key={comment.commentId} style={{ width: "100%" }}>
                 <ContentText fontSize={1.2}>
                   {comment.memberNickName}#{comment.memberId}
                 </ContentText>
