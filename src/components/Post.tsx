@@ -266,7 +266,7 @@ function Post() {
               onClick={likeUp}
               style={
                 likeToggle
-                  ? { background: "rgb(255,159,159)" }
+                  ? { background: "rgb(247, 133, 133)" }
                   : { background: "pink" }
               }
             >
@@ -376,11 +376,11 @@ const Btn = styled.div<any>`
   margin-top: 7px;
   transition: all 0.7s;
   &:hover {
-    filter: contrast(150%);
+    filter: contrast(170%);
     cursor: pointer;
   }
   &:active {
-    filter: hue-rotate(330deg);
+    filter: hue-rotate(320deg);
   }
 `;
 
