@@ -31,7 +31,9 @@ function Community() {
 
   const getPostingData = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/api/posting/list`);
+      const response = await axios.get(
+        `${apiAddress}/api/posting/list/${category}`
+      );
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
       setPosts(response.data);
       setSearchTemp(response.data);
@@ -115,6 +117,10 @@ function Community() {
   const enterPress = (e: any) => {
     if (e.key === "Enter") searching();
   };
+
+  useEffect(() => {
+    getPostingData();
+  }, [category]);
   return (
     <Container>
       <Link

@@ -378,7 +378,7 @@ function MapCluster({ reviewData }: any) {
       }
     );
 
-    console.log(avgLatLongByDong);
+    //console.log(avgLatLongByDong);
     setDongs(avgLatLongByDong);
   };
 
