@@ -63,15 +63,8 @@ function CommunityFactory({ postData }: any) {
           title: title,
           content: content.replace(/\n/g, "<br/>"),
           nickname: session.nickname,
-          category: category,
-          member: {
-            id: session.id,
-            name: session.name,
-            nickname: session.nickname,
-            email: session.email,
-            password: session.password,
-            role: session.role,
-          },
+          categoryId: category,
+          memberId: session.id,
         });
 
         console.log("리스폰즈DATAthen : " + response.data);
@@ -107,6 +100,7 @@ function CommunityFactory({ postData }: any) {
           {
             title: title,
             content: content.replace(/\n/g, "<br/>"),
+            categoryId: category,
           }
         );
 
