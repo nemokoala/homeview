@@ -138,16 +138,9 @@ function Community() {
           <div>&nbsp;&nbsp;x</div>
         </SearchResult>
       )}
-      <ContentBlock
-        style={{
-          padding: "0 0 25px 0",
-          backgroundColor: "white",
-        }}
-      >
-        <CategoryContainer>
-          <Category category={category} setCategory={setCategory} />
-        </CategoryContainer>
-      </ContentBlock>
+      <CategoryContainer>
+        <Category category={category} setCategory={setCategory} />
+      </CategoryContainer>
       {posts.map((post: any) => (
         <ContentBlock
           key={post.postId}
