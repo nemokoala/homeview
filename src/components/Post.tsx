@@ -253,7 +253,7 @@ function Post() {
 
               {session.role === "ADMIN" && (
                 <Btn
-                  backgroundColor="tomato"
+                  backgroundColor="rgb(255,159,159)"
                   onClick={() => deletePostingData(postData.postId)}
                 >
                   삭제
@@ -265,7 +265,9 @@ function Post() {
             <Btn
               onClick={likeUp}
               style={
-                likeToggle ? { background: "tomato" } : { background: "pink" }
+                likeToggle
+                  ? { background: "rgb(255,159,159)" }
+                  : { background: "pink" }
               }
             >
               ❤️{postData.postLikes}
@@ -374,11 +376,11 @@ const Btn = styled.div<any>`
   margin-top: 7px;
   transition: all 0.7s;
   &:hover {
-    filter: contrast(130%);
+    filter: contrast(150%);
     cursor: pointer;
   }
   &:active {
-    filter: hue-rotate(340deg);
+    filter: hue-rotate(330deg);
   }
 `;
 
