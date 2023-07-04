@@ -183,7 +183,7 @@ function Post() {
     } else if (session.id === postData.memberId) {
       try {
         const response = await axios.get(
-          `${apiAddress}/admin/posting/${postId}/delete`
+          `${apiAddress}/api/posting/${postId}/delete`
         );
         console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
         navigate("/community");
