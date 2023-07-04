@@ -222,6 +222,24 @@ function Post() {
         );
     }
   };
+  const deleteComment = async (commentId: any) => {
+    try {
+      const response = await axios.get(
+        `${apiAddress}/api/comment/${commentId}/delete`
+      );
+      if (response.status === 202) {
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "댓글이 삭제되었습니다.",
+          } as any)
+        );
+      }
+      console.log("Post.tsx(deleteComment): " + JSON.stringify(response));
+    } catch (error: any) {
+      console.error("Post.tsx(deleteComment): " + JSON.stringify(error));
+    }
+  };
   const onChange = (e: any) => {
     const {
       target: { id, value },
@@ -330,6 +348,11 @@ function Post() {
                 <ContentText fontsize={0.9} color="lightgray">
                   {changeDate(comment.commentTime)}
                 </ContentText>
+                {session.id === comment.memberId && (
+                  <Btn onClick={() => deleteComment(comment.commentId)}>
+                    삭제
+                  </Btn>
+                )}
                 <hr></hr>
                 <ContentText>{comment.content}</ContentText>
               </ContentBlock>
