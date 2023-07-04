@@ -228,6 +228,7 @@ function Post() {
         `${apiAddress}/api/comment/${commentId}/delete`
       );
       if (response.status === 202) {
+        getComment();
         dispatch(
           setModal({
             title: "알림",
