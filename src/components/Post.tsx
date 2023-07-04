@@ -186,7 +186,7 @@ function Post() {
       });
       if (response.status === 201) {
         setLikeToggle(true);
-        getLike();
+        getComment();
         dispatch(
           setModal({
             title: "알림",
