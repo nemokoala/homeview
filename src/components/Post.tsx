@@ -179,7 +179,7 @@ function Post() {
   };
   const postComment = async () => {
     try {
-      const response = await axios.post(`${apiAddress}/api/comment/add/`, {
+      const response = await axios.post(`${apiAddress}/api/comment/add`, {
         postId: postId,
         memberId: session.id,
         content: commentContent,
