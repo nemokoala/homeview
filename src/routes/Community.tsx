@@ -1,8 +1,9 @@
 import axios from "axios";
 import Category from "components/Category";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
@@ -25,6 +26,7 @@ function Community() {
   const [category, setCategory] = useState(0);
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     getPostingData();
   }, []);
@@ -95,11 +97,34 @@ function Community() {
     if (!search) return;
     try {
       const response = await axios.get(
-        `${apiAddress}/api/posting/search?keyword=${search}&page=0`
+        `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=0`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
+      let categoryName = "";
+      switch (category) {
+        case 0:
+          categoryName = "전체";
+          break;
+        case 1:
+          categoryName = "자유";
+          break;
+        case 2:
+          categoryName = "질문";
+          break;
+        case 3:
+          categoryName = "유머";
+          break;
+        case 4:
+          categoryName = "정보";
+          break;
+      }
+      if (response.status === 203) {
+        dispatch(setModal({ text: "카테고리 범위를 벗어났습니다." } as any));
+      }
       if (response.data.content.length === 0)
-        setSearchResult(`${search}에 대한 검색 결과가 없습니다.`);
+        setSearchResult(
+          `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${category}"]`
+        );
       else {
         setPosts(response.data.content);
         setSearchResult(`"${search}"에 대한 검색 결과`);
@@ -119,7 +144,8 @@ function Community() {
   };
 
   useEffect(() => {
-    getPostingData();
+    if (!search) getPostingData();
+    else if (search) searching();
   }, [category]);
   return (
     <Container>
