@@ -61,7 +61,7 @@ function Post() {
           minute: "2-digit",
         });
       setPostData(updatedData);
-      if (session) getLike();
+      getLike();
     } catch (error: any) {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
     }
