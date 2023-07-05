@@ -123,11 +123,13 @@ function Community() {
       }
       if (response.data.content.length === 0)
         setSearchResult(
-          `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${category}"]`
+          `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${categoryName}"]`
         );
       else {
         setPosts(response.data.content);
-        setSearchResult(`"${search}"에 대한 검색 결과`);
+        setSearchResult(
+          `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"`
+        );
       }
     } catch (error: any) {
       console.error("Community.tsx(searching): " + JSON.stringify(error));
