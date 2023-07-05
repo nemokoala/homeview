@@ -156,6 +156,7 @@ function Post() {
 
   const deletePostingData = async (id: number) => {
     if (session.role === "ADMIN") {
+      //admin 전용
       const answer = prompt(
         `해당 게시글의 아이디("${id}")를 입력하면 삭제처리가 됩니다. `
       );
@@ -181,9 +182,11 @@ function Post() {
         console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
       }
     } else if (session.id === postData.memberId) {
+      //유저 전용
       try {
         const response = await axios.get(
-          `${apiAddress}/api/posting/${postId}/delete`
+          `${apiAddress}/api/posting/${postId}/delete`,
+          { withCredentials: true }
         );
         console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
         navigate("/community");
