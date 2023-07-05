@@ -34,7 +34,6 @@ function Post() {
   useEffect(() => {
     getPostDetail();
     getComment();
-    if (session) getLike();
   }, []);
 
   useEffect(() => {
@@ -62,6 +61,7 @@ function Post() {
           minute: "2-digit",
         });
       setPostData(updatedData);
+      if (session) getLike();
     } catch (error: any) {
       console.error("Post.tsx(getPostDetail): " + JSON.stringify(error));
     }
