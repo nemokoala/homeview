@@ -149,6 +149,7 @@ function Post() {
       if (response.status === 201) setLikeToggle(false);
       if (response.status === 202) setLikeToggle(true);
       setPostData((prev: any) => ({ ...prev, postLikes: response.data }));
+      console.log("Post.tsx(getLike): " + JSON.stringify(response));
     } catch (error: any) {
       console.error("Post.tsx(getLike): " + JSON.stringify(error));
     }
