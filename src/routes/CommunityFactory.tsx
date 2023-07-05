@@ -59,13 +59,16 @@ function CommunityFactory({ postData }: any) {
     if (!postData) {
       //글 작성일 경우
       try {
-        const response = await axios.post(`${apiAddress}/api/posting/add`, {
-          title: title,
-          content: content.replace(/\n/g, "<br/>"),
-          nickname: session.nickname,
-          categoryId: category,
-          memberId: session.id,
-        });
+        const response = await axios.post(
+          `${apiAddress}/api/posting/add`,
+          {
+            title: title,
+            content: content.replace(/\n/g, "<br/>"),
+            nickname: session.nickname,
+            categoryId: category,
+          },
+          { withCredentials: true }
+        );
 
         console.log("리스폰즈DATAthen : " + response.data);
         console.log("리스폰즈STATUS : " + response.status);
@@ -101,7 +104,8 @@ function CommunityFactory({ postData }: any) {
             title: title,
             content: content.replace(/\n/g, "<br/>"),
             categoryId: category,
-          }
+          },
+          { withCredentials: true }
         );
 
         console.log("글수정 response : " + response.data);
