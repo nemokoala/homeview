@@ -267,13 +267,31 @@ function Post() {
       });
     return changedTime;
   };
+  const getCategoryName = (categoryId: any) => {
+    switch (categoryId) {
+      case 0:
+        return "전체";
+      case 1:
+        return "자유";
+      case 2:
+        return "질문";
+      case 3:
+        return "유머";
+      case 4:
+        return "정보";
+    }
+  };
   return (
     <Container>
       {postData ? (
         <>
           <ContentBlock>
             <ContentText fontSize={1.4}>
-              {postData.title} 👀{postData.postHits}
+              <span style={{ color: "gray" }}>
+                [{getCategoryName(postData.categoryId)}]
+              </span>
+              &nbsp;{postData.title} 👀
+              {postData.postHits}
             </ContentText>
             <ContentText fontSize={0.9} fontColor="gray">
               {postData.memberNickname}#{postData.memberId}
@@ -407,7 +425,7 @@ const Btn = styled.div<any>`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: ${(props) => props.height || "35px"};
+  height: ${(props) => props.height || "30px"};
   border-radius: 20px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
