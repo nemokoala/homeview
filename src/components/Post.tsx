@@ -353,7 +353,7 @@ function Post() {
                 <ContentText fontsize={0.9} color="lightgray">
                   {changeDate(comment.commentTime)}
                 </ContentText>
-                {session.id === comment.memberId && (
+                {session.id && (
                   <Btn onClick={() => deleteComment(comment.commentId)}>
                     삭제
                   </Btn>
