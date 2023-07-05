@@ -121,14 +121,15 @@ function Community() {
       if (response.status === 203) {
         dispatch(setModal({ text: "카테고리 범위를 벗어났습니다." } as any));
       }
-      if (response.data.content.length === 0)
+      if (response.data.content.length === 0) {
+        setPosts([]);
         setSearchResult(
           `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${categoryName}"]`
         );
-      else {
+      } else {
         setPosts(response.data.content);
         setSearchResult(
-          `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"`
+          `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"]`
         );
       }
     } catch (error: any) {
@@ -340,6 +341,7 @@ const SearchResult = styled.div`
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 5px 4px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  white-space: pre-wrap;
   & div {
     display: flex;
     align-items: center;
