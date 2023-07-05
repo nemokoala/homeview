@@ -18,6 +18,8 @@ function Post() {
   const [commentContent, setCommentContent] = useState("");
   const dispatch = useDispatch();
   const session = useSelector((state: any) => state.userSet.session);
+  const modal = useSelector((state: any) => state.modalSet.modal);
+  let enterEnable = true;
   // const example = {
   //   postId: 12,
   //   memberId: 2,
@@ -33,8 +35,17 @@ function Post() {
     getPostDetail();
     getComment();
     if (session) getLike();
-    getEdit();
   }, []);
+
+  useEffect(() => {
+    //모달창 enter로 종료후 바로 onclick되는 현상 수정
+    if (!modal.open) {
+      enterEnable = false;
+      setTimeout(() => {
+        enterEnable = true;
+      }, 300);
+    }
+  }, [modal]);
   const getPostDetail = async () => {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/${postId}`);
@@ -143,17 +154,6 @@ function Post() {
     }
   };
 
-  const getEdit = async () => {
-    try {
-      const response = await axios.get(
-        `${apiAddress}/api/posting/${postId}/edit`
-      );
-      console.log("Post.tsx(getEdit): " + JSON.stringify(response));
-    } catch (error: any) {
-      console.error("Post.tsx(getEdit): " + JSON.stringify(error));
-    }
-  };
-
   const deletePostingData = async (id: number) => {
     if (session.role === "ADMIN") {
       const answer = prompt(
@@ -194,11 +194,14 @@ function Post() {
   };
   const postComment = async () => {
     try {
-      const response = await axios.post(`${apiAddress}/api/comment/add`, {
-        postId: postId,
-        memberId: session.id,
-        content: commentContent,
-      });
+      const response = await axios.post(
+        `${apiAddress}/api/comment/add`,
+        {
+          postId: postId,
+          content: commentContent,
+        },
+        { withCredentials: true }
+      );
       if (response.status === 201) {
         setLikeToggle(true);
         getComment();
@@ -225,7 +228,8 @@ function Post() {
   const deleteComment = async (commentId: any) => {
     try {
       const response = await axios.get(
-        `${apiAddress}/api/comment/${commentId}/delete`
+        `${apiAddress}/api/comment/${commentId}/delete`,
+        { withCredentials: true }
       );
       if (response.status === 202) {
         getComment();
@@ -324,7 +328,7 @@ function Post() {
                 onChange={onChange}
                 placeholder="댓글 내용을 입력해주세요."
                 onKeyUp={(e: any) => {
-                  if (e.key === "Enter") postComment();
+                  if (e.key === "Enter" && enterEnable) postComment();
                 }}
               />
               <Btn
