@@ -186,7 +186,10 @@ function Community() {
           onClick={() => navigate(`/community/${post.postId}`)}
         >
           <ContentText fontSize={1.3}>
-            [{getCategoryName(post.categoryId)}]&nbsp;
+            <span style={{ color: "gray" }}>
+              [{getCategoryName(post.categoryId)}]
+            </span>
+            &nbsp;
             {post.title}{" "}
             {session.role === "ADMIN" && (
               <DeleteBtn
@@ -202,7 +205,7 @@ function Community() {
           </ContentText>
           <ContentText>
             {post.memberNickname}#{post.memberId} &nbsp;|&nbsp;{" "}
-            {changeDate(post.postTime)}
+            <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
           </ContentText>
         </ContentBlock>
       ))}
