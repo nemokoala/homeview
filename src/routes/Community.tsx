@@ -100,24 +100,8 @@ function Community() {
         `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=0`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
-      let categoryName = "";
-      switch (category) {
-        case 0:
-          categoryName = "전체";
-          break;
-        case 1:
-          categoryName = "자유";
-          break;
-        case 2:
-          categoryName = "질문";
-          break;
-        case 3:
-          categoryName = "유머";
-          break;
-        case 4:
-          categoryName = "정보";
-          break;
-      }
+      let categoryName = getCategoryName(category);
+
       if (response.status === 203) {
         dispatch(setModal({ text: "카테고리 범위를 벗어났습니다." } as any));
       }
@@ -145,7 +129,20 @@ function Community() {
   const enterPress = (e: any) => {
     if (e.key === "Enter") searching();
   };
-
+  const getCategoryName = (categoryId: any) => {
+    switch (categoryId) {
+      case 0:
+        return "전체";
+      case 1:
+        return "자유";
+      case 2:
+        return "질문";
+      case 3:
+        return "유머";
+      case 4:
+        return "정보";
+    }
+  };
   useEffect(() => {
     if (!search) getPostingData();
     else if (search) searching();
@@ -189,6 +186,7 @@ function Community() {
           onClick={() => navigate(`/community/${post.postId}`)}
         >
           <ContentText fontSize={1.3}>
+            [{getCategoryName(post.categoryId)}]&nbsp;
             {post.title}{" "}
             {session.role === "ADMIN" && (
               <DeleteBtn
