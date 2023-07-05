@@ -83,9 +83,9 @@ function Post() {
         const response = await axios.post(
           `${apiAddress}/api/posting/like/save`,
           {
-            memberId: session.id,
             postId: postId,
-          }
+          },
+          { withCredentials: true }
         );
         if (response.status === 201) {
           setLikeToggle(true);
@@ -116,9 +116,9 @@ function Post() {
         const response = await axios.post(
           `${apiAddress}/api/posting/like/delete`,
           {
-            memberId: session.id,
             postId: postId,
-          }
+          },
+          { withCredentials: true }
         );
         if (response.status === 202) {
           setLikeToggle(false);
@@ -142,9 +142,9 @@ function Post() {
       const response = await axios.post(
         `${apiAddress}/api/posting/like/check`,
         {
-          memberId: session.id,
           postId: postId,
-        }
+        },
+        { withCredentials: true }
       );
       if (response.status === 201) setLikeToggle(false);
       if (response.status === 202) setLikeToggle(true);
