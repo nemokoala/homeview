@@ -45,6 +45,10 @@ function Post() {
       }, 300);
     }
   }, [modal]);
+
+  useEffect(() => {
+    if (session) getLike();
+  }, [session]);
   const getPostDetail = async () => {
     try {
       const response = await axios.get(`${apiAddress}/api/posting/${postId}`);
