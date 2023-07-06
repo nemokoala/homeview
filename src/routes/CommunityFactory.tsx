@@ -1,6 +1,6 @@
 import axios from "axios";
 import Category from "components/Category";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setModal } from "slice/modalSlice";
@@ -18,6 +18,18 @@ function CommunityFactory({ postData }: any) {
   const handleInput = useCallback((event: any) => {
     event.target.style.height = "auto";
     event.target.style.height = `${event.target.scrollHeight}px`;
+  }, []);
+
+  useEffect(() => {
+    if (!session) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "글을 작성하려면 로그인이 필요합니다.",
+        } as any)
+      );
+      navigate("/community");
+    }
   }, []);
 
   const onChange = (e: any) => {
