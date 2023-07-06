@@ -171,7 +171,7 @@ function CommunityFactory({ postData, setFixToggle }: any) {
       <Button onClick={confirm}>{postData ? "수정 완료" : "작성 완료"}</Button>
       <Button
         onClick={() => setFixToggle(false)}
-        style={{ background: "rgb(143, 143, 143)" }}
+        style={{ background: "rgb(202, 202, 202)", margin: "0px 0px" }}
       >
         수정 취소
       </Button>

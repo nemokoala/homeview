@@ -182,15 +182,10 @@ function Community() {
       </ContentBlock>
       {posts.map((post: any) => (
         <ContentBlock
-          style={
-            session.id === post.memberId
-              ? { background: "rgb(163, 203, 255)" }
-              : {}
-          }
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
-          <ContentText fontSize={1.3}>
+          <ContentText fontSize={1.3} fontColor={session && "skyblue"}>
             <span style={{ color: "gray" }}>
               [{getCategoryName(post.categoryId)}]
             </span>
@@ -208,8 +203,8 @@ function Community() {
           <ContentText fontSize={1.1}>
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
-          <ContentText>
-            {post.memberNickname}#{post.memberId} &nbsp;|&nbsp;{" "}
+          <ContentText fontColor={session && "skyblue"}>
+            {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
             <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
           </ContentText>
         </ContentBlock>
