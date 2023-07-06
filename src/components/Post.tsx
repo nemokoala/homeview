@@ -189,15 +189,21 @@ function Post() {
       }
     } else if (session.id === postData.memberId) {
       //유저 전용
-      try {
-        const response = await axios.get(
-          `${apiAddress}/api/posting/${postId}/delete`,
-          { withCredentials: true }
-        );
-        console.log("Post.tsx(deletePostingData): " + JSON.stringify(response));
-        navigate("/community");
-      } catch (error: any) {
-        console.error("Post.tsx(deletePostingData): " + JSON.stringify(error));
+      if (window.confirm("게시글을 삭제하시겠습니까?")) {
+        try {
+          const response = await axios.get(
+            `${apiAddress}/api/posting/${postId}/delete`,
+            { withCredentials: true }
+          );
+          console.log(
+            "Post.tsx(deletePostingData): " + JSON.stringify(response)
+          );
+          navigate("/community");
+        } catch (error: any) {
+          console.error(
+            "Post.tsx(deletePostingData): " + JSON.stringify(error)
+          );
+        }
       }
     }
   };
@@ -363,7 +369,7 @@ function Post() {
             <ContentText fontSize={1.3} margin="0 0 10px 0">
               댓글
             </ContentText>
-            <div style={{ display: "flex", gap: "13px", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "14px", alignItems: "center" }}>
               <CommentInput
                 id="comment"
                 value={commentContent}
