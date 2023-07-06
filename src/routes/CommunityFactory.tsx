@@ -251,7 +251,7 @@ const Content = styled.textarea`
   border: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 0px 13px;
+  padding: 10px 14px;
   resize: none;
   overflow-y: auto;
   border-radius: 15px;
