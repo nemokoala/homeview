@@ -424,7 +424,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, white, #e3f7ff);
+  background: linear-gradient(to bottom, white, #f3fbff);
 `;
 const fadein = keyframes`
   from {
