@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CommunityFactory from "routes/CommunityFactory";
 import { setModal } from "slice/modalSlice";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { apiAddress } from "value";
 
 function Post() {
@@ -424,6 +424,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(to bottom, white, #d9f4ff);
+`;
+const fadein = keyframes`
+  from {
+    opacity: 0;
+    transform:translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform:translateY(0);
+  }
 `;
 const ContentBlock = styled.div`
   width: 95%;
@@ -432,6 +443,7 @@ const ContentBlock = styled.div`
   padding: 20px;
   border-radius: 20px;
   transition: all 0.7s;
+  animation: ${fadein} 0.5s ease-out;
 `;
 const ContentText = styled.div<any>`
   display: flex;

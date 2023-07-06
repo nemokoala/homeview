@@ -174,7 +174,7 @@ function CommunityFactory({ postData, setFixToggle }: any) {
           onClick={() => setFixToggle(false)}
           style={{
             background: "rgb(202, 202, 202)",
-            margin: "-20px 0px 20px 0px",
+            margin: "-15px 0px 20px 0px",
           }}
         >
           수정 취소
