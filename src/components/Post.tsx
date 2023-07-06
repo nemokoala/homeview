@@ -34,6 +34,15 @@ function Post() {
   useEffect(() => {
     getPostDetail();
     getComment();
+    if (!session) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "글을 작성하려면 로그인이 필요합니다.",
+        } as any)
+      );
+      navigate("/community");
+    }
   }, []);
 
   useEffect(() => {
@@ -202,6 +211,15 @@ function Post() {
     }
   };
   const postComment = async () => {
+    if (!session) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "댓글을 작성하려면 로그인이 필요합니다.",
+        } as any)
+      );
+      return;
+    }
     try {
       const response = await axios.post(
         `${apiAddress}/api/comment/add`,
@@ -353,7 +371,11 @@ function Post() {
                 id="comment"
                 value={commentContent}
                 onChange={onChange}
-                placeholder="댓글 내용을 입력해주세요."
+                placeholder={
+                  session
+                    ? "댓글 내용을 입력해주세요."
+                    : "로그인을 하셔야 댓글 작성이 가능합니다."
+                }
                 onKeyUp={(e: any) => {
                   if (e.key === "Enter" && enterEnable) postComment();
                 }}

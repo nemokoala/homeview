@@ -182,6 +182,7 @@ function Community() {
       </ContentBlock>
       {posts.map((post: any) => (
         <ContentBlock
+          style={session.id === post.memberId ? { background: "skyblue" } : {}}
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
@@ -242,7 +243,7 @@ const ContentText = styled.div<any>`
 const Button = styled.button`
   width: 100%;
   height: 50px;
-  margin: 15px 0;
+  margin: 20px 0;
   background-color: var(--orange);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
   border: 0px;

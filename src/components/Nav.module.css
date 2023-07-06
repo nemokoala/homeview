@@ -91,6 +91,7 @@
   background: rgb(63, 110, 110);
 }
 .registerBtn {
+  min-width: 40px;
   background: rgb(255, 202, 44) !important;
   color: darkslategray;
   transition: all 0.5s;
