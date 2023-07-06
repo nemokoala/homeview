@@ -187,7 +187,7 @@ function Community() {
         >
           <ContentText
             fontSize={1.3}
-            fontColor={session.id === post.memberId && "rgb(45, 22, 145)"}
+            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
           >
             <span style={{ color: "gray" }}>
               [{getCategoryName(post.categoryId)}]
@@ -207,7 +207,7 @@ function Community() {
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
           <ContentText
-            fontColor={session.id === post.memberId && "rgb(45, 22, 145)"}
+            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
           >
             {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
             <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
@@ -223,7 +223,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, white, #f3fbff);
+  background: linear-gradient(to bottom, white, #def4ff);
 `;
 const fadein = keyframes`
   from {
