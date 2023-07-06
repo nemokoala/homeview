@@ -187,7 +187,7 @@ function Community() {
         >
           <ContentText
             fontSize={1.3}
-            fontColor={session.id === post.memberId && "blue"}
+            fontColor={session.id === post.memberId && "rgb(45, 22, 145)"}
           >
             <span style={{ color: "gray" }}>
               [{getCategoryName(post.categoryId)}]
@@ -206,7 +206,9 @@ function Community() {
           <ContentText fontSize={1.1}>
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
-          <ContentText fontColor={session.id === post.memberId && "blue"}>
+          <ContentText
+            fontColor={session.id === post.memberId && "rgb(45, 22, 145)"}
+          >
             {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
             <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
           </ContentText>
@@ -221,7 +223,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to bottom, white, #d9f4ff);
+  background: linear-gradient(to bottom, white, #f3fbff);
 `;
 const fadein = keyframes`
   from {
@@ -276,7 +278,6 @@ const Button = styled.button`
     filter: hue-rotate(340deg);
   }
   &:focus {
-    color: orange;
     border: 2px solid orange !important;
   }
 `;
@@ -311,7 +312,7 @@ const SearchContainer = styled.div`
   width: 90%;
   height: 50px;
   display: flex;
-  gap: 10px;
+  gap: 14px;
   margin-bottom: 25px;
   & div {
     width: 90px;
