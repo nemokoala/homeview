@@ -7,7 +7,7 @@ import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
-function CommunityFactory({ postData }: any) {
+function CommunityFactory({ postData, setFixToggle }: any) {
   const [title, setTitle] = useState(postData?.title || "");
   const [content, setContent] = useState(postData?.content || "");
   const [category, setCategory] = useState(postData?.category || 0);
@@ -169,6 +169,12 @@ function CommunityFactory({ postData }: any) {
         placeholder="2~500자리 글자 수"
       />
       <Button onClick={confirm}>{postData ? "수정 완료" : "작성 완료"}</Button>
+      <Button
+        onClick={() => setFixToggle(false)}
+        style={{ background: "rgb(143, 143, 143)" }}
+      >
+        수정 취소
+      </Button>
     </Container>
   );
 }
