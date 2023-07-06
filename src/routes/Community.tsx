@@ -187,7 +187,7 @@ function Community() {
         >
           <ContentText
             fontSize={1.3}
-            fontColor={session.id === post.memberId && "lightblue"}
+            fontColor={session.id === post.memberId && "blue"}
           >
             <span style={{ color: "gray" }}>
               [{getCategoryName(post.categoryId)}]
@@ -206,7 +206,7 @@ function Community() {
           <ContentText fontSize={1.1}>
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
-          <ContentText fontColor={session.id === post.memberId && "lightblue"}>
+          <ContentText fontColor={session.id === post.memberId && "blue"}>
             {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
             <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
           </ContentText>
