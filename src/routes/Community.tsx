@@ -39,7 +39,7 @@ function Community() {
   const getPostingData = async () => {
     try {
       const response = await axios.get(
-        `${apiAddress}/api/posting/${category}?page=${page}`
+        `${apiAddress}/api/posting/list/${category}?page=${page}`
       );
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
       setPosts(response.data);
