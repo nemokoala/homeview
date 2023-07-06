@@ -203,7 +203,6 @@ function Community() {
             <div
               onClick={() => {
                 setPage(index + (pageSet.now - 1) * 5);
-                getPostingData();
               }}
             >
               {index + (pageSet.now - 1) * 5 + 1}
@@ -228,7 +227,7 @@ function Community() {
             fontSize={1.3}
             fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
           >
-            <span style={{ color: "gray" }}>[{post.categoryId}]</span>
+            <span style={{ color: "gray" }}>[{post.category.name}]</span>
             &nbsp;
             {post.title}{" "}
             {session.role === "ADMIN" && (
