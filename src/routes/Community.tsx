@@ -185,7 +185,10 @@ function Community() {
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
-          <ContentText fontSize={1.3} fontColor={session && "skyblue"}>
+          <ContentText
+            fontSize={1.3}
+            fontColor={session.id === post.memberId && "lightblue"}
+          >
             <span style={{ color: "gray" }}>
               [{getCategoryName(post.categoryId)}]
             </span>
@@ -203,7 +206,7 @@ function Community() {
           <ContentText fontSize={1.1}>
             ❤️{post.postLikes} 👀{post.postHits}
           </ContentText>
-          <ContentText fontColor={session && "skyblue"}>
+          <ContentText fontColor={session.id === post.memberId && "lightblue"}>
             {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
             <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
           </ContentText>
