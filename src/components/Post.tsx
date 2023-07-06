@@ -410,6 +410,8 @@ const ContentBlock = styled.div`
   transition: all 0.7s;
 `;
 const ContentText = styled.div<any>`
+  display: flex;
+  align-items: center;
   font-size: ${(props) => props.fontSize + "rem"};
   color: ${(props) => props.fontColor};
   margin: ${(props) => props.margin};
