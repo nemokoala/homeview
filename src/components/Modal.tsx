@@ -27,6 +27,13 @@ function Modal({ ...props }: any) {
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       if (modal.open) {
+        modal.btn1Func();
+        dispatch(setModal({ open: false } as any));
+      }
+    }
+    if (e.key === "Esc") {
+      if (modal.open) {
+        modal.btn2Func();
         dispatch(setModal({ open: false } as any));
       }
     }

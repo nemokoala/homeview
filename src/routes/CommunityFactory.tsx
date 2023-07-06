@@ -174,7 +174,7 @@ function CommunityFactory({ postData, setFixToggle }: any) {
           onClick={() => setFixToggle(false)}
           style={{
             background: "rgb(202, 202, 202)",
-            margin: "-15px 0px 20px 0px",
+            margin: "-10px 0px 20px 0px",
           }}
         >
           수정 취소
@@ -231,7 +231,7 @@ const Label = styled.div`
 const Title = styled.input`
   width: 90%;
   height: 50px;
-  padding: 10px;
+  padding: 0px 13px;
   margin: 0;
   border-radius: 15px;
   border: 0px;
@@ -251,7 +251,7 @@ const Content = styled.textarea`
   border: 1px solid black;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 0px 13px;
   resize: none;
   overflow-y: auto;
   border-radius: 15px;

@@ -336,7 +336,7 @@ const SearchContainer = styled.div`
 const Input = styled.input`
   width: 100%;
   height: 50px;
-  padding: 10px;
+  padding: 0px 13px;
   border-radius: 15px;
   border: 0px;
   backdrop-filter: blur(15px);
