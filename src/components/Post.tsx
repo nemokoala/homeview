@@ -365,7 +365,7 @@ function Post() {
                 placeholder={
                   session
                     ? "댓글 내용을 입력해주세요."
-                    : "로그인을 하셔야 댓글 작성이 가능합니다."
+                    : "로그인을 해야 댓글 작성이 가능합니다."
                 }
                 onKeyUp={(e: any) => {
                   if (e.key === "Enter" && enterEnable) postComment();

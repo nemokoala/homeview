@@ -182,7 +182,11 @@ function Community() {
       </ContentBlock>
       {posts.map((post: any) => (
         <ContentBlock
-          style={session.id === post.memberId ? { background: "skyblue" } : {}}
+          style={
+            session.id === post.memberId
+              ? { background: "rgb(163, 203, 255)" }
+              : {}
+          }
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
         >
