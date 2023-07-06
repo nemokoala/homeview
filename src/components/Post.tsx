@@ -383,7 +383,7 @@ function Post() {
                   margin: 0,
                   height: "50px",
                   borderRadius: "17px",
-                  backgroundColor: "skyblue",
+                  backgroundColor: session ? "skyblue" : "gray",
                 }}
                 onClick={postComment}
               >
