@@ -316,7 +316,7 @@ function Post() {
             <Btns>
               {session.id === postData.memberId && (
                 <Btn
-                  backgroundColor={fixToggle ? "pink" : "skyblue"}
+                  backgroundColor={fixToggle ? "rgb(143, 143, 143)" : "skyblue"}
                   onClick={() => {
                     setFixToggle((prev) => !prev);
                   }}
@@ -328,7 +328,7 @@ function Post() {
               {(session.role === "ADMIN" ||
                 session.id === postData.memberId) && (
                 <Btn
-                  backgroundColor="rgb(255,159,159)"
+                  backgroundColor="rgb(253, 132, 132)"
                   onClick={() => deletePostingData(postData.postId)}
                 >
                   삭제
@@ -341,7 +341,10 @@ function Post() {
               onClick={likeUp}
               style={
                 likeToggle
-                  ? { background: "rgb(247, 133, 133)" }
+                  ? {
+                      background: "rgb(247, 123, 123)",
+                      boxShadow: "0px 0px 10px rgba(255, 159, 159, 0.358)",
+                    }
                   : { background: "pink" }
               }
             >
@@ -350,7 +353,10 @@ function Post() {
           </ContentBlock>
           {fixToggle && (
             <ContentBlock>
-              <CommunityFactory postData={postData} />
+              <CommunityFactory
+                postData={postData}
+                setFixToggle={setFixToggle}
+              />
             </ContentBlock>
           )}
           <ContentBlock>
