@@ -34,15 +34,6 @@ function Post() {
   useEffect(() => {
     getPostDetail();
     getComment();
-    if (!session) {
-      dispatch(
-        setModal({
-          title: "알림",
-          text: "글을 작성하려면 로그인이 필요합니다.",
-        } as any)
-      );
-      navigate("/community");
-    }
   }, []);
 
   useEffect(() => {
