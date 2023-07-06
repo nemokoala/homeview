@@ -21,6 +21,7 @@ function Community() {
         memberId: 0,
       },
     ],
+    category: { name: "로딩중..." },
     totalPages: 25,
   });
   const [search, setSearch] = useState("");
