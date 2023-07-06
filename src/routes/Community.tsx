@@ -8,22 +8,27 @@ import styled, { keyframes } from "styled-components";
 import { apiAddress } from "value";
 
 function Community() {
-  const [posts, setPosts] = useState<any>([
-    {
-      postId: 1,
-      title: "글 정보 불러오는 중...",
-      content: "첫번쨰 글",
-      memberNickname: "로딩중...",
-      postTime: "",
-      postHits: 0,
-      postLikes: 0,
-      memberId: 0,
-    },
-  ]);
+  const [posts, setPosts] = useState<any>({
+    content: [
+      {
+        postId: 1,
+        title: "글 정보 불러오는 중...",
+        content: "첫번쨰 글",
+        memberNickname: "로딩중...",
+        postTime: "",
+        postHits: 0,
+        postLikes: 0,
+        memberId: 0,
+      },
+    ],
+    totalPages: 25,
+  });
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchTemp, setSearchTemp] = useState([]);
   const [category, setCategory] = useState(0);
+  const [page, setPage] = useState(0);
+  const [pageSet, setPageSet] = useState({ now: 1, max: 1 });
   const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,10 +39,11 @@ function Community() {
   const getPostingData = async () => {
     try {
       const response = await axios.get(
-        `${apiAddress}/api/posting/list/${category.toString()}`
+        `${apiAddress}/api/posting/${category}/?page=${page}`
       );
       console.log("Community.tsx(getPostingData): " + JSON.stringify(response));
       setPosts(response.data);
+      setPageSet({ now: 1, max: Math.ceil(response.data.totalPages / 5) });
       setSearchTemp(response.data);
       // dispatch(setModal({ text: JSON.stringify(response) } as any));
     } catch (error: any) {
@@ -180,7 +186,37 @@ function Community() {
           <Category category={category} setCategory={setCategory} />
         </CategoryContainer>
       </ContentBlock>
-      {posts.map((post: any) => (
+      <PageBlock>
+        <div
+          onClick={() => {
+            if (pageSet.now > 1)
+              setPageSet((prev) => ({ ...prev, now: prev.now - 1 }));
+          }}
+        >
+          ◀
+        </div>
+        {[...Array(posts.totalPages > 5 ? 5 : posts.totalPages)].map(
+          (page: any, index) => (
+            <div
+              onClick={() => {
+                setPage(index + (pageSet.now - 1) * 5);
+                getPostingData();
+              }}
+            >
+              {index + (pageSet.now - 1) * 5 + 1}
+            </div>
+          )
+        )}
+        <div
+          onClick={() => {
+            if (pageSet.now < pageSet.max)
+              setPageSet((prev) => ({ ...prev, now: prev.now + 1 }));
+          }}
+        >
+          ▶
+        </div>
+      </PageBlock>
+      {posts.content.map((post: any) => (
         <ContentBlock
           key={post.postId}
           onClick={() => navigate(`/community/${post.postId}`)}
@@ -383,4 +419,174 @@ const CategoryContainer = styled.div`
   width: 100%;
   margin-bottom: 10px;
 `;
+
+const PageBlock = styled.div`
+  width: 90%;
+  margin: 15px 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+  padding: 5px 10px;
+  border-radius: 20px;
+  transition: all 0.7s;
+  animation: ${fadein} 0.5s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  & div {
+    width: 50px;
+    flex-grow: 1;
+    font-size: 1.3rem;
+    padding: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & div:hover {
+    background-color: rgb(255, 241, 195);
+    cursor: pointer;
+  }
+`;
 export default Community;
+
+const json = {
+  data: {
+    content: [
+      {
+        postId: 21,
+        member: {
+          id: 5,
+          name: "만보",
+          nickname: "만보",
+          email: "m1@naver.com",
+          password:
+            "$2a$10$vK9dDtRURea0FAvtOSluIuV5MpiJuK6r2VkUGX8gxGJ9X1Mepew42",
+          role: "ROLE_MEMBER",
+        },
+        category: { categoryId: 4, name: "정보" },
+        title: "레몬 하나에는 레몬4개 분량의 비타민이 들어있다.",
+        content: "https://www.humorworld.net/?p=112320<br/>링크 테스트",
+        postTime: "2023-07-06T07:08:19.241+00:00",
+        postHits: 4,
+        postLikes: 1,
+      },
+      {
+        postId: 20,
+        member: {
+          id: 1,
+          name: "박재연",
+          nickname: "어드민",
+          email: "admin@naver.com",
+          password:
+            "$2a$10$bZJ8UvBG2w6fnsK7t/L1quhX0ojYnbB6c0acGkSOsdMm27BAsFR2q",
+          role: "ADMIN",
+        },
+        category: { categoryId: 2, name: "질문" },
+        title: "질문",
+        content: "ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄴㄴㄴㄴㄴ",
+        postTime: "2023-07-05T12:38:26.494+00:00",
+        postHits: 73,
+        postLikes: 1,
+      },
+      {
+        postId: 19,
+        member: {
+          id: 4,
+          name: "정유선",
+          nickname: "ys",
+          email: "seon7129@naver.com",
+          password:
+            "$2a$10$DAEo4CrGJYC92PHr4UzAgeSq3XZhjFBMdDhbZe4x7AjNVq.QaHrHi",
+          role: "ROLE_MEMBER",
+        },
+        category: { categoryId: 3, name: "유머" },
+        title: "새로운 글",
+        content: "테스트",
+        postTime: "2023-07-04T14:12:40.229+00:00",
+        postHits: 49,
+        postLikes: 3,
+      },
+      {
+        postId: 17,
+        member: {
+          id: 5,
+          name: "만보",
+          nickname: "만보",
+          email: "m1@naver.com",
+          password:
+            "$2a$10$vK9dDtRURea0FAvtOSluIuV5MpiJuK6r2VkUGX8gxGJ9X1Mepew42",
+          role: "ROLE_MEMBER",
+        },
+        category: { categoryId: 1, name: "자유" },
+        title: "하이를 ㅂㅇ",
+        content: "하이 수정",
+        postTime: "2023-07-04T12:18:44.034+00:00",
+        postHits: 48,
+        postLikes: 2,
+      },
+      {
+        postId: 16,
+        member: {
+          id: 2,
+          name: "박재연",
+          nickname: "t1t1",
+          email: "t1@naver.com",
+          password:
+            "$2a$10$gRqPap0PyWbuwOt.8vbpX.0OpjbQhPxuyF2J0cTS/bm2D/OKWaofm",
+          role: "ADMIN",
+        },
+        category: { categoryId: 1, name: "자유" },
+        title: "안녕하세요",
+        content: "안녕",
+        postTime: "2023-07-04T12:17:52.913+00:00",
+        postHits: 9,
+        postLikes: 1,
+      },
+    ],
+    pageable: {
+      sort: { empty: false, sorted: true, unsorted: false },
+      offset: 0,
+      pageNumber: 0,
+      pageSize: 10,
+      paged: true,
+      unpaged: false,
+    },
+    totalPages: 1,
+    totalElements: 5,
+    last: true,
+    size: 10,
+    number: 0,
+    sort: { empty: false, sorted: true, unsorted: false },
+    numberOfElements: 5,
+    first: true,
+    empty: false,
+  },
+  status: 200,
+  statusText: "",
+  headers: {
+    "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+    "content-type": "application/json",
+    expires: "0",
+    pragma: "no-cache",
+  },
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false,
+    },
+    adapter: ["xhr", "http"],
+    transformRequest: [null],
+    transformResponse: [null],
+    timeout: 0,
+    xsrfCookieName: "XSRF-TOKEN",
+    xsrfHeaderName: "X-XSRF-TOKEN",
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: {},
+    headers: { Accept: "application/json, text/plain, */*" },
+    method: "get",
+    url: "https://api.binbinbin.site/api/posting/list/0",
+  },
+  request: {},
+};
