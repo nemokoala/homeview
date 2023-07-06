@@ -138,6 +138,7 @@ function Post() {
     }
   };
   const getLike = async () => {
+    if (!session) return;
     try {
       const response = await axios.post(
         `${apiAddress}/api/posting/like/check`,
