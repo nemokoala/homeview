@@ -111,13 +111,13 @@ function CommunityFactory({ postData }: any) {
         console.log("글수정 response : " + response.data);
         console.log("글수정 STATUS : " + response.status);
         console.log(session.id + " // " + session.nickname);
-        if (response.status === 201) {
+        if (response.status === 200) {
           dispatch(
             setModal({
               title: "알림",
               text: "글 수정을 완료했습니다.",
               btn1Func: function () {
-                navigate("/community");
+                window.location.reload();
               },
             } as any)
           );
