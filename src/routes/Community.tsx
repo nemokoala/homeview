@@ -19,9 +19,10 @@ function Community() {
         postHits: 0,
         postLikes: 0,
         memberId: 0,
+        category: { name: "로딩중..." },
       },
     ],
-    category: { name: "로딩중..." },
+
     totalPages: 25,
   });
   const [search, setSearch] = useState("");
