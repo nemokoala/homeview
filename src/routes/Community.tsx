@@ -1,5 +1,6 @@
 import axios from "axios";
 import Category from "components/Category";
+import PageBlock from "components/PageBlock";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -119,13 +120,13 @@ function Community() {
       if (response.data.content.length === 0) {
         setPosts(response.data);
         setSearchResult(
-          `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${categoryName}"]`
+          `"${search}"에 대한 검색 결과가 없습니다.\n[게시판 종류: ${categoryName}]`
         );
       } else {
         setPosts(response.data);
         setPageSet({ now: 1, max: Math.ceil(response.data.totalPages / 5) });
         setSearchResult(
-          `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"]`
+          `"${search}"에 대한 검색 결과.\n[게시판 종류: ${categoryName}]`
         );
       }
     } catch (error: any) {
@@ -192,35 +193,14 @@ function Community() {
           <Category category={category} setCategory={setCategory} />
         </CategoryContainer>
       </ContentBlock>
-      <PageBlock>
-        <div
-          onClick={() => {
-            if (pageSet.now > 1)
-              setPageSet((prev) => ({ ...prev, now: prev.now - 1 }));
-          }}
-        >
-          ◀
-        </div>
-        {[...Array(posts.totalPages > 5 ? 5 : posts.totalPages)].map(
-          (page: any, index) => (
-            <div
-              onClick={() => {
-                setPage(index + (pageSet.now - 1) * 5);
-              }}
-            >
-              {index + (pageSet.now - 1) * 5 + 1}
-            </div>
-          )
-        )}
-        <div
-          onClick={() => {
-            if (pageSet.now < pageSet.max)
-              setPageSet((prev) => ({ ...prev, now: prev.now + 1 }));
-          }}
-        >
-          ▶
-        </div>
-      </PageBlock>
+      {posts.content.totalPages > 0 && (
+        <PageBlock
+          posts={posts}
+          pageSet={pageSet}
+          setPage={setPage}
+          setPageSet={setPageSet}
+        />
+      )}
       {posts.content.map((post: any) => (
         <ContentBlock
           key={post.postId}
@@ -253,6 +233,14 @@ function Community() {
           </ContentText>
         </ContentBlock>
       ))}
+      {posts.content.totalPages > 0 && (
+        <PageBlock
+          posts={posts}
+          pageSet={pageSet}
+          setPage={setPage}
+          setPageSet={setPageSet}
+        />
+      )}
     </Container>
   );
 }
@@ -394,6 +382,7 @@ const SearchResult = styled.div`
   margin: 5px auto;
   transition: 0.5s all;
   padding: 10px;
+  justify-content: center;
   align-items: center;
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 5px 4px,
@@ -423,33 +412,6 @@ const CategoryContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const PageBlock = styled.div`
-  width: 90%;
-  margin: 15px 0;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
-  padding: 5px 10px;
-  border-radius: 20px;
-  transition: all 0.7s;
-  animation: ${fadein} 0.5s ease-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  & div {
-    width: 50px;
-    flex-grow: 1;
-    font-size: 1.3rem;
-    padding: 10px 0;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  & div:hover {
-    background-color: rgb(255, 241, 195);
-    cursor: pointer;
-  }
-`;
 export default Community;
 
 const json = {
