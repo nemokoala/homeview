@@ -193,14 +193,14 @@ function Community() {
           <Category category={category} setCategory={setCategory} />
         </CategoryContainer>
       </ContentBlock>
-      {posts.content.totalPages > 0 && (
-        <PageBlock
-          posts={posts}
-          pageSet={pageSet}
-          setPage={setPage}
-          setPageSet={setPageSet}
-        />
-      )}
+
+      <PageBlock
+        posts={posts}
+        pageSet={pageSet}
+        setPage={setPage}
+        setPageSet={setPageSet}
+      />
+
       {posts.content.map((post: any) => (
         <ContentBlock
           key={post.postId}
