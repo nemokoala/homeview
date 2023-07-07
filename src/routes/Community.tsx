@@ -221,38 +221,41 @@ function Community() {
           ▶
         </div>
       </PageBlock>
-      {posts.content.map((post: any) => (
-        <ContentBlock
-          key={post.postId}
-          onClick={() => navigate(`/community/${post.postId}`)}
-        >
-          <ContentText
-            fontSize={1.3}
-            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
+      {posts.content.map.length > 0 &&
+        posts.content.map((post: any) => (
+          <ContentBlock
+            key={post.postId}
+            onClick={() => navigate(`/community/${post.postId}`)}
           >
-            <span style={{ color: "gray" }}>[{post.category.name}]</span>
-            &nbsp;
-            {post.title}{" "}
-            {session.role === "ADMIN" && (
-              <DeleteBtn
-                onClick={(event: any) => deletePostingData(event, post.postId)}
-              >
-                삭제
-              </DeleteBtn>
-            )}
-          </ContentText>
-          <Hr />
-          <ContentText fontSize={1.1}>
-            ❤️{post.postLikes} 👀{post.postHits}
-          </ContentText>
-          <ContentText
-            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
-          >
-            {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
-            <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
-          </ContentText>
-        </ContentBlock>
-      ))}
+            <ContentText
+              fontSize={1.3}
+              fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
+            >
+              <span style={{ color: "gray" }}>[{post.category.name}]</span>
+              &nbsp;
+              {post.title}{" "}
+              {session.role === "ADMIN" && (
+                <DeleteBtn
+                  onClick={(event: any) =>
+                    deletePostingData(event, post.postId)
+                  }
+                >
+                  삭제
+                </DeleteBtn>
+              )}
+            </ContentText>
+            <Hr />
+            <ContentText fontSize={1.1}>
+              ❤️{post.postLikes} 👀{post.postHits}
+            </ContentText>
+            <ContentText
+              fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
+            >
+              {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
+              <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
+            </ContentText>
+          </ContentBlock>
+        ))}
     </Container>
   );
 }
