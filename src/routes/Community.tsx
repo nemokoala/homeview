@@ -117,7 +117,7 @@ function Community() {
         dispatch(setModal({ text: "카테고리 범위를 벗어났습니다." } as any));
       }
       if (response.data.content.length === 0) {
-        setPosts([]);
+        setPosts(response.data);
         setSearchResult(
           `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${categoryName}"]`
         );
@@ -221,41 +221,38 @@ function Community() {
           ▶
         </div>
       </PageBlock>
-      {posts.content.map.length > 0 &&
-        posts.content.map((post: any) => (
-          <ContentBlock
-            key={post.postId}
-            onClick={() => navigate(`/community/${post.postId}`)}
+      {posts.content.map((post: any) => (
+        <ContentBlock
+          key={post.postId}
+          onClick={() => navigate(`/community/${post.postId}`)}
+        >
+          <ContentText
+            fontSize={1.3}
+            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
           >
-            <ContentText
-              fontSize={1.3}
-              fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
-            >
-              <span style={{ color: "gray" }}>[{post.category.name}]</span>
-              &nbsp;
-              {post.title}{" "}
-              {session.role === "ADMIN" && (
-                <DeleteBtn
-                  onClick={(event: any) =>
-                    deletePostingData(event, post.postId)
-                  }
-                >
-                  삭제
-                </DeleteBtn>
-              )}
-            </ContentText>
-            <Hr />
-            <ContentText fontSize={1.1}>
-              ❤️{post.postLikes} 👀{post.postHits}
-            </ContentText>
-            <ContentText
-              fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
-            >
-              {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
-              <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
-            </ContentText>
-          </ContentBlock>
-        ))}
+            <span style={{ color: "gray" }}>[{post.category.name}]</span>
+            &nbsp;
+            {post.title}{" "}
+            {session.role === "ADMIN" && (
+              <DeleteBtn
+                onClick={(event: any) => deletePostingData(event, post.postId)}
+              >
+                삭제
+              </DeleteBtn>
+            )}
+          </ContentText>
+          <Hr />
+          <ContentText fontSize={1.1}>
+            ❤️{post.postLikes} 👀{post.postHits}
+          </ContentText>
+          <ContentText
+            fontColor={session.id === post.memberId && "rgb(86, 66, 177)"}
+          >
+            {post.memberNickname}#{post.memberId} &nbsp;| &nbsp;{" "}
+            <span style={{ color: "gray" }}>{changeDate(post.postTime)}</span>
+          </ContentText>
+        </ContentBlock>
+      ))}
     </Container>
   );
 }
