@@ -109,7 +109,7 @@ function Community() {
     if (!search) return;
     try {
       const response = await axios.get(
-        `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=0`
+        `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=${page}`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
       let categoryName = getCategoryName(category);
@@ -157,8 +157,8 @@ function Community() {
     }
   };
   useEffect(() => {
-    if (!search) getPostingData();
-    else if (search) searching();
+    if (!searchResult) getPostingData();
+    else if (searchResult) searching();
   }, [category]);
   return (
     <Container>
@@ -383,7 +383,7 @@ const SearchResult = styled.div`
   font-size: 1.3rem;
   margin: 5px auto;
   transition: 0.5s all;
-  padding: 10px;
+  padding: 10px 15px;
   justify-content: center;
   align-items: center;
   text-align: center;
