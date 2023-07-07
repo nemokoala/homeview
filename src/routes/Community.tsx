@@ -234,7 +234,7 @@ function Community() {
           </ContentText>
         </ContentBlock>
       ))}
-      {posts.totalPages >= 1 && (
+      {posts.content.length >= 5 && (
         <PageBlock
           posts={posts}
           pageSet={pageSet}
@@ -386,14 +386,17 @@ const SearchResult = styled.div`
   padding: 10px;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 5px 4px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   white-space: pre-wrap;
   & div {
     display: flex;
+    justify-content: center;
     align-items: center;
     transition: 0.5s all;
+    padding: 0 5px;
   }
   &:hover {
     cursor: pointer;
