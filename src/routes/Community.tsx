@@ -122,7 +122,7 @@ function Community() {
           `${search}에 대한 검색 결과가 없습니다.\n[게시판 종류: "${categoryName}"]`
         );
       } else {
-        setPosts(response.data.content);
+        setPosts(response.data);
         setSearchResult(
           `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"]`
         );
