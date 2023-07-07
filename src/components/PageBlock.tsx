@@ -12,7 +12,7 @@ function PageBlock({ posts, pageSet, page, setPage, setPageSet }: any) {
         ◀
       </div>
       {[...Array(posts.totalPages > 5 ? 5 : posts.totalPages)].map(
-        (page: any, index) => (
+        (p: any, index) => (
           <div
             style={{
               color:
