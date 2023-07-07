@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-function PageBlock({ posts, pageSet, setPage, setPageSet }: any) {
+function PageBlock({ posts, pageSet, page, setPage, setPageSet }: any) {
   return (
     <PageContentBlock>
       <div
@@ -14,6 +14,10 @@ function PageBlock({ posts, pageSet, setPage, setPageSet }: any) {
       {[...Array(posts.totalPages > 5 ? 5 : posts.totalPages)].map(
         (page: any, index) => (
           <div
+            style={{
+              color:
+                page === index + (pageSet.now - 1) * 5 ? "purple" : "black",
+            }}
             onClick={() => {
               setPage(index + (pageSet.now - 1) * 5);
             }}
