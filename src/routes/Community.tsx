@@ -123,6 +123,7 @@ function Community() {
         );
       } else {
         setPosts(response.data);
+        setPageSet({ now: 1, max: Math.ceil(response.data.totalPages / 5) });
         setSearchResult(
           `"${search}"에 대한 검색 결과.\n[게시판 종류: "${categoryName}"]`
         );
