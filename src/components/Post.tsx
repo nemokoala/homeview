@@ -233,6 +233,7 @@ function Post() {
       );
       if (response.status === 201) {
         setLikeToggle(true);
+        setComments("");
         getComment();
         dispatch(
           setModal({
@@ -354,7 +355,7 @@ function Post() {
                 likeToggle
                   ? {
                       background: "rgb(247, 123, 123)",
-                      boxShadow: "0px 0px 10px rgba(255, 159, 159, 0.358)",
+                      boxShadow: "0px 0px 10px rgba(255, 150, 150, 0.432)",
                     }
                   : { background: "pink" }
               }
@@ -404,19 +405,22 @@ function Post() {
 
             {comments.map((comment: any) => (
               <ContentBlock key={comment.commentId} style={{ width: "100%" }}>
-                <ContentText fontSize={1.2}>
+                <ContentText fontSize={1.3}>
                   {comment.memberNickName}#{comment.memberId}
                 </ContentText>
-                <ContentText fontsize={0.9} color="lightgray">
+                <ContentText fontsize={0.9} fontColor="gray">
                   {changeDate(comment.commentTime)}
                 </ContentText>
                 {session.id === comment.memberId && (
-                  <Btn onClick={() => deleteComment(comment.commentId)}>
+                  <Btn
+                    style={{ backgroundColor: "rgb(253, 132, 132)" }}
+                    onClick={() => deleteComment(comment.commentId)}
+                  >
                     삭제
                   </Btn>
                 )}
                 <hr></hr>
-                <ContentText>{comment.content}</ContentText>
+                <ContentText fonSize={1.2}>{comment.content}</ContentText>
               </ContentBlock>
             ))}
           </ContentBlock>
@@ -478,8 +482,9 @@ const Btn = styled.div<any>`
   border-radius: 20px;
   color: white;
   background-color: ${(props) => props.backgroundColor || "pink"};
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
-  margin-top: 7px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  margin-bottom: 3px;
   transition: all 0.7s;
   &:hover {
     filter: contrast(170%);
