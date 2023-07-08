@@ -106,7 +106,8 @@ function Community() {
     if (id === "search") setSearch(value);
   };
 
-  const searching = async (p = page) => {
+  const searching = async (p = 0) => {
+    //매개변수가 없으면 0을받음
     if (!search) return;
     try {
       const response = await axios.get(
@@ -177,7 +178,7 @@ function Community() {
           onKeyUp={enterPress}
           placeholder="게시글 제목 검색"
         />
-        <div onClick={() => searching(0)}>검색</div>
+        <div onClick={() => searching()}>검색</div>
       </SearchContainer>
       {searchResult && (
         <SearchResult onClick={deleteSearch}>
