@@ -44,6 +44,11 @@ function Post() {
         enterEnable = true;
       }, 300);
     }
+    if (modal.text.includes("글 수정을")) {
+      setFixToggle(false);
+      getPostDetail();
+      getComment();
+    }
   }, [modal]);
 
   useEffect(() => {

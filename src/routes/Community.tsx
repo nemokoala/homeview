@@ -157,6 +157,7 @@ function Community() {
     }
   };
   useEffect(() => {
+    setPage(0);
     if (!searchResult) getPostingData();
     else if (searchResult) searching();
   }, [category]);
