@@ -10,7 +10,7 @@ import { apiAddress } from "value";
 function CommunityFactory({ postData, setFixToggle }: any) {
   const [title, setTitle] = useState(postData?.title || "");
   const [content, setContent] = useState(postData?.content || "");
-  const [category, setCategory] = useState(postData?.category || 0);
+  const [category, setCategory] = useState(postData?.categoryId || 0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const session = useSelector((state: any) => state.userSet.session);
