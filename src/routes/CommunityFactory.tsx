@@ -128,9 +128,6 @@ function CommunityFactory({ postData, setFixToggle }: any) {
             setModal({
               title: "알림",
               text: "글 수정을 완료했습니다.",
-              btn1Func: function () {
-                window.location.reload();
-              },
             } as any)
           );
         }
