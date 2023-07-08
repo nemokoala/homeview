@@ -39,7 +39,8 @@ function Community() {
     getPostingData();
   }, []);
   useEffect(() => {
-    getPostingData();
+    if (!searchResult) getPostingData();
+    else if (searchResult) searching(page);
   }, [page]);
 
   const getPostingData = async () => {
@@ -105,11 +106,11 @@ function Community() {
     if (id === "search") setSearch(value);
   };
 
-  const searching = async () => {
+  const searching = async (p = page) => {
     if (!search) return;
     try {
       const response = await axios.get(
-        `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=${page}`
+        `${apiAddress}/api/posting/search/${category}?keyword=${search}&page=${p}`
       );
       console.log("Community.tsx(searching): " + JSON.stringify(response));
       let categoryName = getCategoryName(category);
