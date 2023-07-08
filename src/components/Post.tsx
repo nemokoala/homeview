@@ -233,7 +233,7 @@ function Post() {
       );
       if (response.status === 201) {
         setLikeToggle(true);
-        setComments("");
+        setCommentContent("");
         getComment();
         dispatch(
           setModal({
