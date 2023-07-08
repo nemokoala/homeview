@@ -142,7 +142,7 @@ function Community() {
   };
 
   const enterPress = (e: any) => {
-    if (e.key === "Enter") searching();
+    if (e.key === "Enter") searching(0);
   };
   const getCategoryName = (categoryId: any) => {
     switch (categoryId) {
@@ -178,7 +178,7 @@ function Community() {
           onKeyUp={enterPress}
           placeholder="게시글 제목 검색"
         />
-        <div onClick={() => searching()}>검색</div>
+        <div onClick={() => searching(0)}>검색</div>
       </SearchContainer>
       {searchResult && (
         <SearchResult onClick={deleteSearch}>
