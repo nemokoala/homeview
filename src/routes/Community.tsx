@@ -177,7 +177,7 @@ function Community() {
           onKeyUp={enterPress}
           placeholder="게시글 제목 검색"
         />
-        <div onClick={searching}>검색</div>
+        <div onClick={() => searching(0)}>검색</div>
       </SearchContainer>
       {searchResult && (
         <SearchResult onClick={deleteSearch}>
