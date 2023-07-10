@@ -17,7 +17,7 @@ function ReviewDetail() {
   }, []);
 
   useEffect(() => {
-    setStar();
+    if (reviewData) setStar();
   }, [reviewData]);
 
   const getReviewDetail = async () => {
