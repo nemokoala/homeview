@@ -304,7 +304,7 @@ function MapCluster({ reviewData }: any) {
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   useEffect(() => {
-    getRoomDatas();
+    if (sidoTarget) getRoomDatas();
   }, [sidoTarget]);
 
   const getRoomDatas = async () => {
