@@ -188,6 +188,7 @@ function ReviewFac({ setReviewData }: any) {
               text: "리뷰 작성을 완료했습니다.",
             } as any)
           );
+          navigate("/review");
         }
       } catch (error: any) {
         console.error(JSON.stringify(error));
@@ -202,8 +203,6 @@ function ReviewFac({ setReviewData }: any) {
           } as any)
         );
       }
-
-      //navigate("/review");
     }
   };
 
