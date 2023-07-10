@@ -26,7 +26,7 @@ function MapContainer({ data }: any) {
 
   function searchLoc() {
     geocoder.addressSearch(
-      data.newAddress,
+      data.room.new_address,
       function (result: any, status: any): any {
         // 정상적으로 검색이 완료됐으면
         if (status == kakao.maps.services.Status.OK) {
@@ -68,16 +68,16 @@ function MapContainer({ data }: any) {
         ></MapMarker>
         <CustomOverlayMap position={state.center} xAnchor={0.5} yAnchor={1.5}>
           <Div>
-            <div className="building">{data.building}</div>
+            <div className="building">{data.room.building}</div>
             <div className="buttons">
               <a
-                href={`https://map.kakao.com/link/to/${data.building},${state.center.lat},${state.center.lng}`}
+                href={`https://map.kakao.com/link/to/${data.room.building},${state.center.lat},${state.center.lng}`}
                 target="_blank"
               >
                 <div className="road">길찾기</div>
               </a>
               <a
-                href={`https://map.kakao.com/link/map/${data.building},${state.center.lat},${state.center.lng}`}
+                href={`https://map.kakao.com/link/map/${data.room.building},${state.center.lat},${state.center.lng}`}
                 target="_blank"
               >
                 <div className="showmap">지도보기</div>
