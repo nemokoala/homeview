@@ -1,42 +1,63 @@
+import axios from "axios";
 import MapContainer from "components/MapContainer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { apiAddress } from "value";
 
-function ReviewDetail({ reviewData }: any | null) {
-  const { id } = useParams();
+function ReviewDetail() {
+  const [reviewData, setReviewData] = useState<any>(null);
+
+  const params = useParams();
+  const reviewId = params.id;
+
+  useEffect(() => {
+    getReviewDetail();
+  }, []);
+
+  const getReviewDetail = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
+      setReviewData(response.data);
+
+      console.log(
+        "ReviewDetail.tsx(getReviewDetail): " + JSON.stringify(response)
+      );
+    } catch (error: any) {
+      console.error(
+        "ReviewDetail.tsx(getReviewDetail): " + JSON.stringify(error)
+      );
+    }
+  };
+
   if (reviewData != null) {
   }
 
-  const review = reviewData?.find((reviewId: any) => reviewId.reviewId == id);
   let stars = "";
-  for (let i = 0; i < review.star; i++) {
+  for (let i = 0; i < reviewData.score; i++) {
     stars += "★";
   }
   const navigate = useNavigate();
-  useEffect(() => {
-    if (review == null) navigate("/");
-  }, []);
+
   return (
     <>
-      {review != null && (
+      {!reviewData && (
         <>
-          <MapContainer data={review} />
+          <MapContainer data={reviewData} />
           <CustomDiv>
             <Building>
-              {review.building} <Star>{stars}</Star>{" "}
-              <span style={{ color: "gray" }}> #{review.reviewId}</span>{" "}
+              {reviewData.building} <Star>{stars}</Star>{" "}
+              <span style={{ color: "gray" }}> #{reviewData.review_id}</span>{" "}
             </Building>
-            <Address>{review.newAddress}</Address>
-            <Address>{review.oldAddress}</Address>
+            <Address>{reviewData.new_address}</Address>
+            <Address>{reviewData.old_address}</Address>
             <Hr></Hr>
-            <Pros>장점 : {review.pros}</Pros>
-            <Cons>단점 : {review.cons}</Cons>
-            <Year>거주년도 : {review.livedYear}년까지</Year>
-            <Year>거주유형 : {review.residenceType}</Year>
-            <Year>거주층 : {review.residenceFloor}</Year>
-            <UserName>작성자 : {review.userName}</UserName>
+            <Pros>장점 : {reviewData.pros}</Pros>
+            <Cons>단점 : {reviewData.cons}</Cons>
+            <UserName>
+              작성자 : {reviewData.nickname}#{reviewData.member_id}
+            </UserName>
           </CustomDiv>
         </>
       )}

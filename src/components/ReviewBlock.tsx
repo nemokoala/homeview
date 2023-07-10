@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 function ReviewBlock({ review }: any) {
   const navigate = useNavigate();
   const gotoDetail = (review: any): void => {
-    navigate(`/review/${review.reviewId}`);
+    navigate(`/review/${review.review_id}`);
   };
   let stars = "";
   for (let i = 0; i < review.score; i++) {

@@ -51,10 +51,7 @@ function AppRouter({ reviewData, setReviewData }: any) {
               />
             }
           />
-          <Route
-            path="/review/:id"
-            element={<ReviewDetail reviewData={reviewData} />}
-          />
+          <Route path="/review/:id" element={<ReviewDetail />} />
           <Route
             path="/reviewfac"
             element={
