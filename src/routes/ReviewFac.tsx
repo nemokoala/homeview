@@ -2,6 +2,10 @@ import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
 import styles from "./ReviewFac.module.css";
+import axios from "axios";
+import { apiAddress } from "value";
+import { useDispatch } from "react-redux";
+import { setModal } from "slice/modalSlice";
 
 function ReviewFac({ setReviewData }: any) {
   const [openPostcode, setOpenPostcode] = useState(false);
@@ -20,6 +24,9 @@ function ReviewFac({ setReviewData }: any) {
   const [lat, setLat] = useState(0); //위도 35.xx
   const [lng, setLng] = useState(0); //경도 127.xx
   const [dong, setDong] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageLink, setImageLink] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let now = new Date();
   let nowYear = now.getFullYear();
@@ -94,8 +101,37 @@ function ReviewFac({ setReviewData }: any) {
     if (name === "pros") setPros(value);
     if (name === "cons") setCons(value);
   };
+  const onFileChange = (event: any) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const onFileUpload = async () => {
+    const formData = new FormData();
+    formData.append("images", selectedFile as any); // 'file'은 스프링 서버에서 사용할 키 값이다.
 
-  const sendReview = () => {
+    try {
+      const response = await axios.post(`${apiAddress}/s3/upload`, formData);
+      console.log("File Uploaded Successfully:", response);
+      if (response.data) setImageLink(response.data);
+      else
+        dispatch(
+          setModal({
+            title: "에러",
+            titleColor: "red",
+            text: "이미지 업로드를 실패하였습니다.",
+          } as any)
+        );
+    } catch (error) {
+      const errorText = JSON.stringify(error);
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
+    }
+  };
+  const sendReview = async () => {
     if (buildingName === "") alert("주소를 입력해주세요.");
     else if (residenceType === "") alert("거주유형을 선택해주세요");
     else if (residenceFloor === "") alert("거주층을 선택해주세요");
@@ -105,23 +141,26 @@ function ReviewFac({ setReviewData }: any) {
     else if (star === 0) alert("별점을 선택해주세요.");
     else {
       const newReview = {
-        reviewId: (Math.floor(Math.random() * 10000) + 1).toString(),
-        userName: "코알라",
         building: buildingName,
         newAddress: newAddress,
         oldAddress: oldAddress,
         pros: pros,
         cons: cons,
-        residenceType: residenceType,
-        residenceFloor: residenceFloor,
-        livedYear: livedYear,
-        star,
+        score: star,
         lat: Number(lat),
         lng: Number(lng),
         sido,
         sigungu,
         dong,
       };
+      try {
+        const response = await axios.post(`${apiAddress}/room/check`);
+        if (response.status === 201) {
+          //방 존재 x
+        }
+      } catch (error: any) {
+        console.log(JSON.stringify(error));
+      }
       setReviewData((prev: any) => [...prev, newReview]);
       const json = JSON.stringify(newReview);
       console.log(json);
@@ -152,7 +191,7 @@ function ReviewFac({ setReviewData }: any) {
             </div>
           )}
         </div>
-        <label>거주유형</label>
+        {/* <label>거주유형</label>
         <div className={styles.buttons}>
           <div
             className={`${styles.mediumBtn} ${
@@ -219,6 +258,12 @@ function ReviewFac({ setReviewData }: any) {
               {year}년까지
             </div>
           ))}
+        </div> */}
+        <label>사진 업로드</label>
+        <div>
+          <input type="file" onChange={onFileChange} />
+          <button onClick={onFileUpload}>Upload</button>
+          {imageLink && <img src={imageLink} alt="이미지를 선택해주세요." />}
         </div>
         <label>장점</label>
         <textarea
