@@ -161,7 +161,7 @@ const Btn = styled.div<any>`
   color: white;
   background-color: ${(props) => props.backgroundColor || "rgb(253, 132, 132)"};
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  margin-top: 8px;
+  margin-top: 7px;
   margin-bottom: 3px;
   transition: all 0.7s;
   &:hover {
