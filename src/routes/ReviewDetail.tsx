@@ -1,6 +1,7 @@
 import axios from "axios";
 import MapContainer from "components/MapContainer";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -8,7 +9,7 @@ import { apiAddress } from "value";
 
 function ReviewDetail() {
   const [reviewData, setReviewData] = useState<any>(null);
-
+  const session = useSelector((state: any) => state.userSet.session);
   const params = useParams();
   const reviewId = params.id;
 
@@ -35,6 +36,24 @@ function ReviewDetail() {
     }
   };
 
+  const deleteReview = async () => {
+    if (window.confirm("리뷰를 삭제하시겠습니까?"))
+      try {
+        const response = await axios.get(
+          `${apiAddress}/review/delete/${reviewId}`,
+          { withCredentials: true }
+        );
+        if (response) navigate("/review");
+        console.log(
+          "ReviewDetail.tsx(deleteReview): " + JSON.stringify(response)
+        );
+      } catch (error: any) {
+        console.error(
+          "ReviewDetail.tsx(deleteReview): " + JSON.stringify(error)
+        );
+      }
+  };
+
   let stars = "";
   const setStar = () => {
     for (let i = 0; i < reviewData.score; i++) {
@@ -56,6 +75,9 @@ function ReviewDetail() {
             </Building>
             <Address>{reviewData.room.new_address}</Address>
             <Address>{reviewData.room.old_address}</Address>
+            {reviewData.review_id === session.id && (
+              <Btn onClick={() => deleteReview()}>삭제</Btn>
+            )}
             <Hr></Hr>
             <Pros>장점 : {reviewData.pros}</Pros>
             <Cons>단점 : {reviewData.cons}</Cons>
@@ -117,7 +139,7 @@ const Detail = styled.div`
   margin-top: 10px;
 `;
 const Hr = styled.hr`
-  width: 98%;
+  width: 100%;
   height: 1px;
   border: 0px;
   background-color: black;
@@ -127,5 +149,27 @@ const UserName = styled.div`
   font-size: 1rem;
   color: rgb(156, 89, 0);
   text-align: right;
+`;
+
+const Btn = styled.div<any>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: ${(props) => props.height || "30px"};
+  border-radius: 20px;
+  color: white;
+  background-color: ${(props) => props.backgroundColor || "rgb(253, 132, 132)"};
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  margin-bottom: 3px;
+  transition: all 0.7s;
+  &:hover {
+    filter: contrast(170%);
+    cursor: pointer;
+  }
+  &:active {
+    filter: hue-rotate(320deg);
+  }
 `;
 export default ReviewDetail;

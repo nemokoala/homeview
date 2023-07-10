@@ -82,7 +82,7 @@ const Detail = styled.div`
   margin-top: 10px;
 `;
 const Hr = styled.hr`
-  width: 98%;
+  width: 100%;
   height: 1px;
   border: 0px;
   background-color: black;
