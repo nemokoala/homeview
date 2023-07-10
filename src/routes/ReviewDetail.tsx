@@ -16,6 +16,10 @@ function ReviewDetail() {
     getReviewDetail();
   }, []);
 
+  useEffect(() => {
+    setStar();
+  }, [reviewData]);
+
   const getReviewDetail = async () => {
     try {
       const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
@@ -31,13 +35,13 @@ function ReviewDetail() {
     }
   };
 
-  if (reviewData != null) {
-  }
-
   let stars = "";
-  for (let i = 0; i < reviewData.score; i++) {
-    stars += "★";
-  }
+  const setStar = () => {
+    for (let i = 0; i < reviewData.score; i++) {
+      stars += "★";
+    }
+  };
+
   const navigate = useNavigate();
 
   return (
