@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
 import styles from "./ReviewFac.module.css";
@@ -25,6 +25,7 @@ function ReviewFac({ setReviewData }: any) {
   const [lng, setLng] = useState(0); //경도 127.xx
   const [dong, setDong] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewSrc, setPreviewSrc] = useState(null);
   const [imageLink, setImageLink] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,6 +39,19 @@ function ReviewFac({ setReviewData }: any) {
   /**
    * handler
    */
+  useEffect(() => {
+    if (selectedFile) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setPreviewSrc(reader.result as any);
+      };
+
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setPreviewSrc(null);
+    }
+  }, [selectedFile]);
   const handle = {
     // 버튼 클릭 이벤트
     clickButton: () => {
@@ -105,14 +119,20 @@ function ReviewFac({ setReviewData }: any) {
     setSelectedFile(event.target.files[0]);
   };
   const onFileUpload = async () => {
+    if (!selectedFile) {
+      sendReview();
+      return;
+    }
     const formData = new FormData();
     formData.append("images", selectedFile as any); // 'file'은 스프링 서버에서 사용할 키 값이다.
 
     try {
       const response = await axios.post(`${apiAddress}/s3/upload`, formData);
       console.log("File Uploaded Successfully:", response);
-      if (response.data) setImageLink(response.data);
-      else
+      if (response.data) {
+        setImageLink(response.data);
+        sendReview();
+      } else
         dispatch(
           setModal({
             title: "에러",
@@ -133,7 +153,6 @@ function ReviewFac({ setReviewData }: any) {
   };
   const sendReview = async () => {
     if (buildingName === "") alert("주소를 입력해주세요.");
-    else if (!imageLink) alert("이미지를 업로드 해주세요.");
     else if (pros === "") alert("장점을 입력해주세요.");
     else if (cons === "") alert("단점을 입력해주세요.");
     else if (star === 0) alert("별점을 선택해주세요.");
@@ -142,8 +161,8 @@ function ReviewFac({ setReviewData }: any) {
         const newReview = {
           room: {
             building: buildingName,
-            newAddress: newAddress,
-            oldAddress: oldAddress,
+            new_address: newAddress,
+            old_address: oldAddress,
             latitude: lat,
             longitude: lng,
             sido,
@@ -280,8 +299,8 @@ function ReviewFac({ setReviewData }: any) {
         <label>사진 업로드</label>
         <div>
           <input type="file" onChange={onFileChange} />
-          <button onClick={onFileUpload}>Upload</button>
-          {imageLink && <img src={imageLink} alt="이미지를 선택해주세요." />}
+          {/* <button onClick={onFileUpload}>Upload</button> */}
+          {<img src={previewSrc as any} alt="이미지를 선택해주세요." />}
         </div>
         <label>장점</label>
         <textarea
@@ -338,7 +357,7 @@ function ReviewFac({ setReviewData }: any) {
           <div className={styles.mediumBtn} onClick={() => navigate("/review")}>
             취소
           </div>
-          <div className={styles.mediumBtn} onClick={sendReview}>
+          <div className={styles.mediumBtn} onClick={onFileChange}>
             제출
           </div>
         </div>
