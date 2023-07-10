@@ -304,7 +304,7 @@ function MapCluster() {
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   useEffect(() => {
-    if (sidoTarget) getRoomDatas();
+    if (zoomLevel <= 9 && sidoTarget) getRoomDatas();
   }, [sidoTarget]);
 
   useEffect(() => {
@@ -492,6 +492,7 @@ function MapCluster() {
                     style={{ background: "rgb(255,255, 255,0.5)" }}
                     onClick={() => {
                       getReviewDatas(roomData.room_id);
+                      dispatch(saveShowReview(reviewDatas));
                       setCenter({
                         lat:
                           roomData.latitude +
@@ -558,14 +559,13 @@ function MapCluster() {
                     : {}
                 }
               >
-                <div>{root.name}</div>{" "}
-                <div style={{ color: "red" }}>{root.count}</div>
+                <div>{root.name}</div>
               </CustomDiv>
             </CustomOverlayMap>
           ))}
 
         {7 < zoomLevel &&
-          zoomLevel < 10 && //시 구 표시
+          zoomLevel < 10 && //시 군 구 표시
           sigungu.map((sigungu: any) => (
             <CustomOverlayMap
               key={sigungu.name}
