@@ -1,8 +1,10 @@
 import Map from "components/LegacyMapContainer";
 import ReviewBlock from "components/ReviewBlock";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Review.module.css";
+import axios from "axios";
+import { apiAddress } from "value";
 
 interface Reviews {
   reviewId: string;
@@ -13,6 +15,8 @@ interface Reviews {
   cons: string;
 }
 function Review({ reviewData, searchTerm, setSearchTerm }: any) {
+  const params = useParams();
+  const reviewId = params.id;
   const [reviews, setReviews] = useState<[object]>(reviewData);
   const [sidoList, setSidoList] = useState<any>([]);
   const [sidoFilter, setSidoFilter] = useState("전체");
@@ -20,6 +24,7 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
   let filteredReview = [];
   useEffect(() => {
     createSidoBtn();
+    getReviewDetail();
   }, []);
 
   useEffect(() => {
@@ -65,6 +70,16 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
       review.newAddress.includes(searchTerm) ||
       review.oldAddress.includes(searchTerm)
   );
+
+  const getReviewDetail = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
+      setReviews(response.data);
+      console.log("Post.tsx(getComment): " + JSON.stringify(response));
+    } catch (error: any) {
+      console.error("Post.tsx(getComment): " + JSON.stringify(error));
+    }
+  };
 
   return (
     <>
