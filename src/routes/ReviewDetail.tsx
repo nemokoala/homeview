@@ -46,7 +46,7 @@ function ReviewDetail() {
 
   return (
     <>
-      {!reviewData && (
+      {reviewData && (
         <>
           <MapContainer data={reviewData} />
           <CustomDiv>
@@ -59,6 +59,7 @@ function ReviewDetail() {
             <Hr></Hr>
             <Pros>장점 : {reviewData.pros}</Pros>
             <Cons>단점 : {reviewData.cons}</Cons>
+            {reviewData.url && <img src={reviewData.url} />}
             <UserName>
               작성자 : {reviewData.nickname}#{reviewData.member_id}
             </UserName>
