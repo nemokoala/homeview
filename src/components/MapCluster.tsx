@@ -310,7 +310,7 @@ function MapCluster({ reviewData }: any) {
   const getRoomDatas = async () => {
     try {
       const response = await axios.get(`${apiAddress}/room/sido/${sidoTarget}`);
-      setRoomDatas(response.data);
+      setRoomDatas((prev) => ({ ...prev, ...response.data }));
       console.log(JSON.stringify(response));
     } catch (error: any) {
       const errorText = JSON.stringify(error);
@@ -413,7 +413,7 @@ function MapCluster({ reviewData }: any) {
         }}
         onTileLoaded={(map) => {
           console.log("ontileloaded");
-          //getAddressInfo(map.getCenter().getLat(), map.getCenter().getLng());
+          getAddressInfo(map.getCenter().getLat(), map.getCenter().getLng());
           dispatch(saveZoom(map.getLevel() as any));
           dispatch(
             saveCenter({
@@ -428,7 +428,7 @@ function MapCluster({ reviewData }: any) {
             timerEnable = false;
             setTimeout(() => {
               timerEnable = true;
-            }, 300);
+            }, 500);
           }
         }}
         // onDragEnd={(map) => {
@@ -449,35 +449,35 @@ function MapCluster({ reviewData }: any) {
           minLevel={6} // 클러스터 할 최소 지도 레벨
         >
           {zoomLevel < 7 &&
-            reviewDatas.map((reviewData: any, idx: any): any => (
+            roomDatas.map((roomData: any, idx: any): any => (
               <React.Fragment
-                key={`customoverlay_${reviewData.reviewId}-${reviewData.lat}-${reviewData.lng}`}
+                key={`customoverlay_${roomData.room_id}-${roomData.latitude}-${roomData.longitude}`}
               >
                 <CustomOverlayMap //커스텀 오버레이 건물 표시
                   position={{
-                    lat: reviewData.lat,
-                    lng: reviewData.lng,
+                    lat: roomData.latitude,
+                    lng: roomData.longitude,
                   }}
                   yAnchor={zoomLevel >= 6 ? 1.0 : 2.2}
                 >
                   <CustomDiv
                     style={{ background: "rgb(255,255, 255,0.5)" }}
                     onClick={() => {
-                      setShow(reviewData);
+                      setShow(roomData);
                       setCenter({
                         lat:
-                          reviewData.lat +
+                          roomData.latitude +
                           Math.random() * (0.000009 - 0.000001) +
                           0.0001,
                         lng:
-                          reviewData.lng +
+                          roomData.longitude +
                           Math.random() * (0.000009 - 0.000001) +
                           0.0001, //같은 거 클릭했을 때 먹통 안되게 랜덤값 추가
                       });
                     }}
                   >
-                    {reviewData.building}{" "}
-                    <div style={{ color: "red" }}>{reviewData.count}</div>
+                    {roomData.building}{" "}
+                    <div style={{ color: "red" }}>{roomData.length}</div>
                   </CustomDiv>
                 </CustomOverlayMap>
               </React.Fragment>
