@@ -79,6 +79,7 @@ function ReviewFac({ setReviewData }: any) {
         setSigungu("세종시");
       }
       if (data.sido === "제주특별자치도") setSido("제주");
+      if (data.sido === "강원특별자치도") setSido("강원");
       if (data.sido)
         console.log(`
               주소: ${data.roadAddress},
