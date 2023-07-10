@@ -18,12 +18,12 @@ import axios from "axios";
 import { apiAddress } from "value";
 import { setModal } from "slice/modalSlice";
 
-function MapCluster({ reviewData }: any) {
+function MapCluster() {
   const loadZoomLevel = useSelector((state: any) => state.mapSet.zoomLevel);
   const loadCenter = useSelector((state: any) => state.mapSet.center);
   const loadShowReview = useSelector((state: any) => state.mapSet.showReview);
   const [reviewDatas, setReviewDatas] = useState<any>([]);
-  const [roomDatas, setRoomDatas] = useState([]);
+  const [roomDatas, setRoomDatas] = useState<any>([]);
   const [zoomLevel, setZoomLevel] = useState(loadZoomLevel);
   const [center, setCenter] = useState(loadCenter);
   const [showReview, setShowReview] = useState(loadShowReview);
@@ -307,6 +307,10 @@ function MapCluster({ reviewData }: any) {
     if (sidoTarget) getRoomDatas();
   }, [sidoTarget]);
 
+  useEffect(() => {
+    setDongPosition();
+  }, [roomDatas]);
+
   const getRoomDatas = async () => {
     try {
       const response = await axios.get(`${apiAddress}/room/sido/${sidoTarget}`);
@@ -326,14 +330,33 @@ function MapCluster({ reviewData }: any) {
       );
     }
   };
+
+  const getReviewDatas = async (room_id: any) => {
+    try {
+      const response = await axios.get(
+        `${apiAddress}/review/search/${room_id}`
+      );
+      setReviewDatas(response.data);
+      console.log(JSON.stringify(response));
+    } catch (error: any) {
+      const errorText = JSON.stringify(error);
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
+    }
+  };
   const returnSigungu = (name: string): string => {
     const [sido, sigungu] = name.split("/");
     return sigungu;
   };
 
   const setDongPosition = () => {
-    const review = reviewDatas;
-    const groupByDong = review.reduce((result: any, item: any) => {
+    const room = roomDatas;
+    const groupByDong = room.reduce((result: any, item: any) => {
       const { dong, lat, lng } = item;
       if (!result[dong]) {
         result[dong] = { lat: lat, lng: lng, count: 1 };
@@ -349,7 +372,7 @@ function MapCluster({ reviewData }: any) {
       ([dong, value]: any) => {
         const avgLat = value.lat / value.count;
         const avgLng = value.lng / value.count;
-        return { dong, lat: avgLat, lng: avgLng, count: value.count };
+        return { dong, lat: avgLat, lng: avgLng };
       }
     );
 
@@ -359,11 +382,11 @@ function MapCluster({ reviewData }: any) {
 
   const setShow = (reviews: any) => {
     //오버레이 클릭 시 지도 밑에 건물 목록 표시
-    const showReview = reviewData.filter(
-      (review: any) => review.building === reviews.building
-    );
-    dispatch(saveShowReview(showReview as any));
-    setShowReview(showReview);
+    // const showReview = reviewData.filter(
+    //   (review: any) => review.building === reviews.building
+    // );
+    // dispatch(saveShowReview(showReview as any));
+    // setShowReview(showReview);
   };
 
   async function getAddressInfo(latitude: any, longitude: any) {
@@ -466,7 +489,7 @@ function MapCluster({ reviewData }: any) {
                   <CustomDiv
                     style={{ background: "rgb(255,255, 255,0.5)" }}
                     onClick={() => {
-                      setShow(roomData);
+                      getReviewDatas(roomData.room_id);
                       setCenter({
                         lat:
                           roomData.latitude +
@@ -575,7 +598,7 @@ function MapCluster({ reviewData }: any) {
             </CustomOverlayMap>
           ))}
 
-        {7 == zoomLevel &&
+        {7 === zoomLevel &&
           //동 표시
           dongs.map((dong: any) => (
             <CustomOverlayMap
@@ -610,8 +633,8 @@ function MapCluster({ reviewData }: any) {
         <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>
       <ContentDiv>
-        {showReview &&
-          showReview.map((review: any) => (
+        {reviewDatas.length > 0 &&
+          reviewDatas.map((review: any) => (
             <ReviewBlock key={review.reviewId} review={review} />
           ))}
         {showReview.length === 0 && (
