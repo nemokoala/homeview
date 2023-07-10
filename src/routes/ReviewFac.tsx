@@ -133,9 +133,7 @@ function ReviewFac({ setReviewData }: any) {
   };
   const sendReview = async () => {
     if (buildingName === "") alert("주소를 입력해주세요.");
-    else if (residenceType === "") alert("거주유형을 선택해주세요");
-    else if (residenceFloor === "") alert("거주층을 선택해주세요");
-    else if (livedYear === 0) alert("거주년도를 선택해주세요.");
+    else if (!imageLink) alert("이미지를 업로드 해주세요.");
     else if (pros === "") alert("장점을 입력해주세요.");
     else if (cons === "") alert("단점을 입력해주세요.");
     else if (star === 0) alert("별점을 선택해주세요.");
