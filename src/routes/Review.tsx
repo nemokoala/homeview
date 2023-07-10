@@ -12,7 +12,9 @@ function Review({ searchTerm, setSearchTerm }: any) {
   const [sidoFilter, setSidoFilter] = useState("전체");
   const [showNoResult, setShowNoResult] = useState(false);
   let filteredReview = [];
-
+  useEffect(() => {
+    getReviews();
+  }, []);
   useEffect(() => {
     if (searchTerm.length > 0) {
       let filtered = reviews.filter(
