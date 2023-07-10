@@ -51,13 +51,13 @@ function Review({ searchTerm, setSearchTerm }: any) {
     const sortedSidos = sidos.sort();
     setSidoList([...sortedSidos, "전체"]);
   };
-
-  filteredReview = reviews.filter(
-    (review: any) =>
-      review.room.building.includes(searchTerm) ||
-      review.room.new_address.includes(searchTerm) ||
-      review.room.old_address.includes(searchTerm)
-  );
+  if (reviews)
+    filteredReview = reviews.filter(
+      (review: any) =>
+        review.room.building.includes(searchTerm) ||
+        review.room.new_address.includes(searchTerm) ||
+        review.room.old_address.includes(searchTerm)
+    );
 
   const getReviews = async () => {
     try {
