@@ -357,7 +357,7 @@ function ReviewFac({ setReviewData }: any) {
           <div className={styles.mediumBtn} onClick={() => navigate("/review")}>
             취소
           </div>
-          <div className={styles.mediumBtn} onClick={onFileChange}>
+          <div className={styles.mediumBtn} onClick={onFileUpload}>
             제출
           </div>
         </div>
