@@ -39,7 +39,7 @@ function ReviewDetail() {
   const deleteReview = async () => {
     if (window.confirm("리뷰를 삭제하시겠습니까?"))
       try {
-        const response = await axios.get(
+        const response = await axios.delete(
           `${apiAddress}/review/delete/${reviewId}`,
           { withCredentials: true }
         );
