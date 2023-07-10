@@ -131,7 +131,7 @@ function ReviewFac({ setReviewData }: any) {
       console.log("File Uploaded Successfully:", response);
       if (response.data) {
         setImageLink(response.data);
-        sendReview();
+        sendReview(response.data);
       } else
         dispatch(
           setModal({
@@ -151,7 +151,7 @@ function ReviewFac({ setReviewData }: any) {
       );
     }
   };
-  const sendReview = async () => {
+  const sendReview = async (url = imageLink) => {
     if (buildingName === "") alert("주소를 입력해주세요.");
     else if (pros === "") alert("장점을 입력해주세요.");
     else if (cons === "") alert("단점을 입력해주세요.");
