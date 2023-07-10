@@ -51,15 +51,17 @@ function ReviewDetail() {
           <MapContainer data={reviewData} />
           <CustomDiv>
             <Building>
-              {reviewData.building} <Star>{stars}</Star>{" "}
+              {reviewData.room.building} <Star>{stars}</Star>{" "}
               <span style={{ color: "gray" }}> #{reviewData.review_id}</span>{" "}
             </Building>
-            <Address>{reviewData.new_address}</Address>
-            <Address>{reviewData.old_address}</Address>
+            <Address>{reviewData.room.new_address}</Address>
+            <Address>{reviewData.room.old_address}</Address>
             <Hr></Hr>
             <Pros>장점 : {reviewData.pros}</Pros>
             <Cons>단점 : {reviewData.cons}</Cons>
-            {reviewData.url && <img src={reviewData.url} />}
+            {reviewData.url && (
+              <img src={reviewData.url} style={{ width: "100%" }} />
+            )}
             <UserName>
               작성자 : {reviewData.nickname}#{reviewData.member_id}
             </UserName>
