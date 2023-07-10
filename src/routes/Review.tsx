@@ -54,9 +54,9 @@ function Review({ searchTerm, setSearchTerm }: any) {
 
   filteredReview = reviews.filter(
     (review: any) =>
-      review.building.includes(searchTerm) ||
-      review.newAddress.includes(searchTerm) ||
-      review.oldAddress.includes(searchTerm)
+      review.room.building.includes(searchTerm) ||
+      review.room.new_address.includes(searchTerm) ||
+      review.room.old_address.includes(searchTerm)
   );
 
   const getReviews = async () => {
