@@ -6,22 +6,21 @@ function ReviewBlock({ review }: any) {
     navigate(`/review/${review.reviewId}`);
   };
   let stars = "";
-  for (let i = 0; i < review.star; i++) {
+  for (let i = 0; i < review.score; i++) {
     stars += "★";
   }
   return (
     <CustomDiv className="reviewContainer" onClick={() => gotoDetail(review)}>
       <Building>
-        {review.building}
+        {review.room.building}
         <Star> {stars}</Star>
-        <span style={{ color: "gray" }}> #{review.reviewId}</span>{" "}
+        <span style={{ color: "gray" }}> #{review.review_id}</span>{" "}
       </Building>
-      <Address>{review.newAddress}</Address>
-      <Address>{review.oldAddress}</Address>
+      <Address>{review.room.new_address}</Address>
+      <Address>{review.room.old_address}</Address>
       <Hr></Hr>
       <Pros>장점 : {review.pros}</Pros>
       <Cons>단점 : {review.cons}</Cons>
-      <Year>거주년도 : {review.livedYear}년까지</Year>
       <Detail>클릭하여 자세히 보기...</Detail>
     </CustomDiv>
   );
