@@ -6,30 +6,16 @@ import styles from "./Review.module.css";
 import axios from "axios";
 import { apiAddress } from "value";
 
-interface Reviews {
-  reviewId: string;
-  building: string;
-  newAddress: string;
-  oldAddress: string;
-  pros: string;
-  cons: string;
-}
-function Review({ reviewData, searchTerm, setSearchTerm }: any) {
-  const params = useParams();
-  const reviewId = params.id;
-  const [reviews, setReviews] = useState<[object]>(reviewData);
+function Review({ searchTerm, setSearchTerm }: any) {
+  const [reviews, setReviews] = useState<any>([]);
   const [sidoList, setSidoList] = useState<any>([]);
   const [sidoFilter, setSidoFilter] = useState("전체");
   const [showNoResult, setShowNoResult] = useState(false);
   let filteredReview = [];
-  useEffect(() => {
-    createSidoBtn();
-    getReviewDetail();
-  }, []);
 
   useEffect(() => {
     if (searchTerm.length > 0) {
-      let filtered = reviewData.filter(
+      let filtered = reviews.filter(
         (review: any) =>
           (review.building.includes(searchTerm) ||
             review.newAddress.includes(searchTerm) ||
@@ -37,7 +23,7 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
           review.sido === sidoFilter
       );
       if (sidoFilter === "전체") {
-        filtered = reviewData.filter(
+        filtered = reviews.filter(
           (review: any) =>
             review.building.includes(searchTerm) ||
             review.newAddress.includes(searchTerm) ||
@@ -52,32 +38,33 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
 
   const createSidoBtn = () => {
     const sidos = new Array();
-    for (let i = 0; i < reviewData.length; i++) {
+    for (let i = 0; i < reviews.length; i++) {
       let 중복 = false;
       sidos.forEach((sido) => {
-        if (sido === reviewData[i].sido) 중복 = true;
+        if (sido === reviews[i].sido) 중복 = true;
       });
-      if (중복 === false) sidos.push(reviewData[i].sido);
+      if (중복 === false) sidos.push(reviews[i].sido);
     }
 
     const sortedSidos = sidos.sort();
     setSidoList([...sortedSidos, "전체"]);
   };
 
-  filteredReview = reviewData.filter(
+  filteredReview = reviews.filter(
     (review: any) =>
       review.building.includes(searchTerm) ||
       review.newAddress.includes(searchTerm) ||
       review.oldAddress.includes(searchTerm)
   );
 
-  const getReviewDetail = async () => {
+  const getReviews = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
+      const response = await axios.get(`${apiAddress}/review/all`);
       setReviews(response.data);
-      console.log("Post.tsx(getComment): " + JSON.stringify(response));
+
+      console.log("ReviewDetail.tsx(getReviews): " + JSON.stringify(response));
     } catch (error: any) {
-      console.error("Post.tsx(getComment): " + JSON.stringify(error));
+      console.error("ReviewDetail.tsx(getReviews): " + JSON.stringify(error));
     }
   };
 
@@ -102,13 +89,13 @@ function Review({ reviewData, searchTerm, setSearchTerm }: any) {
           ? reviews.map(
               (review: any) =>
                 (sidoFilter === review.sido || sidoFilter === "전체") && (
-                  <ReviewBlock review={review} key={review.reviewId} />
+                  <ReviewBlock review={review} key={review.review_id} />
                 )
             )
           : filteredReview.map(
               (review: any) =>
                 (sidoFilter === review.sido || sidoFilter === "전체") && (
-                  <ReviewBlock review={review} key={review.reviewId} />
+                  <ReviewBlock review={review} key={review.review_id} />
                 )
             )}
         {showNoResult && (
