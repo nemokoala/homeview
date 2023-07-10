@@ -75,7 +75,7 @@ function ReviewDetail() {
             </Building>
             <Address>{reviewData.room.new_address}</Address>
             <Address>{reviewData.room.old_address}</Address>
-            {reviewData.review_id === session.id && (
+            {reviewData.member_id === session.id && (
               <Btn onClick={() => deleteReview()}>삭제</Btn>
             )}
             <Hr></Hr>
