@@ -357,12 +357,12 @@ function MapCluster() {
   const setDongPosition = () => {
     const room = roomDatas;
     const groupByDong = room.reduce((result: any, item: any) => {
-      const { dong, lat, lng } = item;
+      const { dong, latitude, longitude } = item;
       if (!result[dong]) {
-        result[dong] = { lat: lat, lng: lng, count: 1 };
+        result[dong] = { latitude: latitude, longitude: longitude, count: 1 };
       } else {
-        result[dong].lat += lat;
-        result[dong].lng += lng;
+        result[dong].latitude += latitude;
+        result[dong].longitude += longitude;
         result[dong].count += 1;
       }
       return result;
@@ -370,9 +370,14 @@ function MapCluster() {
 
     const avgLatLongByDong = Object.entries(groupByDong).map(
       ([dong, value]: any) => {
-        const avgLat = value.lat / value.count;
-        const avgLng = value.lng / value.count;
-        return { dong, lat: avgLat, lng: avgLng, count: value.count };
+        const avgLat = value.latitude / value.count;
+        const avgLng = value.longitude / value.count;
+        return {
+          dong,
+          latitude: avgLat,
+          longitude: avgLng,
+          count: value.count,
+        };
       }
     );
 
@@ -604,8 +609,8 @@ function MapCluster() {
             <CustomOverlayMap
               key={dong.dong}
               position={{
-                lat: dong.lat,
-                lng: dong.lng,
+                lat: dong.latitude,
+                lng: dong.longitude,
               }}
             >
               <CustomDiv
