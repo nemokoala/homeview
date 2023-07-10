@@ -310,7 +310,10 @@ function MapCluster({ reviewData }: any) {
   const getRoomDatas = async () => {
     try {
       const response = await axios.get(`${apiAddress}/room/sido/${sidoTarget}`);
-      setRoomDatas((prev) => ({ ...prev, ...response.data }));
+      setRoomDatas((prevRoomDatas: any): any => [
+        ...prevRoomDatas,
+        ...response.data,
+      ]);
       console.log(JSON.stringify(response));
     } catch (error: any) {
       const errorText = JSON.stringify(error);
