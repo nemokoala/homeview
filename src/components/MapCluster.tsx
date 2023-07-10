@@ -617,9 +617,13 @@ function MapCluster() {
                 onClick={() => {
                   setCenter({
                     lat:
-                      dong.lat + Math.random() * (0.000009 - 0.000001) + 0.0001,
+                      dong.latitude +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
                     lng:
-                      dong.lng + Math.random() * (0.000009 - 0.000001) + 0.0001,
+                      dong.longitude +
+                      Math.random() * (0.000009 - 0.000001) +
+                      0.0001,
                   });
                   setZoomLevel(6);
                 }}
