@@ -182,13 +182,14 @@ function ReviewFac({ setReviewData }: any) {
         if (response.data) {
           dispatch(
             setModal({
-              title: "에러",
-              titleColor: "red",
+              title: "알림",
+              titleColor: "black",
               text: "리뷰 작성을 완료했습니다.",
             } as any)
           );
         }
       } catch (error: any) {
+        console.error(JSON.stringify(error));
         let errorText;
         if (error.response.status === 500) errorText = "500 failed";
         else errorText = error.response.data;
