@@ -140,30 +140,50 @@ function ReviewFac({ setReviewData }: any) {
     else if (cons === "") alert("단점을 입력해주세요.");
     else if (star === 0) alert("별점을 선택해주세요.");
     else {
-      const newReview = {
-        building: buildingName,
-        newAddress: newAddress,
-        oldAddress: oldAddress,
-        pros: pros,
-        cons: cons,
-        score: star,
-        lat: Number(lat),
-        lng: Number(lng),
-        sido,
-        sigungu,
-        dong,
-      };
       try {
-        const response = await axios.post(`${apiAddress}/room/check`);
-        if (response.status === 201) {
-          //방 존재 x
+        const newReview = {
+          room: {
+            building: buildingName,
+            newAddress: newAddress,
+            oldAddress: oldAddress,
+            latitude: lat,
+            longitude: lng,
+            sido,
+            sigungu,
+            dong,
+          },
+          url: imageLink,
+          pros: pros,
+          cons: cons,
+          score: star,
+        };
+        const response = await axios.post(
+          `${apiAddress}/review/add`,
+          newReview,
+          { withCredentials: true }
+        );
+        if (response.data) {
+          dispatch(
+            setModal({
+              title: "에러",
+              titleColor: "red",
+              text: "리뷰 작성을 완료했습니다.",
+            } as any)
+          );
         }
       } catch (error: any) {
-        console.log(JSON.stringify(error));
+        let errorText;
+        if (error.response.status === 500) errorText = "500 failed";
+        else errorText = error.response.data;
+        dispatch(
+          setModal({
+            title: "에러!",
+            titleColor: "red",
+            text: errorText,
+          } as any)
+        );
       }
-      setReviewData((prev: any) => [...prev, newReview]);
-      const json = JSON.stringify(newReview);
-      console.log(json);
+
       navigate("/review");
       alert("리뷰작성이 완료되었습니다!");
     }
