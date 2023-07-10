@@ -372,7 +372,7 @@ function MapCluster() {
       ([dong, value]: any) => {
         const avgLat = value.lat / value.count;
         const avgLng = value.lng / value.count;
-        return { dong, lat: avgLat, lng: avgLng };
+        return { dong, lat: avgLat, lng: avgLng, count: value.count };
       }
     );
 
