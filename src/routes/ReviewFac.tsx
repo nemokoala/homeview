@@ -151,7 +151,7 @@ function ReviewFac({ setReviewData }: any) {
       );
     }
   };
-  const sendReview = async (url = imageLink) => {
+  const sendReview = async (urlImage = imageLink) => {
     if (buildingName === "") alert("주소를 입력해주세요.");
     else if (pros === "") alert("장점을 입력해주세요.");
     else if (cons === "") alert("단점을 입력해주세요.");
@@ -169,7 +169,7 @@ function ReviewFac({ setReviewData }: any) {
             sigungu,
             dong,
           },
-          url: imageLink,
+          url: urlImage,
           pros: pros,
           cons: cons,
           score: star,
