@@ -203,8 +203,7 @@ function ReviewFac({ setReviewData }: any) {
         );
       }
 
-      navigate("/review");
-      alert("리뷰작성이 완료되었습니다!");
+      //navigate("/review");
     }
   };
 

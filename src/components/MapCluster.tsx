@@ -314,10 +314,7 @@ function MapCluster() {
   const getRoomDatas = async () => {
     try {
       const response = await axios.get(`${apiAddress}/room/sido/${sidoTarget}`);
-      setRoomDatas((prevRoomDatas: any): any => [
-        ...prevRoomDatas,
-        ...response.data,
-      ]);
+      setRoomDatas(response.data);
       console.log(JSON.stringify(response));
     } catch (error: any) {
       const errorText = JSON.stringify(error);
@@ -515,15 +512,15 @@ function MapCluster() {
             ))}
         </MarkerClusterer>
 
-        {reviewDatas.map((reviewData: any, idx: any): any => (
+        {reviewDatas.map((roomData: any, idx: any): any => (
           <React.Fragment
-            key={`marker_${reviewData.reviewId}-${reviewData.lat}-${reviewData.lng}`}
+            key={`marker_${roomData.room_id}-${roomData.latitude}-${roomData.longitude}`}
           >
             {zoomLevel < 6 && (
               <MapMarker // 해당 건물 마커
                 position={{
-                  lat: reviewData.lat,
-                  lng: reviewData.lng,
+                  lat: roomData.latitude,
+                  lng: roomData.longitude,
                 }}
               ></MapMarker>
             )}
