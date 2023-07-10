@@ -309,7 +309,7 @@ function MapCluster({ reviewData }: any) {
 
   const getRoomDatas = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/sido/${sidoTarget}`);
+      const response = await axios.get(`${apiAddress}/room/sido/${sidoTarget}`);
       setRoomDatas(response.data);
       console.log(JSON.stringify(response));
     } catch (error: any) {
