@@ -194,7 +194,7 @@ function ReviewFac({ setReviewData }: any) {
           { withCredentials: true }
         );
         console.log(JSON.stringify(response));
-        if (response.data) {
+        if (response.data === "OK") {
           setSending(false);
           dispatch(
             setModal({
@@ -204,6 +204,16 @@ function ReviewFac({ setReviewData }: any) {
             } as any)
           );
           navigate("/review");
+        }
+
+        if (response.data === "BAD_REQUEST") {
+          dispatch(
+            setModal({
+              title: "알림",
+              titleColor: "red",
+              text: "이미 작성한 기록이 있는 방 입니다. 새로 작성을 원하시면 기존 리뷰를 삭제 후 다시 작성해주세요.",
+            } as any)
+          );
         }
       } catch (error: any) {
         setSending(false);
