@@ -27,6 +27,7 @@ function ReviewFac({ setReviewData }: any) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewSrc, setPreviewSrc] = useState(null);
   const [imageLink, setImageLink] = useState("");
+  const [sending, setSending] = useState(false); //리뷰 post 보내는 중인지 체크
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let now = new Date();
@@ -120,6 +121,8 @@ function ReviewFac({ setReviewData }: any) {
     setSelectedFile(event.target.files[0]);
   };
   const onFileUpload = async () => {
+    if (sending) return;
+    setSending(true);
     if (!selectedFile) {
       sendReview();
       return;
@@ -143,6 +146,7 @@ function ReviewFac({ setReviewData }: any) {
         );
     } catch (error) {
       const errorText = JSON.stringify(error);
+      setSending(false);
       dispatch(
         setModal({
           title: "에러!",
@@ -153,6 +157,7 @@ function ReviewFac({ setReviewData }: any) {
     }
   };
   const sendReview = async (urlImage = imageLink) => {
+    if (sending) return;
     if (buildingName === "") alert("주소를 입력해주세요.");
     else if (pros === "") alert("장점을 입력해주세요.");
     else if (cons === "") alert("단점을 입력해주세요.");
@@ -181,6 +186,7 @@ function ReviewFac({ setReviewData }: any) {
           { withCredentials: true }
         );
         if (response.data) {
+          setSending(false);
           dispatch(
             setModal({
               title: "알림",
@@ -191,9 +197,18 @@ function ReviewFac({ setReviewData }: any) {
           navigate("/review");
         }
       } catch (error: any) {
+        setSending(false);
         console.error(JSON.stringify(error));
         let errorText;
         if (error.response.status === 500) errorText = "500 failed";
+        else if (error.response.status === 400)
+          dispatch(
+            setModal({
+              title: "알림",
+              titleColor: "red",
+              text: "이미 작성한 기록이 있는 방 입니다. 새로 작성을 원하시면 기존 리뷰를 삭제 후 다시 작성해주세요.",
+            } as any)
+          );
         else errorText = error.response.data;
         dispatch(
           setModal({
@@ -300,7 +315,13 @@ function ReviewFac({ setReviewData }: any) {
         <div>
           <input type="file" onChange={onFileChange} />
           {/* <button onClick={onFileUpload}>Upload</button> */}
-          {<img src={previewSrc as any} alt="이미지를 선택해주세요." />}
+          {
+            <img
+              src={previewSrc as any}
+              alt="이미지를 선택해주세요."
+              style={{ width: "100%" }}
+            />
+          }
         </div>
         <label>장점</label>
         <textarea
@@ -354,11 +375,15 @@ function ReviewFac({ setReviewData }: any) {
           </div>
         </div>
         <div className={styles.submitBtns}>
+          <div
+            className={styles.mediumBtn}
+            onClick={onFileUpload}
+            style={{ backgroundColor: sending ? "gray" : "" }}
+          >
+            {!sending ? "작성 완료" : "작성 중..."}
+          </div>
           <div className={styles.mediumBtn} onClick={() => navigate("/review")}>
             취소
-          </div>
-          <div className={styles.mediumBtn} onClick={onFileUpload}>
-            제출
           </div>
         </div>
       </form>

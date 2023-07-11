@@ -1,11 +1,13 @@
 import axios from "axios";
 import Modal from "components/Modal";
-import { useState } from "react";
+import ReviewBlock from "components/ReviewBlock";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setModal } from "slice/modalSlice";
 import { saveSession } from "slice/userSlice";
 import styled, { css } from "styled-components";
+import { apiAddress } from "value";
 
 function Profile() {
   const session = useSelector((state: any) => state.userSet.session);
@@ -14,9 +16,30 @@ function Profile() {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const [checked, setChecked] = useState(false);
+  const [myReviews, setMyreviews] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    getMyReviews();
+  }, []);
+
+  const getMyReviews = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/api/mypage/`);
+      setMyreviews(response.data);
+      console.log(JSON.stringify(response));
+    } catch (error: any) {
+      const errorText = JSON.stringify(error);
+      dispatch(
+        setModal({
+          title: "에러!",
+          titleColor: "red",
+          text: errorText,
+        } as any)
+      );
+    }
+  };
   const onChange = (e: any) => {
     const {
       target: { id, value },
@@ -209,6 +232,10 @@ function Profile() {
           </Buttons>
         </Form>
       )}
+      {myReviews.length > 0 &&
+        myReviews.map((review: any) => (
+          <ReviewBlock review={review} key={review.review_id} />
+        ))}
     </Container>
   );
 }
