@@ -304,7 +304,7 @@ function MapCluster() {
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   useEffect(() => {
-    if (zoomLevel <= 9 && sidoTarget) getRoomDatas();
+    if (zoomLevel <= 11 && sidoTarget) getRoomDatas();
   }, [sidoTarget]);
 
   useEffect(() => {
@@ -533,7 +533,7 @@ function MapCluster() {
             ))}
         </MarkerClusterer>
 
-        {reviewDatas.map((roomData: any, idx: any): any => (
+        {roomDatas.map((roomData: any, idx: any): any => (
           <React.Fragment
             key={`marker_${roomData.room_id}-${roomData.latitude}-${roomData.longitude}`}
           >
@@ -548,7 +548,7 @@ function MapCluster() {
           </React.Fragment>
         ))}
 
-        {zoomLevel >= 10 && //시도 표시
+        {zoomLevel >= 12 && //시도 표시
           sido.map((root: any) => (
             <CustomOverlayMap
               key={root.name}
@@ -585,7 +585,7 @@ function MapCluster() {
           ))}
 
         {7 < zoomLevel &&
-          zoomLevel < 10 && //시 군 구 표시
+          zoomLevel < 12 && //시 군 구 표시
           sigungu.map((sigungu: any) => (
             <CustomOverlayMap
               key={sigungu.name}
