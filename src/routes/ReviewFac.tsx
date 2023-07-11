@@ -193,6 +193,7 @@ function ReviewFac({ setReviewData }: any) {
           newReview,
           { withCredentials: true }
         );
+        console.log(JSON.stringify(response));
         if (response.data) {
           setSending(false);
           dispatch(
