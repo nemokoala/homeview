@@ -26,7 +26,9 @@ function Profile() {
 
   const getMyReviews = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/api/mypage/reviews`);
+      const response = await axios.get(`${apiAddress}/api/mypage/reviews`, {
+        withCredentials: true,
+      });
       setMyreviews(response.data);
       console.log(JSON.stringify(response));
     } catch (error: any) {
