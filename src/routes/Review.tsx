@@ -25,7 +25,7 @@ function Review({ searchTerm, setSearchTerm }: any) {
           (review.room.building.includes(searchTerm) ||
             review.room.new_address.includes(searchTerm) ||
             review.room.old_address.includes(searchTerm)) &&
-          review.sido === sidoFilter
+          review.room.sido === sidoFilter
       );
       if (sidoFilter === "전체") {
         filtered = reviews.filter(
