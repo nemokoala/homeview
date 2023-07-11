@@ -16,6 +16,9 @@ function Review({ searchTerm, setSearchTerm }: any) {
     getReviews();
   }, []);
   useEffect(() => {
+    createSidoBtn();
+  }, [reviews]);
+  useEffect(() => {
     if (searchTerm.length > 0) {
       let filtered = reviews.filter(
         (review: any) =>
@@ -63,7 +66,6 @@ function Review({ searchTerm, setSearchTerm }: any) {
     try {
       const response = await axios.get(`${apiAddress}/review/all`);
       setReviews(response.data);
-      createSidoBtn();
       console.log("ReviewDetail.tsx(getReviews): " + JSON.stringify(response));
     } catch (error: any) {
       console.error("ReviewDetail.tsx(getReviews): " + JSON.stringify(error));
