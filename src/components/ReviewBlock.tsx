@@ -46,7 +46,7 @@ const CustomDiv = styled.div`
   &:hover {
     background-color: rgb(255, 241, 195);
     cursor: pointer;
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 `;
 const Building = styled.div`

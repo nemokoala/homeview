@@ -19,17 +19,17 @@ function Review({ searchTerm, setSearchTerm }: any) {
     if (searchTerm.length > 0) {
       let filtered = reviews.filter(
         (review: any) =>
-          (review.building.includes(searchTerm) ||
-            review.newAddress.includes(searchTerm) ||
-            review.oldAddress.includes(searchTerm)) &&
+          (review.room.building.includes(searchTerm) ||
+            review.room.new_address.includes(searchTerm) ||
+            review.room.old_address.includes(searchTerm)) &&
           review.sido === sidoFilter
       );
       if (sidoFilter === "전체") {
         filtered = reviews.filter(
           (review: any) =>
-            review.building.includes(searchTerm) ||
-            review.newAddress.includes(searchTerm) ||
-            review.oldAddress.includes(searchTerm)
+            review.room.building.includes(searchTerm) ||
+            review.room.new_address.includes(searchTerm) ||
+            review.room.old_address.includes(searchTerm)
         );
       }
       console.log(filtered);
@@ -63,7 +63,7 @@ function Review({ searchTerm, setSearchTerm }: any) {
     try {
       const response = await axios.get(`${apiAddress}/review/all`);
       setReviews(response.data);
-
+      createSidoBtn();
       console.log("ReviewDetail.tsx(getReviews): " + JSON.stringify(response));
     } catch (error: any) {
       console.error("ReviewDetail.tsx(getReviews): " + JSON.stringify(error));
