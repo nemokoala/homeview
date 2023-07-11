@@ -158,11 +158,19 @@ function ReviewFac({ setReviewData }: any) {
   };
   const sendReview = async (urlImage = imageLink) => {
     if (sending) return;
-    if (buildingName === "") alert("주소를 입력해주세요.");
-    else if (pros === "") alert("장점을 입력해주세요.");
-    else if (cons === "") alert("단점을 입력해주세요.");
-    else if (star === 0) alert("별점을 선택해주세요.");
-    else {
+    if (buildingName === "") {
+      alert("주소를 입력해주세요.");
+      setSending(false);
+    } else if (pros === "") {
+      alert("장점을 입력해주세요.");
+      setSending(false);
+    } else if (cons === "") {
+      alert("단점을 입력해주세요.");
+      setSending(false);
+    } else if (star === 0) {
+      alert("별점을 선택해주세요.");
+      setSending(false);
+    } else {
       try {
         const newReview = {
           room: {
