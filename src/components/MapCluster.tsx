@@ -304,7 +304,7 @@ function MapCluster() {
   }, []); //오버레이 버그 수정을 위한 지도 줌 새로고침
 
   useEffect(() => {
-    if (zoomLevel <= 10 && sidoTarget) getRoomDatas();
+    if (sidoTarget) getRoomDatas();
   }, [sidoTarget]);
 
   useEffect(() => {
