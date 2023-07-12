@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setModal } from "slice/modalSlice";
 import axios from "axios";
 import { apiAddress } from "value";
+import AdminReview from "./AdminReview";
 function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
@@ -69,6 +70,7 @@ function Admin({ reviewData, setReviewData }: any) {
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
         {location === "room" ? <AdminRoom /> : null}
+        {location === "review" ? <AdminReview /> : null}
       </section>
     </div>
   );
