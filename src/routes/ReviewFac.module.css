@@ -153,23 +153,22 @@
   display: flex;
   gap: 15px;
 }
-.photoContainer div {
+.photoContainer button {
   flex-grow: 1;
   background: transparent;
+  border: 1px solid black;
+  padding: 10px 15px;
 }
-.photoContainer div:nth-child(1) {
-  background: skyblue;
-  color: white;
-}
-.photoContainer div:nth-child(2) {
+
+.photoContainer button:nth-child(2) {
   background: tomato;
   color: red;
 }
-.photoContainer div:hover {
+.photoContainer button:hover {
   filter: contrast(150%);
   cursor: pointer;
 }
-.photoContainer div:active {
+.photoContainer button:active {
   filter: hue-rotate(330deg);
 }
 
