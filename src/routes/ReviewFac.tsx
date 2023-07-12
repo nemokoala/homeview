@@ -38,6 +38,7 @@ function ReviewFac({ setReviewData }: any) {
           text: "글을 작성하려면 로그인을 해주세요.",
         } as any)
       );
+      navigate("/login");
     }
     if (selectedFile) {
       const reader = new FileReader();
@@ -345,11 +346,11 @@ function ReviewFac({ setReviewData }: any) {
               style={{ display: "none" }}
               ref={fileInput}
             />
-            <div onClick={onClickImageUpload}>사진 선택</div>
+            <button onClick={onClickImageUpload}>사진 선택</button>
 
             {previewSrc && (
               <>
-                <div onClick={onClearAttachment}>사진 삭제</div>
+                <button onClick={onClearAttachment}>사진 삭제</button>
                 <img
                   src={previewSrc as any}
                   alt="이미지를 선택해주세요."
