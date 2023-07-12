@@ -171,7 +171,7 @@
   cursor: pointer;
 }
 .photoContainer button:nth-child(2):hover {
-  background-color: var(--tomato);
+  background-color: tomato;
   color: white;
   cursor: pointer;
 }
