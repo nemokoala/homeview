@@ -212,7 +212,7 @@ const Table = styled.table`
   & td:nth-child(5) {
     width: 80px;
   }
-  & td:nth-child(7) {
+  & td:nth-child(8) {
     width: 65px;
   }
   & tr:nth-child(odd) {

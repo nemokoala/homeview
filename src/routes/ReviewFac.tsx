@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
 import styles from "./ReviewFac.module.css";
 import axios from "axios";
 import { apiAddress } from "value";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "slice/modalSlice";
 
 function ReviewFac({ setReviewData }: any) {
@@ -14,11 +14,8 @@ function ReviewFac({ setReviewData }: any) {
   const [newAddress, setNewAddress] = useState("");
   const [oldAddress, setOldAddress] = useState<string>("");
   const [buildingName, setBuildingName] = useState("");
-  const [residenceType, setResidenceType] = useState("");
-  const [residenceFloor, setResidenceFloor] = useState("");
   const [pros, setPros] = useState("");
   const [cons, setCons] = useState("");
-  const [livedYear, setLivedYear] = useState(0);
   const [star, setStar] = useState(0);
   const [addressTitle, setAddressTitle] = useState("클릭하여 주소 검색");
   const [lat, setLat] = useState(0); //위도 35.xx
@@ -28,19 +25,20 @@ function ReviewFac({ setReviewData }: any) {
   const [previewSrc, setPreviewSrc] = useState(null);
   const [imageLink, setImageLink] = useState("");
   const [sending, setSending] = useState(false); //리뷰 post 보내는 중인지 체크
+  const session = useSelector((state: any) => state.userSet.session);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let now = new Date();
-  let nowYear = now.getFullYear();
-  let years = new Array(nowYear - 2020);
-  for (let i = 2020; i <= nowYear; i++) {
-    years[i - 2020] = i;
-  }
-  years.reverse();
-  /**
-   * handler
-   */
+  const fileInput = useRef<any>();
   useEffect(() => {
+    if (!session) {
+      dispatch(
+        setModal({
+          title: "알림",
+          titleColor: "red",
+          text: "글을 작성하려면 로그인을 해주세요.",
+        } as any)
+      );
+    }
     if (selectedFile) {
       const reader = new FileReader();
 
@@ -119,6 +117,10 @@ function ReviewFac({ setReviewData }: any) {
   };
   const onFileChange = (event: any) => {
     setSelectedFile(event.target.files[0]);
+  };
+  const onClearAttachment = () => {
+    setPreviewSrc(null);
+    fileInput.current.value = null;
   };
   const onFileUpload = async () => {
     if (sending) return;
@@ -332,15 +334,24 @@ function ReviewFac({ setReviewData }: any) {
         </div> */}
         <label>사진 업로드</label>
         <div>
-          <input type="file" onChange={onFileChange} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            style={{ display: "none" }}
+            ref={fileInput}
+          />
           {/* <button onClick={onFileUpload}>Upload</button> */}
-          {
-            <img
-              src={previewSrc as any}
-              alt="이미지를 선택해주세요."
-              style={{ width: "100%" }}
-            />
-          }
+          {previewSrc && (
+            <>
+              <button onClick={onClearAttachment}>사진 삭제</button>
+              <img
+                src={previewSrc as any}
+                alt="이미지를 선택해주세요."
+                style={{ width: "100%" }}
+              />
+            </>
+          )}
         </div>
         <label>장점</label>
         <textarea
