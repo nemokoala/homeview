@@ -46,7 +46,7 @@ function Review({ searchTerm, setSearchTerm }: any) {
     for (let i = 0; i < reviews.length; i++) {
       let 중복 = false;
       sidos.forEach((sido) => {
-        if (sido === reviews[i].sido) 중복 = true;
+        if (sido === reviews[i].room.sido) 중복 = true;
       });
       if (중복 === false) sidos.push(reviews[i].sido);
     }
