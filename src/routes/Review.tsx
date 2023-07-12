@@ -69,6 +69,7 @@ function Review({ searchTerm, setSearchTerm }: any) {
     try {
       const response = await axios.get(`${apiAddress}/review/all`);
       setReviews(response.data);
+      setFilteredReivew(response.data);
       console.log("ReviewDetail.tsx(getReviews): " + JSON.stringify(response));
     } catch (error: any) {
       console.error("ReviewDetail.tsx(getReviews): " + JSON.stringify(error));

@@ -49,6 +49,7 @@ function AdminRoom() {
       const response = await axios.get(`${apiAddress}/admin/room/list`, {
         withCredentials: true,
       });
+      console.log(JSON.stringify(response));
       setRooms(response.data);
     } catch (error: any) {
       dispatch(
@@ -123,7 +124,7 @@ function AdminRoom() {
               <td>{room.building}</td>
               <td>{room.score}</td>
               <td>
-                {room.new_Address} | {room.old_Address}
+                {room.new_address} | {room.old_address}
               </td>
               <td>
                 {room.latitude},{room.longitude}
