@@ -346,14 +346,15 @@ function ReviewFac({ setReviewData }: any) {
               style={{ display: "none" }}
               ref={fileInput}
             />
-            <button onClick={onClickImageUpload}>사진 선택</button>
+            <div className={styles.buttons}>
+              <button onClick={onClickImageUpload}>사진 선택</button>
 
-            {previewSrc && (
-              <>
+              {previewSrc && (
                 <button onClick={onClearAttachment}>사진 삭제</button>
-                <br />
-                <img src={previewSrc as any} alt="이미지를 선택해주세요." />
-              </>
+              )}
+            </div>
+            {previewSrc && (
+              <img src={previewSrc as any} alt="이미지를 선택해주세요." />
             )}
           </div>
         </div>
