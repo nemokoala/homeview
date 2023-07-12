@@ -48,7 +48,7 @@ function Review({ searchTerm, setSearchTerm }: any) {
       sidos.forEach((sido) => {
         if (sido === reviews[i].room.sido) 중복 = true;
       });
-      if (중복 === false) sidos.push(reviews[i].sido);
+      if (중복 === false) sidos.push(reviews[i].room.sido);
     }
 
     const sortedSidos = sidos.sort();

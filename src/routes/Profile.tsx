@@ -234,7 +234,7 @@ function Profile() {
           </Buttons>
         </Form>
       )}
-      <Label>내가 작성한 리뷰</Label>
+      <Label style={{ marginLeft: "30px" }}>내가 작성한 리뷰</Label>
       {myReviews.length > 0 &&
         myReviews.map((review: any) => (
           <ReviewBlock review={review} key={review.review_id} />
