@@ -157,20 +157,22 @@
   display: flex;
   gap: 15px;
 }
-.photoContainer button {
+.buttons button {
   width: 100px;
   flex-grow: 1;
   background: transparent;
   border: 1px solid black;
   padding: 10px 15px;
+  transition: all 0.7s;
 }
 
-.photoContainer button:nth-child(3) {
-  background: tomato;
-  color: red;
+.photoContainer button:nth-child(1):hover {
+  background-color: var(--lightBlue);
+  cursor: pointer;
 }
-.photoContainer button:hover {
-  filter: contrast(150%);
+.photoContainer button:nth-child(2):hover {
+  background-color: var(--tomato);
+  color: white;
   cursor: pointer;
 }
 .photoContainer button:active {
