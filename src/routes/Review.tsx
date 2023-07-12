@@ -96,13 +96,13 @@ function Review({ searchTerm, setSearchTerm }: any) {
         {searchTerm === ""
           ? reviews.map(
               (review: any) =>
-                (sidoFilter === review.sido || sidoFilter === "전체") && (
+                (sidoFilter === review.room.sido || sidoFilter === "전체") && (
                   <ReviewBlock review={review} key={review.review_id} />
                 )
             )
           : filteredReview.map(
               (review: any) =>
-                (sidoFilter === review.sido || sidoFilter === "전체") && (
+                (sidoFilter === review.room.sido || sidoFilter === "전체") && (
                   <ReviewBlock review={review} key={review.review_id} />
                 )
             )}
