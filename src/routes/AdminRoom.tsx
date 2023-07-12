@@ -63,8 +63,8 @@ function AdminRoom() {
   };
   const sortId = (n: number): void => {
     const sortedId = [...rooms].sort((a, b) => {
-      if (a.reviewId < b.reviewId) return n;
-      if (a.reviewId > b.reviewId) return -n;
+      if (a.review_id < b.review_id) return n;
+      if (a.review_id > b.review_id) return -n;
       return 0;
     });
     setRooms(sortedId);
@@ -77,18 +77,18 @@ function AdminRoom() {
     });
     setRooms(sortedName);
   };
-  const sortScore = (n: number): void => {
+  const sortSido = (n: number): void => {
     const sortedScore = [...rooms].sort((a, b) => {
-      if (a.star < b.star) return n;
-      if (a.star > b.star) return -n;
+      if (a.sido < b.sido) return n;
+      if (a.sido > b.sido) return -n;
       return 0;
     });
     setRooms(sortedScore);
   };
   const sortaddress = (n: number): void => {
     const sortedaddress = [...rooms].sort((a, b) => {
-      if (a.newAddress < b.newAddress) return n;
-      if (a.newAddress > b.newAddress) return -n;
+      if (a.new_address < b.new_address) return n;
+      if (a.new_address > b.new_address) return -n;
       return 0;
     });
     setRooms(sortedaddress);
@@ -110,11 +110,13 @@ function AdminRoom() {
               <button onClick={() => sortName(1)}>▼</button>
             </th>
             <th>
-              별점
-              <button onClick={() => sortScore(-1)}>▲</button>
-              <button onClick={() => sortScore(1)}>▼</button>
+              시도 | 시군구 | 동<button onClick={() => sortSido(-1)}>▲</button>
+              <button onClick={() => sortSido(1)}>▼</button>
             </th>
-            <th>방 주소</th>
+            <th>
+              방 주소<button onClick={() => sortaddress(-1)}>▲</button>
+              <button onClick={() => sortaddress(1)}>▼</button>
+            </th>
             <th>지역 좌표</th>
             <th>삭제</th>
           </tr>
@@ -122,7 +124,9 @@ function AdminRoom() {
             <tr key={room.room_id}>
               <td>{room.room_id}</td>
               <td>{room.building}</td>
-              <td>{room.score}</td>
+              <td>
+                {room.sido} | {room.sigungu} | {room.dong}
+              </td>
               <td>
                 {room.new_address} | {room.old_address}
               </td>
