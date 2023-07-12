@@ -31,14 +31,6 @@ function Admin({ reviewData, setReviewData }: any) {
           } as any)
         );
         navigate("/");
-      } else {
-        dispatch(
-          setModal({
-            title: "알림",
-            text: "어드민 확인이 완료되었습니다.",
-            titleColor: "lightgreen",
-          } as any)
-        );
       }
     } catch (error: any) {
       const errorText = JSON.stringify(error);
@@ -67,7 +59,12 @@ function Admin({ reviewData, setReviewData }: any) {
         >
           방 관리
         </div>
-        <div onClick={() => console.log(members)}>리뷰 관리</div>
+        <div
+          className={location === "review" ? styles.divOn : styles.divOff}
+          onClick={() => setLocation("review")}
+        >
+          리뷰 관리
+        </div>
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
