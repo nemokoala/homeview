@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 function ReviewBlock({ review }: any) {
+  const session = useSelector((state: any) => state.userSet.session);
   const navigate = useNavigate();
   const gotoDetail = (review: any): void => {
     navigate(`/review/${review.review_id}`);
@@ -11,7 +13,9 @@ function ReviewBlock({ review }: any) {
   }
   return (
     <CustomDiv className="reviewContainer" onClick={() => gotoDetail(review)}>
-      <Building>
+      <Building
+        style={session.id === review.member_id ? { color: "purple" } : {}}
+      >
         {review.room.building}
         <Star> {stars}</Star>
         <span style={{ color: "gray" }}> #{review.review_id}</span>{" "}
