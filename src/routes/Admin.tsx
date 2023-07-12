@@ -71,9 +71,7 @@ function Admin({ reviewData, setReviewData }: any) {
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
-        {location === "room" ? (
-          <AdminRoom reviewData={reviewData} setReviewData={setReviewData} />
-        ) : null}
+        {location === "room" ? <AdminRoom /> : null}
       </section>
     </div>
   );

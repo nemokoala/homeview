@@ -40,6 +40,15 @@ function Review({ searchTerm, setSearchTerm }: any) {
       if (filtered.length === 0) setShowNoResult(true);
       else setShowNoResult(false);
     }
+    if (reviews) {
+      const newfilteredReview = reviews.filter(
+        (review: any) =>
+          review.room.building.includes(searchTerm) ||
+          review.room.new_address.includes(searchTerm) ||
+          review.room.old_address.includes(searchTerm)
+      );
+      setFilteredReivew([...newfilteredReview]);
+    }
   }, [searchTerm, sidoFilter]); //시도 버튼 클릭 시 + 검색어 입력시 검색없음 텍스트 나오게하기.
 
   const createSidoBtn = () => {
@@ -54,16 +63,6 @@ function Review({ searchTerm, setSearchTerm }: any) {
 
     const sortedSidos = sidos.sort();
     setSidoList([...sortedSidos, "전체"]);
-
-    if (reviews) {
-      const newfilteredReview = reviews.filter(
-        (review: any) =>
-          review.room.building.includes(searchTerm) ||
-          review.room.new_address.includes(searchTerm) ||
-          review.room.old_address.includes(searchTerm)
-      );
-      setFilteredReivew([...newfilteredReview]);
-    }
   };
 
   const getReviews = async () => {
