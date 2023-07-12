@@ -151,10 +151,14 @@
 .photoContainer {
   width: 100%;
   display: flex;
+  flex-direction: column;
+}
+.buttons {
+  display: flex;
   gap: 15px;
 }
 .photoContainer button {
-  width: auto;
+  width: 100px;
   flex-grow: 1;
   background: transparent;
   border: 1px solid black;
