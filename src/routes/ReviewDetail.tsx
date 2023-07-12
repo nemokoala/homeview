@@ -1,9 +1,10 @@
 import axios from "axios";
 import MapContainer from "components/MapContainer";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate, useParams } from "react-router-dom";
+import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 import { apiAddress } from "value";
 
@@ -12,7 +13,7 @@ function ReviewDetail() {
   const session = useSelector((state: any) => state.userSet.session);
   const params = useParams();
   const reviewId = params.id;
-
+  const dispatch = useDispatch();
   useEffect(() => {
     getReviewDetail();
   }, []);
@@ -37,21 +38,47 @@ function ReviewDetail() {
   };
 
   const deleteReview = async () => {
-    if (window.confirm("리뷰를 삭제하시겠습니까?"))
-      try {
-        const response = await axios.delete(
-          `${apiAddress}/review/delete/${reviewId}`,
-          { withCredentials: true }
-        );
-        if (response) navigate("/review");
-        console.log(
-          "ReviewDetail.tsx(deleteReview): " + JSON.stringify(response)
-        );
-      } catch (error: any) {
-        console.error(
-          "ReviewDetail.tsx(deleteReview): " + JSON.stringify(error)
-        );
-      }
+    if (session.role !== "ADMIN") {
+      if (window.confirm("리뷰를 삭제하시겠습니까?"))
+        try {
+          const response = await axios.delete(
+            `${apiAddress}/review/delete/${reviewId}`,
+            { withCredentials: true }
+          );
+          if (response) navigate("/review");
+          console.log(
+            "ReviewDetail.tsx(deleteReview): " + JSON.stringify(response)
+          );
+        } catch (error: any) {
+          console.error(
+            "ReviewDetail.tsx(deleteReview): " + JSON.stringify(error)
+          );
+        }
+    } else {
+      if (window.confirm("[어드민] 리뷰를 삭제하시겠습니까?"))
+        try {
+          const response = await axios.delete(
+            `${apiAddress}/admin/review/${reviewId}`,
+            { withCredentials: true }
+          );
+          if (response) navigate("/review");
+          alert("삭제가 완료되었습니다.");
+          console.log(
+            "ReviewDetail.tsx(deleteReview): " + JSON.stringify(response)
+          );
+        } catch (error: any) {
+          dispatch(
+            setModal({
+              title: "에러",
+              titleColor: "red",
+              text: JSON.stringify(error),
+            } as any)
+          );
+          console.error(
+            "ReviewDetail.tsx(deleteReview): " + JSON.stringify(error)
+          );
+        }
+    }
   };
 
   let stars = "";
@@ -75,7 +102,8 @@ function ReviewDetail() {
             </Building>
             <Address>{reviewData.room.new_address}</Address>
             <Address>{reviewData.room.old_address}</Address>
-            {reviewData.member_id === session.id && (
+            {(reviewData.member_id === session.id ||
+              session.role === "ADMIN") && (
               <Btn onClick={() => deleteReview()}>삭제</Btn>
             )}
             <Hr></Hr>
