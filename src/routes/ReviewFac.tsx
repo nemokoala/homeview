@@ -336,26 +336,28 @@ function ReviewFac({ setReviewData }: any) {
           ))}
         </div> */}
         <label>사진 업로드</label>
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onFileChange}
-            style={{ display: "none" }}
-            ref={fileInput}
-          />
-          <button onClick={onClickImageUpload}>사진 업로드</button>
+        <div className={styles.photoContainer}>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={onFileChange}
+              style={{ display: "none" }}
+              ref={fileInput}
+            />
+            <div onClick={onClickImageUpload}>사진 선택</div>
 
-          {previewSrc && (
-            <>
-              <button onClick={onClearAttachment}>사진 삭제</button>
-              <img
-                src={previewSrc as any}
-                alt="이미지를 선택해주세요."
-                style={{ width: "100%" }}
-              />
-            </>
-          )}
+            {previewSrc && (
+              <>
+                <div onClick={onClearAttachment}>사진 삭제</div>
+                <img
+                  src={previewSrc as any}
+                  alt="이미지를 선택해주세요."
+                  style={{ width: "100%" }}
+                />
+              </>
+            )}
+          </div>
         </div>
         <label>장점</label>
         <textarea

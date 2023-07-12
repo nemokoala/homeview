@@ -148,7 +148,35 @@
   transform: translateX(-50%);
   top: var(--navHeight);
 }
+.photoContainer {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+}
+.photoContainer div {
+  flex-grow: 1;
+  background: transparent;
+}
+.photoContainer div:nth-child(1) {
+  background: skyblue;
+  color: white;
+}
+.photoContainer div:nth-child(2) {
+  background: tomato;
+  color: red;
+}
+.photoContainer div:hover {
+  filter: contrast(150%);
+  cursor: pointer;
+}
+.photoContainer div:active {
+  filter: hue-rotate(330deg);
+}
 
+.photoContainer img {
+  width: 100%;
+  margin: 15px 0;
+}
 @media screen and (max-width: 613px) {
   .form {
     width: 90%;
