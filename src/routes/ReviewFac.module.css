@@ -154,13 +154,14 @@
   gap: 15px;
 }
 .photoContainer button {
+  width: auto;
   flex-grow: 1;
   background: transparent;
   border: 1px solid black;
   padding: 10px 15px;
 }
 
-.photoContainer button:nth-child(2) {
+.photoContainer button:nth-child(3) {
   background: tomato;
   color: red;
 }
@@ -173,6 +174,7 @@
 }
 
 .photoContainer img {
+  min-width: 100%;
   width: 100%;
   margin: 15px 0;
 }

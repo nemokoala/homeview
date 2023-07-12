@@ -351,11 +351,8 @@ function ReviewFac({ setReviewData }: any) {
             {previewSrc && (
               <>
                 <button onClick={onClearAttachment}>사진 삭제</button>
-                <img
-                  src={previewSrc as any}
-                  alt="이미지를 선택해주세요."
-                  style={{ width: "100%" }}
-                />
+                <br />
+                <img src={previewSrc as any} alt="이미지를 선택해주세요." />
               </>
             )}
           </div>
