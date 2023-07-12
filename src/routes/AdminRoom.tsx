@@ -198,7 +198,7 @@ const Table = styled.table`
     width: 150px;
   }
   & td:nth-child(6) {
-    width: 50px;
+    width: 65px;
   }
   & tr:nth-child(odd) {
     background-color: rgb(248, 250, 195);
