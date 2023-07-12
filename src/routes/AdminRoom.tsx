@@ -103,20 +103,25 @@ function AdminRoom() {
           <tr>
             <th>
               id
+              <br />
               <button onClick={() => sortId(-1)}>▲</button>
               <button onClick={() => sortId(+1)}>▼</button>
             </th>
             <th>
               이름
+              <br />
               <button onClick={() => sortName(-1)}>▲</button>
               <button onClick={() => sortName(1)}>▼</button>
             </th>
             <th>
-              시도 | 시군구 | 동<button onClick={() => sortSido(-1)}>▲</button>
+              시도 | 시군구 | 동<br />
+              <button onClick={() => sortSido(-1)}>▲</button>
               <button onClick={() => sortSido(1)}>▼</button>
             </th>
             <th>
-              방 주소<button onClick={() => sortaddress(-1)}>▲</button>
+              방 주소
+              <br />
+              <button onClick={() => sortaddress(-1)}>▲</button>
               <button onClick={() => sortaddress(1)}>▼</button>
             </th>
             <th>지역 좌표</th>
@@ -181,13 +186,13 @@ const Table = styled.table`
     margin: 1;
   }
   & td:nth-child(1) {
-    width: 50px;
+    width: 80px;
   }
   & td:nth-child(2) {
-    width: 150px;
+    width: 160px;
   }
   & td:nth-child(3) {
-    width: 150px;
+    width: 170px;
   }
   & td:nth-child(5) {
     width: 150px;

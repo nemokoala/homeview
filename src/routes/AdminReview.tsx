@@ -111,24 +111,32 @@ function AdminReview() {
           <tr>
             <th>
               리뷰 id
+              <br />
               <button onClick={() => sortId(-1)}>▲</button>
               <button onClick={() => sortId(+1)}>▼</button>
             </th>
             <th>
               방 id
+              <br />
               <button onClick={() => sortRoomId(-1)}>▲</button>
               <button onClick={() => sortRoomId(1)}>▼</button>
             </th>
             <th>
-              유저 id<button onClick={() => sortUserId(-1)}>▲</button>
+              유저 id
+              <br />
+              <button onClick={() => sortUserId(-1)}>▲</button>
               <button onClick={() => sortUserId(1)}>▼</button>
             </th>
             <th>
-              유저 닉네임<button onClick={() => sortUserNickname(-1)}>▲</button>
+              유저 닉네임
+              <br />
+              <button onClick={() => sortUserNickname(-1)}>▲</button>
               <button onClick={() => sortUserNickname(1)}>▼</button>
             </th>
             <th>
-              별점<button onClick={() => sortScore(-1)}>▲</button>
+              별점
+              <br />
+              <button onClick={() => sortScore(-1)}>▲</button>
               <button onClick={() => sortScore(1)}>▼</button>
             </th>
             <th>장점</th>
@@ -190,18 +198,18 @@ const Table = styled.table`
     margin: 1;
   }
   & td:nth-child(1) {
-    width: 100px;
+    width: 80px;
   }
   & td:nth-child(2) {
-    width: 100px;
+    width: 80px;
   }
   & td:nth-child(3) {
-    width: 100px;
+    width: 80px;
+  }
+  & td:nth-child(4) {
+    width: 130px;
   }
   & td:nth-child(5) {
-    width: 150px;
-  }
-  & td:nth-child(6) {
     width: 100px;
   }
   & tr:nth-child(odd) {
