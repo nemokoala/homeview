@@ -4,6 +4,7 @@ import { apiAddress } from "value";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setModal } from "slice/modalSlice";
+import styled from "styled-components";
 
 function AdminRoom() {
   const [rooms, setRooms] = useState<any>([]);
@@ -15,10 +16,9 @@ function AdminRoom() {
     if (answer == null) alert("방 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
-        const response = await axios.delete(
-          `${apiAddress}/admin/review/${id}`,
-          { withCredentials: true }
-        );
+        const response = await axios.delete(`${apiAddress}/admin/room/${id}`, {
+          withCredentials: true,
+        });
         getRooms();
         alert("삭제가 완료되었습니다.");
         console.log(
@@ -63,8 +63,8 @@ function AdminRoom() {
   };
   const sortId = (n: number): void => {
     const sortedId = [...rooms].sort((a, b) => {
-      if (a.review_id < b.review_id) return n;
-      if (a.review_id > b.review_id) return -n;
+      if (a.room_id < b.room_id) return n;
+      if (a.room_id > b.room_id) return -n;
       return 0;
     });
     setRooms(sortedId);
@@ -95,8 +95,8 @@ function AdminRoom() {
   };
 
   return (
-    <div className={styles.container}>
-      <table className={styles.table}>
+    <Container>
+      <Table>
         <tbody>
           <tr>
             <th>
@@ -131,7 +131,7 @@ function AdminRoom() {
                 {room.new_address} | {room.old_address}
               </td>
               <td>
-                {room.latitude},{room.longitude}
+                {room.latitude.toFixed(4)},{room.longitude.toFixed(4)}
               </td>
               <td>
                 <button
@@ -144,9 +144,50 @@ function AdminRoom() {
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
+      </Table>
+    </Container>
   );
 }
 
 export default AdminRoom;
+
+const Container = styled.div`
+  width: 100%;
+  min-width: 850px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Table = styled.table`
+  border: 1px solid black;
+  background-color: rgb(254, 255, 220);
+  width: calc(100% - 20px);
+  margin: 30px 0;
+  & * {
+    padding: 5px;
+    text-align: center;
+  }
+  & th {
+    border: 1px solid black;
+  }
+  & td {
+    border: 1px solid black;
+    margin: 1;
+  }
+  & td {
+    border: 1px solid black;
+    margin: 1;
+  }
+  & td:nth-child(1) {
+    width: 100px;
+  }
+  & td:nth-child(2) {
+    width: 150px;
+  }
+  & td:nth-child(3) {
+    width: 150px;
+  }
+  & td:nth-child(5) {
+    width: 150px;
+  }
+`;
