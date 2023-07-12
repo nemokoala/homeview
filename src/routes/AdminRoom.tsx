@@ -46,7 +46,9 @@ function AdminRoom() {
 
   const getRooms = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/admin/room/list`);
+      const response = await axios.get(`${apiAddress}/admin/room/list`, {
+        withCredentials: true,
+      });
       setRooms(response.data);
     } catch (error: any) {
       dispatch(
