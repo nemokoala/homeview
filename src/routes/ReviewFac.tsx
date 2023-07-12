@@ -118,6 +118,9 @@ function ReviewFac({ setReviewData }: any) {
   const onFileChange = (event: any) => {
     setSelectedFile(event.target.files[0]);
   };
+  const onClickImageUpload = () => {
+    fileInput.current.click();
+  };
   const onClearAttachment = () => {
     setPreviewSrc(null);
     fileInput.current.value = null;
@@ -341,7 +344,8 @@ function ReviewFac({ setReviewData }: any) {
             style={{ display: "none" }}
             ref={fileInput}
           />
-          {/* <button onClick={onFileUpload}>Upload</button> */}
+          <button onClick={onClickImageUpload}>사진 업로드</button>
+
           {previewSrc && (
             <>
               <button onClick={onClearAttachment}>사진 삭제</button>
