@@ -190,19 +190,19 @@ const Table = styled.table`
     margin: 1;
   }
   & td:nth-child(1) {
-    width: 50px;
+    width: 100px;
   }
   & td:nth-child(2) {
-    width: 150px;
+    width: 100px;
   }
   & td:nth-child(3) {
-    width: 150px;
+    width: 100px;
   }
   & td:nth-child(5) {
     width: 150px;
   }
   & td:nth-child(6) {
-    width: 50px;
+    width: 100px;
   }
   & tr:nth-child(odd) {
     background-color: rgb(248, 250, 195);
