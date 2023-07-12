@@ -9,6 +9,29 @@ import styled from "styled-components";
 function AdminRoom() {
   const [rooms, setRooms] = useState<any>([]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getRooms();
+  }, []);
+
+  const getRooms = async () => {
+    try {
+      const response = await axios.get(`${apiAddress}/admin/room/list`, {
+        withCredentials: true,
+      });
+      console.log(JSON.stringify(response));
+      setRooms(response.data);
+    } catch (error: any) {
+      dispatch(
+        setModal({
+          title: "에러",
+          titleColor: "red",
+          text: JSON.stringify(error),
+        } as any)
+      );
+    }
+  };
+
   const onClickDestroy = async (id: number) => {
     const answer = prompt(
       `해당 방의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
@@ -40,27 +63,6 @@ function AdminRoom() {
       alert("id값을 잘못 입력하여서 방 삭제가 취소 되었습니다.");
   };
 
-  useEffect(() => {
-    getRooms();
-  }, []);
-
-  const getRooms = async () => {
-    try {
-      const response = await axios.get(`${apiAddress}/admin/room/list`, {
-        withCredentials: true,
-      });
-      console.log(JSON.stringify(response));
-      setRooms(response.data);
-    } catch (error: any) {
-      dispatch(
-        setModal({
-          title: "에러",
-          titleColor: "red",
-          text: JSON.stringify(error),
-        } as any)
-      );
-    }
-  };
   const sortId = (n: number): void => {
     const sortedId = [...rooms].sort((a, b) => {
       if (a.room_id < b.room_id) return n;
@@ -179,7 +181,7 @@ const Table = styled.table`
     margin: 1;
   }
   & td:nth-child(1) {
-    width: 100px;
+    width: 50px;
   }
   & td:nth-child(2) {
     width: 150px;
@@ -189,5 +191,23 @@ const Table = styled.table`
   }
   & td:nth-child(5) {
     width: 150px;
+  }
+  & td:nth-child(6) {
+    width: 50px;
+  }
+  & tr:nth-child(odd) {
+    background-color: rgb(248, 250, 195);
+  }
+  & button {
+    border-radius: 5px;
+    border: 0px;
+    color: white;
+    background-color: rgb(88, 107, 219);
+    margin: 0 3px;
+    transition: all 0.7s;
+  }
+  & button:hover {
+    cursor: pointer;
+    background-color: rgb(117, 134, 228);
   }
 `;
