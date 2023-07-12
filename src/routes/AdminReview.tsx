@@ -207,10 +207,13 @@ const Table = styled.table`
     width: 80px;
   }
   & td:nth-child(4) {
-    width: 130px;
+    width: 100px;
   }
   & td:nth-child(5) {
-    width: 100px;
+    width: 80px;
+  }
+  & td:nth-child(7) {
+    width: 65px;
   }
   & tr:nth-child(odd) {
     background-color: rgb(248, 250, 195);
