@@ -11,7 +11,8 @@ function Review({ searchTerm, setSearchTerm }: any) {
   const [sidoList, setSidoList] = useState<any>([]);
   const [sidoFilter, setSidoFilter] = useState("전체");
   const [showNoResult, setShowNoResult] = useState(false);
-  let filteredReview = [];
+  const [filteredReview, setFilteredReivew] = useState<any>([]);
+
   useEffect(() => {
     getReviews();
   }, []);
@@ -53,14 +54,17 @@ function Review({ searchTerm, setSearchTerm }: any) {
 
     const sortedSidos = sidos.sort();
     setSidoList([...sortedSidos, "전체"]);
+
+    if (reviews) {
+      const newfilteredReview = reviews.filter(
+        (review: any) =>
+          review.room.building.includes(searchTerm) ||
+          review.room.new_address.includes(searchTerm) ||
+          review.room.old_address.includes(searchTerm)
+      );
+      setFilteredReivew([...newfilteredReview]);
+    }
   };
-  if (reviews)
-    filteredReview = reviews.filter(
-      (review: any) =>
-        review.room.building.includes(searchTerm) ||
-        review.room.new_address.includes(searchTerm) ||
-        review.room.old_address.includes(searchTerm)
-    );
 
   const getReviews = async () => {
     try {
