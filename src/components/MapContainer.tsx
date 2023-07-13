@@ -66,6 +66,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
       >
         <MapMarker // 해당 건물 마커
           position={state.center}
+          zIndex={10}
         ></MapMarker>
         <CustomOverlayMap
           position={state.center}
@@ -162,6 +163,7 @@ const NearDiv = styled.div`
   align-items: center;
   width: auto;
   height: auto;
+  font-size: 0.7rem;
   background: transparent;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
@@ -170,13 +172,12 @@ const NearDiv = styled.div`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:hover {
-    background: "skyblue" !important;
+    background-color: rgba(199, 208, 247, 0.8) !important;
     cursor: pointer;
   }
   & a {
     text-decoration: none;
     transition: all 0.7s;
-    font-size: 0.5rem;
     padding: "7px 10px";
     height: "auto";
   }
