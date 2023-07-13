@@ -43,7 +43,7 @@ function ReviewDetail() {
   const getCategory = async () => {
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
-    const headers = `KakaoAK ${appKey}` as any;
+    const headers = { Authorization: `KakaoAK ${appKey}` };
     const params = {
       category_group_code: "CE7", // 편의점 카테고리 코드
       x: reviewData.room.longitude, // 검색할 좌표의 경도
