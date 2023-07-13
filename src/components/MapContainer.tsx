@@ -118,7 +118,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
                 xAnchor={0.5}
                 yAnchor={2.3}
               >
-                <Div>
+                <NearDiv>
                   <a
                     className="building"
                     href={building.place_url}
@@ -132,7 +132,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
                   >
                     {building.place_name}
                   </a>
-                </Div>
+                </NearDiv>
               </CustomOverlayMap>
               <MapMarker // 해당 건물 마커
                 position={{
@@ -149,8 +149,35 @@ function MapContainer({ reviewData, nearBuildings }: any) {
     </>
   );
 }
+const NearDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  height: auto;
+  background: transparent;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgb(255, 255, 255, 0.58);
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  &:hover {
+    background-color: "skyblue" !important;
+    cursor: pointer;
+  }
+  & a {
+    text-decoration: none;
+    transition: all 0.7s;
+    font-size: 0.9rem;
+    padding: "7px 10px";
+    height: "auto";
+  }
+`;
 
 const Div = styled.div`
+  z-index: 10;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -196,17 +223,6 @@ const Div = styled.div`
   & .road:hover,
   .showmap:hover {
     background-color: rgb(255, 139, 139);
-  }
-
-  & a {
-    text-decoration: none;
-    transition: all 0.7s;
-    font-size: 0.9rem;
-    padding: "7px 10px";
-    height: "auto";
-  }
-  & a:hover {
-    background-color: "skyblue" !important;
   }
 `;
 
