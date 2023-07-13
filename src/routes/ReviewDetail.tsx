@@ -134,7 +134,7 @@ function ReviewDetail() {
         <>
           <MapContainer
             reviewData={reviewData}
-            nearBuildings={nearBuildings.documents}
+            nearBuildings={nearBuildings?.documents}
           />
           <CategoryContainer>
             {categoryGroup.map((category: any) => (
