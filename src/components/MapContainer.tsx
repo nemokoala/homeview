@@ -107,40 +107,41 @@ function MapContainer({ reviewData, nearBuildings }: any) {
           </Div>
         </CustomOverlayMap>
 
-        {nearBuildings?.nearBuildings.map((building: any) => (
-          <React.Fragment key={building.place_url}>
-            <CustomOverlayMap
-              position={{
-                lat: building.x,
-                lng: building.y,
-              }}
-              xAnchor={0.5}
-              yAnchor={2.3}
-            >
-              <Div>
-                <a
-                  className="building"
-                  href={building.place_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    padding: "7px 10px",
-                    fontSize: "1rem",
-                    height: "auto",
-                  }}
-                >
-                  {building.place_name}
-                </a>
-              </Div>
-            </CustomOverlayMap>
-            <MapMarker // 해당 건물 마커
-              position={{
-                lat: building.x,
-                lng: building.y,
-              }}
-            ></MapMarker>
-          </React.Fragment>
-        ))}
+        {nearBuildings.length > 0 &&
+          nearBuildings.map((building: any) => (
+            <React.Fragment key={building.place_url}>
+              <CustomOverlayMap
+                position={{
+                  lat: building.x,
+                  lng: building.y,
+                }}
+                xAnchor={0.5}
+                yAnchor={2.3}
+              >
+                <Div>
+                  <a
+                    className="building"
+                    href={building.place_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: "7px 10px",
+                      fontSize: "1rem",
+                      height: "auto",
+                    }}
+                  >
+                    {building.place_name}
+                  </a>
+                </Div>
+              </CustomOverlayMap>
+              <MapMarker // 해당 건물 마커
+                position={{
+                  lat: building.x,
+                  lng: building.y,
+                }}
+              ></MapMarker>
+            </React.Fragment>
+          ))}
 
         <ZoomControl />
         <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />

@@ -259,6 +259,7 @@ const CategoryContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   & div {
+    min-width: 20%;
     padding: 10px 30px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
