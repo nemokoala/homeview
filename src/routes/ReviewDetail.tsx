@@ -11,17 +11,19 @@ import { apiAddress } from "value";
 function ReviewDetail() {
   const [reviewData, setReviewData] = useState<any>(null);
   const [nearBuildings, setNearBuildings] = useState<any>(null);
-  const [categoryGroup, setCategoryGroup] = useState([
-    { name: "대형마트", code: "MT1" },
-    { name: "편의점", code: "CS2" },
-    { name: "주유소,충전소", code: "OL7" },
-    { name: "지하철역", code: "SW8" },
-    { name: "음식점", code: "FD6" },
-    { name: "카페", code: "CE7" },
-    { name: "은행", code: "BK9" },
-    { name: "병원", code: "HP8" },
-    { name: "약국", code: "PM9" },
-  ]);
+  const [categoryGroup, setCategoryGroup] = useState({
+    now: "",
+    list: [
+      { name: "대형마트", code: "MT1" },
+      { name: "편의점", code: "CS2" },
+      { name: "지하철역", code: "SW8" },
+      { name: "음식점", code: "FD6" },
+      { name: "카페", code: "CE7" },
+      { name: "은행", code: "BK9" },
+      { name: "병원", code: "HP8" },
+      { name: "약국", code: "PM9" },
+    ],
+  });
   const [stars, setStars] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const params = useParams();
@@ -52,6 +54,7 @@ function ReviewDetail() {
   };
 
   const getNearBuilding = async (code: any) => {
+    setCategoryGroup((prev) => ({ ...prev, now: code }));
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
     const headers = { Authorization: `KakaoAK ${appKey}` };
@@ -137,8 +140,15 @@ function ReviewDetail() {
             nearBuildings={nearBuildings?.documents}
           />
           <CategoryContainer>
-            {categoryGroup.map((category: any) => (
-              <div onClick={() => getNearBuilding(category.code)}>
+            {categoryGroup.list.map((category: any) => (
+              <div
+                style={
+                  category.code === categoryGroup.now
+                    ? { background: "var(--orange)" }
+                    : {}
+                }
+                onClick={() => getNearBuilding(category.code)}
+              >
                 {category.name}
               </div>
             ))}
@@ -268,6 +278,10 @@ const CategoryContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  & div:hover {
+    cursor: pointer;
+    background: rgb(250, 241, 203);
   }
 `;
 export default ReviewDetail;
