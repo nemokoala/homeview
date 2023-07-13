@@ -222,6 +222,15 @@ function Post() {
       );
       return;
     }
+    if (commentContent.length < 2) {
+      dispatch(
+        setModal({
+          title: "알림",
+          text: "댓글 내용을 최소 2글자를 입력해주세요.",
+        } as any)
+      );
+      return;
+    }
     try {
       const response = await axios.post(
         `${apiAddress}/api/comment/add`,
