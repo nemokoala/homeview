@@ -345,11 +345,11 @@ const Buttons = styled.div`
     font-size: 1.3rem;
   }
   & div:hover {
-    filter: contrast(200%);
+    filter: contrast(150%);
     cursor: pointer;
   }
   & div:active {
-    filter: hue-rotate(90deg);
+    filter: hue-rotate(330deg);
   }
 `;
 export default Profile;

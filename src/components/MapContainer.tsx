@@ -8,8 +8,9 @@ import {
 } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import React from "react";
 
-function MapContainer({ data }: any) {
+function MapContainer({ reviewData, nearBuildings }: any) {
   const [state, setState] = useState<any>({
     center: { lat: 33.452613, lng: 126.570888 },
     isPanto: false,
@@ -26,7 +27,7 @@ function MapContainer({ data }: any) {
 
   function searchLoc() {
     geocoder.addressSearch(
-      data.room.new_address,
+      reviewData.room.new_address,
       function (result: any, status: any): any {
         // 정상적으로 검색이 완료됐으면
         if (status == kakao.maps.services.Status.OK) {
@@ -68,17 +69,19 @@ function MapContainer({ data }: any) {
         ></MapMarker>
         <CustomOverlayMap position={state.center} xAnchor={0.5} yAnchor={1.5}>
           <Div>
-            <div className="building">{data.room.building}</div>
+            <div className="building">{reviewData.room.building}</div>
             <div className="buttons">
               <a
-                href={`https://map.kakao.com/link/to/${data.room.building},${state.center.lat},${state.center.lng}`}
+                href={`https://map.kakao.com/link/to/${reviewData.room.building},${state.center.lat},${state.center.lng}`}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <div className="road">길찾기</div>
               </a>
               <a
-                href={`https://map.kakao.com/link/map/${data.room.building},${state.center.lat},${state.center.lng}`}
+                href={`https://map.kakao.com/link/map/${reviewData.room.building},${state.center.lat},${state.center.lng}`}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <div className="showmap">지도보기</div>
               </a>
@@ -103,6 +106,42 @@ function MapContainer({ data }: any) {
             </div>
           </Div>
         </CustomOverlayMap>
+
+        {nearBuildings.map((building: any) => (
+          <React.Fragment key={building.place_url}>
+            <CustomOverlayMap
+              position={{
+                lat: building.x,
+                lng: building.y,
+              }}
+              xAnchor={0.5}
+              yAnchor={2.3}
+            >
+              <Div>
+                <a
+                  className="building"
+                  href={building.place_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    padding: "7px 10px",
+                    fontSize: "1rem",
+                    height: "auto",
+                  }}
+                >
+                  {building.place_name}
+                </a>
+              </Div>
+            </CustomOverlayMap>
+            <MapMarker // 해당 건물 마커
+              position={{
+                lat: building.x,
+                lng: building.y,
+              }}
+            ></MapMarker>
+          </React.Fragment>
+        ))}
+
         <ZoomControl />
         <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
       </Map>

@@ -10,6 +10,18 @@ import { apiAddress } from "value";
 
 function ReviewDetail() {
   const [reviewData, setReviewData] = useState<any>(null);
+  const [nearBuildings, setNearBuildings] = useState<any>(null);
+  const [categoryGroup, setCategoryGroup] = useState([
+    { name: "대형마트", code: "MT1" },
+    { name: "편의점", code: "CS2" },
+    { name: "주유소,충전소", code: "OL7" },
+    { name: "지하철역", code: "SW8" },
+    { name: "음식점", code: "FD6" },
+    { name: "카페", code: "CE7" },
+    { name: "은행", code: "BK9" },
+    { name: "병원", code: "HP8" },
+    { name: "약국", code: "PM9" },
+  ]);
   const [stars, setStars] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const params = useParams();
@@ -22,7 +34,6 @@ function ReviewDetail() {
   useEffect(() => {
     if (reviewData) {
       setStar();
-      getCategory();
     }
   }, [reviewData]);
 
@@ -40,12 +51,12 @@ function ReviewDetail() {
     }
   };
 
-  const getCategory = async () => {
+  const getNearBuilding = async (code: any) => {
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
     const headers = { Authorization: `KakaoAK ${appKey}` };
     const params = {
-      category_group_code: "CE7", // 편의점 카테고리 코드
+      category_group_code: code, // 편의점 카테고리 코드
       x: reviewData.room.longitude, // 검색할 좌표의 경도
       y: reviewData.room.latitude, // 검색할 좌표의 위도
       radius: 1000, // 검색 반경(미터)
@@ -56,6 +67,7 @@ function ReviewDetail() {
         headers,
         params,
       });
+      setNearBuildings(response.data);
       console.log("카테고리 " + JSON.stringify(response));
     } catch (error) {
       console.error(error);
@@ -120,7 +132,17 @@ function ReviewDetail() {
     <>
       {reviewData && (
         <>
-          <MapContainer data={reviewData} />
+          <MapContainer
+            reviewData={reviewData}
+            nearBuildings={nearBuildings.documents}
+          />
+          <CategoryContainer>
+            {categoryGroup.map((category: any) => (
+              <div onClick={() => getNearBuilding(category.code)}>
+                {category.name}
+              </div>
+            ))}
+          </CategoryContainer>
           <CustomDiv>
             <Building>
               {reviewData.room.building} <Star>{stars}</Star>{" "}
@@ -229,5 +251,22 @@ const Img = styled.img`
   width: 100%;
   max-width: 600px;
   margin: 15px auto;
+`;
+
+const CategoryContainer = styled.div`
+  margin: 20px 15px;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  & div {
+    padding: 10px 30px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3582);
+    transition: all 0.5s;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 export default ReviewDetail;
