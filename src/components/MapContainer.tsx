@@ -164,13 +164,13 @@ const NearDiv = styled.div`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 20px 10px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   &:hover {
-    background-color: "skyblue" !important;
+    background: "skyblue" !important;
     cursor: pointer;
   }
   & a {
     text-decoration: none;
     transition: all 0.7s;
-    font-size: 0.9rem;
+    font-size: 0.5rem;
     padding: "7px 10px";
     height: "auto";
   }
