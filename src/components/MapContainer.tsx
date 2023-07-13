@@ -112,8 +112,8 @@ function MapContainer({ reviewData, nearBuildings }: any) {
             <React.Fragment key={building.place_url}>
               <CustomOverlayMap
                 position={{
-                  lat: building.x,
-                  lng: building.y,
+                  lat: building.y,
+                  lng: building.x,
                 }}
                 xAnchor={0.5}
                 yAnchor={2.3}
@@ -136,8 +136,8 @@ function MapContainer({ reviewData, nearBuildings }: any) {
               </CustomOverlayMap>
               <MapMarker // 해당 건물 마커
                 position={{
-                  lat: building.x,
-                  lng: building.y,
+                  lat: building.y,
+                  lng: building.x,
                 }}
               ></MapMarker>
             </React.Fragment>
