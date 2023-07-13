@@ -10,6 +10,7 @@ import { apiAddress } from "value";
 
 function ReviewDetail() {
   const [reviewData, setReviewData] = useState<any>(null);
+  const [stars, setStars] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const params = useParams();
   const reviewId = params.id;
@@ -26,7 +27,7 @@ function ReviewDetail() {
     try {
       const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
       setReviewData(response.data);
-
+      getCategory();
       console.log(
         "ReviewDetail.tsx(getReviewDetail): " + JSON.stringify(response)
       );
@@ -34,6 +35,28 @@ function ReviewDetail() {
       console.error(
         "ReviewDetail.tsx(getReviewDetail): " + JSON.stringify(error)
       );
+    }
+  };
+
+  const getCategory = async () => {
+    const appKey = process.env.REACT_APP_REST;
+    const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
+    const headers = `KakaoAK ${appKey}` as any;
+    const params = {
+      category_group_code: "CE7", // 편의점 카테고리 코드
+      x: "Longitude", // 검색할 좌표의 경도
+      y: "Latitude", // 검색할 좌표의 위도
+      radius: 1000, // 검색 반경(미터)
+      sort: "distance", // 정렬 순서
+    };
+    try {
+      const response = await axios.get(apiUrl, {
+        headers,
+        params,
+      });
+      console.log("카테고리 " + JSON.stringify(response));
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -81,11 +104,12 @@ function ReviewDetail() {
     }
   };
 
-  let stars = "";
   const setStar = () => {
+    let star = "";
     for (let i = 0; i < reviewData.score; i++) {
-      stars += "★";
+      star += "★";
     }
+    setStars(star);
   };
 
   const navigate = useNavigate();
@@ -109,9 +133,7 @@ function ReviewDetail() {
             <Hr></Hr>
             <Pros>장점 : {reviewData.pros}</Pros>
             <Cons>단점 : {reviewData.cons}</Cons>
-            {reviewData.url && (
-              <img src={reviewData.url} style={{ width: "100%" }} />
-            )}
+            {reviewData.url && <Img src={reviewData.url} />}
             <UserName>
               작성자 : {reviewData.nickname}#{reviewData.member_id}
             </UserName>
@@ -199,5 +221,11 @@ const Btn = styled.div<any>`
   &:active {
     filter: hue-rotate(320deg);
   }
+`;
+
+const Img = styled.img`
+  width: 100%;
+  max-width: 700px;
+  margin: 15px 0;
 `;
 export default ReviewDetail;
