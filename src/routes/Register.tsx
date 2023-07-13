@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { saveSession } from "slice/userSlice";
 import { setModal } from "slice/modalSlice";
 import styled, { keyframes } from "styled-components";
-import { apiAddress } from "value";
+import { apiAddress, sessionTime } from "value";
 
 function Register() {
   const [name, setName] = useState("");
@@ -109,6 +109,7 @@ function Register() {
       const formUserData = {
         email: email,
         password: password,
+        session_time: sessionTime,
       };
       try {
         const response = await axios.post(
