@@ -67,7 +67,12 @@ function MapContainer({ reviewData, nearBuildings }: any) {
         <MapMarker // 해당 건물 마커
           position={state.center}
         ></MapMarker>
-        <CustomOverlayMap position={state.center} xAnchor={0.5} yAnchor={1.5}>
+        <CustomOverlayMap
+          position={state.center}
+          xAnchor={0.5}
+          yAnchor={1.5}
+          zIndex={10}
+        >
           <Div>
             <div className="building">{reviewData.room.building}</div>
             <div className="buttons">
@@ -115,6 +120,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
                   lat: building.y,
                   lng: building.x,
                 }}
+                zIndex={1}
                 xAnchor={0.5}
                 yAnchor={2.3}
               >
@@ -223,6 +229,10 @@ const Div = styled.div`
   & .road:hover,
   .showmap:hover {
     background-color: rgb(255, 139, 139);
+  }
+  & a {
+    text-decoration: none;
+    height: "auto";
   }
 `;
 

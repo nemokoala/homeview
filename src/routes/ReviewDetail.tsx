@@ -64,6 +64,7 @@ function ReviewDetail() {
       if (prev.now === code) return { ...prev, now: "" };
       else return { ...prev, now: code };
     });
+    if (categoryGroup.now === code) return;
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
     const headers = { Authorization: `KakaoAK ${appKey}` };
