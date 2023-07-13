@@ -202,9 +202,11 @@ const Div = styled.div`
     text-decoration: none;
     transition: all 0.7s;
     font-size: 0.9rem;
+    padding: "7px 10px";
+    height: "auto";
   }
   & a:hover {
-    background-color: "skyblue";
+    background-color: "skyblue" !important;
   }
 `;
 
