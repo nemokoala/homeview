@@ -272,7 +272,13 @@ function Post() {
       }
       console.log("Post.tsx(deleteComment): " + JSON.stringify(response));
     } catch (error: any) {
-      console.error("Post.tsx(deleteComment): " + JSON.stringify(error));
+      if (error.response.status === 500)
+        dispatch(
+          setModal({
+            title: "알림",
+            text: "500 failed",
+          } as any)
+        );
     }
   };
   const onChange = (e: any) => {

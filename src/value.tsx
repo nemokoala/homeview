@@ -230,4 +230,4 @@ export const sigungu = [
   { name: "제주/제주시", lat: 33.50972, lng: 126.52194, count: 0 },
   { name: "제주/서귀포시", lat: 33.29307, lng: 126.49748, count: 0 },
 ];
-export const sessionTime = 3; //min
+export const sessionTime = 1; //min
