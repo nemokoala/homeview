@@ -227,7 +227,7 @@ const Btn = styled.div<any>`
 
 const Img = styled.img`
   width: 100%;
-  max-width: 700px;
-  margin: 15px 0;
+  max-width: 600px;
+  margin: 15px auto;
 `;
 export default ReviewDetail;
