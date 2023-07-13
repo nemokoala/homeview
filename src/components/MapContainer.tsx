@@ -200,6 +200,11 @@ const Div = styled.div`
 
   & a {
     text-decoration: none;
+    transition: all 0.7s;
+    font-size: 0.9rem;
+  }
+  & a:hover {
+    background-color: "skyblue";
   }
 `;
 
