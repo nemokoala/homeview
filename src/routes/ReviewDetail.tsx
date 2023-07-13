@@ -60,11 +60,10 @@ function ReviewDetail() {
   };
 
   const getNearBuilding = async (code: any) => {
-    if (categoryGroup.now)
-      setCategoryGroup((prev) => {
-        if (prev.now === code) return { ...prev, now: "" };
-        else return { ...prev, now: code };
-      });
+    setCategoryGroup((prev) => {
+      if (prev.now === code) return { ...prev, now: "" };
+      else return { ...prev, now: code };
+    });
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
     const headers = { Authorization: `KakaoAK ${appKey}` };
