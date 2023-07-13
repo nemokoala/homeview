@@ -107,7 +107,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
           </Div>
         </CustomOverlayMap>
 
-        {nearBuildings.map((building: any) => (
+        {nearBuildings?.nearBuildings.map((building: any) => (
           <React.Fragment key={building.place_url}>
             <CustomOverlayMap
               position={{
