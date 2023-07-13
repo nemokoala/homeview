@@ -20,14 +20,16 @@ function ReviewDetail() {
   }, []);
 
   useEffect(() => {
-    if (reviewData) setStar();
+    if (reviewData) {
+      setStar();
+      getCategory();
+    }
   }, [reviewData]);
 
   const getReviewDetail = async () => {
     try {
       const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
       setReviewData(response.data);
-      getCategory();
       console.log(
         "ReviewDetail.tsx(getReviewDetail): " + JSON.stringify(response)
       );
@@ -44,8 +46,8 @@ function ReviewDetail() {
     const headers = `KakaoAK ${appKey}` as any;
     const params = {
       category_group_code: "CE7", // 편의점 카테고리 코드
-      x: "Longitude", // 검색할 좌표의 경도
-      y: "Latitude", // 검색할 좌표의 위도
+      x: reviewData.room.longitude, // 검색할 좌표의 경도
+      y: reviewData.room.latitude, // 검색할 좌표의 위도
       radius: 1000, // 검색 반경(미터)
       sort: "distance", // 정렬 순서
     };
