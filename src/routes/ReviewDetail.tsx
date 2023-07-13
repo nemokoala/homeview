@@ -39,6 +39,12 @@ function ReviewDetail() {
     }
   }, [reviewData]);
 
+  useEffect(() => {
+    if (categoryGroup.now === "") {
+      setNearBuildings(null);
+    }
+  }, [categoryGroup]);
+
   const getReviewDetail = async () => {
     try {
       const response = await axios.get(`${apiAddress}/review/get/${reviewId}`);
@@ -54,7 +60,11 @@ function ReviewDetail() {
   };
 
   const getNearBuilding = async (code: any) => {
-    setCategoryGroup((prev) => ({ ...prev, now: code }));
+    if (categoryGroup.now)
+      setCategoryGroup((prev) => {
+        if (prev.now === code) return { ...prev, now: "" };
+        else return { ...prev, now: code };
+      });
     const appKey = process.env.REACT_APP_REST;
     const apiUrl = "https://dapi.kakao.com/v2/local/search/category.json";
     const headers = { Authorization: `KakaoAK ${appKey}` };
