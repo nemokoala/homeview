@@ -23,7 +23,7 @@ import Community from "routes/Community";
 import CommunityFactory from "routes/CommunityFactory";
 import Post from "./Post";
 
-function AppRouter({ reviewData, setReviewData }: any) {
+function AppRouter() {
   const [searchTerm, setSearchTerm] = useState("");
   const session = useSelector((state: any) => state.userSet.session);
   const modal = useSelector((state: any) => state.modalSet.modal);
@@ -34,33 +34,16 @@ function AppRouter({ reviewData, setReviewData }: any) {
         <BackButton />
         {modal.open && <Modal />}
         <Routes>
-          <Route path="/" element={<Home reviewData={reviewData} />} />
-          <Route
-            path="/admin"
-            element={
-              <Admin reviewData={reviewData} setReviewData={setReviewData} />
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<Admin />} />
           <Route
             path="/review"
             element={
-              <Review
-                reviewData={reviewData}
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-              />
+              <Review searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             }
           />
           <Route path="/review/:id" element={<ReviewDetail />} />
-          <Route
-            path="/reviewfac"
-            element={
-              <ReviewFac
-                reviewData={reviewData}
-                setReviewData={setReviewData}
-              />
-            }
-          />
+          <Route path="/reviewfac" element={<ReviewFac />} />
           <Route path="/map" element={<Map />} />
           <Route path="/community" element={<Community />} />
           <Route path="/community/:id" element={<Post />} />

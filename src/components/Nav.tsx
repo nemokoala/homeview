@@ -88,7 +88,7 @@ function Nav({ searchTerm, setSearchTerm }: any) {
         </ul>
         <input
           className={styles.input}
-          placeholder="검색"
+          placeholder="리뷰 검색"
           type="text"
           autoComplete="new-password"
           value={searchTerm}
