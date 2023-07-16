@@ -6,21 +6,21 @@ import { useDispatch } from "react-redux";
 import { setModal } from "slice/modalSlice";
 import styled from "styled-components";
 
-function AdminComment() {
-  const [comments, setComments] = useState<any>([]);
+function AdminCommunity() {
+  const [posts, setPosts] = useState<any>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getComments();
+    getPosts();
   }, []);
 
-  const getComments = async () => {
+  const getPosts = async () => {
     try {
-      const response = await axios.get(`${apiAddress}/admin/comment/list`, {
+      const response = await axios.get(`${apiAddress}/admin/posting/list`, {
         withCredentials: true,
       });
       console.log(JSON.stringify(response));
-      setComments(response.data);
+      setPosts(response.data);
     } catch (error: any) {
       dispatch(
         setModal({
@@ -34,9 +34,9 @@ function AdminComment() {
 
   const onClickDestroy = async (id: number) => {
     const answer = prompt(
-      `해당 댓글 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
+      `해당 글 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
-    if (answer == null) alert("댓글 삭제를 취소하였습니다.");
+    if (answer == null) alert("글 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
         const response = await axios.delete(
@@ -45,10 +45,10 @@ function AdminComment() {
             withCredentials: true,
           }
         );
-        getComments();
+        getPosts();
         alert("삭제가 완료되었습니다.");
         console.log(
-          "AdminComment.tsx(onClickDestroy): " + JSON.stringify(response)
+          "AdminCommunity.tsx(onClickDestroy): " + JSON.stringify(response)
         );
       } catch (error: any) {
         dispatch(
@@ -59,52 +59,52 @@ function AdminComment() {
           } as any)
         );
         console.error(
-          "AdminComment.tsx(onClickDestroy): " + JSON.stringify(error)
+          "AdminCommunity.tsx(onClickDestroy): " + JSON.stringify(error)
         );
       }
     } else if (parseInt(answer) !== id)
-      alert("id값을 잘못 입력하여서 댓글 삭제가 취소 되었습니다.");
+      alert("id값을 잘못 입력하여서 글 삭제가 취소 되었습니다.");
   };
 
   const sortId = (n: number): void => {
-    const sortedId = [...comments].sort((a, b) => {
+    const sortedId = [...posts].sort((a, b) => {
       if (a.commentId < b.commentId) return n;
       if (a.commentId > b.commentId) return -n;
       return 0;
     });
-    setComments(sortedId);
+    setPosts(sortedId);
   };
   const sortPostId = (n: number): void => {
-    const sortedName = [...comments].sort((a, b) => {
+    const sortedName = [...posts].sort((a, b) => {
       if (a.postId < b.postId) return n;
       if (a.postId > b.postId) return -n;
       return 0;
     });
-    setComments(sortedName);
+    setPosts(sortedName);
   };
   const sortMemberId = (n: number): void => {
-    const sortedScore = [...comments].sort((a, b) => {
+    const sortedScore = [...posts].sort((a, b) => {
       if (a.memberId < b.memberId) return n;
       if (a.memberId > b.memberId) return -n;
       return 0;
     });
-    setComments(sortedScore);
+    setPosts(sortedScore);
   };
   const sortMemberNickName = (n: number): void => {
-    const sortedaddress = [...comments].sort((a, b) => {
+    const sortedaddress = [...posts].sort((a, b) => {
       if (a.memberNickName < b.memberNickName) return n;
       if (a.memberNickName > b.memberNickName) return -n;
       return 0;
     });
-    setComments(sortedaddress);
+    setPosts(sortedaddress);
   };
   const sortTime = (n: number): void => {
-    const sortedaddress = [...comments].sort((a, b) => {
+    const sortedaddress = [...posts].sort((a, b) => {
       if (changeDate(a.commentTime) < changeDate(b.commentTime)) return n;
       if (changeDate(a.commentTime) > changeDate(b.commentTime)) return -n;
       return 0;
     });
-    setComments(sortedaddress);
+    setPosts(sortedaddress);
   };
 
   const changeDate = (time: any) => {
@@ -158,7 +158,7 @@ function AdminComment() {
             </th>
             <th>삭제</th>
           </tr>
-          {comments.map((comment: any) => (
+          {posts.map((comment: any) => (
             <tr key={comment.commentId}>
               <td>{comment.commentId}</td>
               <td>{comment.postId}</td>
@@ -182,7 +182,7 @@ function AdminComment() {
   );
 }
 
-export default AdminComment;
+export default AdminCommunity;
 
 const Container = styled.div`
   width: 100%;
