@@ -9,6 +9,7 @@ import axios from "axios";
 import { apiAddress } from "value";
 import AdminReview from "./AdminReview";
 import AdminComment from "./AdminComment";
+import AdminCommunity from "./AdminCommunity";
 function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
@@ -73,12 +74,19 @@ function Admin({ reviewData, setReviewData }: any) {
         >
           댓글 관리
         </div>
+        <div
+          className={location === "community" ? styles.divOn : styles.divOff}
+          onClick={() => setLocation("community")}
+        >
+          글 관리
+        </div>
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
         {location === "room" ? <AdminRoom /> : null}
         {location === "review" ? <AdminReview /> : null}
         {location === "comment" ? <AdminComment /> : null}
+        {location === "community" ? <AdminCommunity /> : null}
       </section>
     </div>
   );
