@@ -135,7 +135,9 @@ function AdminRoom() {
                 {room.sido} | {room.sigungu} | {room.dong}
               </td>
               <td>
-                {room.new_address} | {room.old_address}
+                {room.new_address}
+                <br />
+                {room.old_address}
               </td>
               <td>
                 {room.latitude.toFixed(4)},{room.longitude.toFixed(4)}

@@ -8,6 +8,7 @@ import { setModal } from "slice/modalSlice";
 import axios from "axios";
 import { apiAddress } from "value";
 import AdminReview from "./AdminReview";
+import AdminComment from "./AdminComment";
 function Admin({ reviewData, setReviewData }: any) {
   const [location, setLocation] = useState("user");
   const [unlock, setUnlock] = useState(false);
@@ -66,11 +67,18 @@ function Admin({ reviewData, setReviewData }: any) {
         >
           리뷰 관리
         </div>
+        <div
+          className={location === "comment" ? styles.divOn : styles.divOff}
+          onClick={() => setLocation("comment")}
+        >
+          리뷰 관리
+        </div>
       </aside>
       <section className={styles.section}>
         {location === "user" ? <AdminUser /> : null}
         {location === "room" ? <AdminRoom /> : null}
         {location === "review" ? <AdminReview /> : null}
+        {location === "comment" ? <AdminComment /> : null}
       </section>
     </div>
   );

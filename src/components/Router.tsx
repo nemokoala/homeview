@@ -6,7 +6,7 @@ import {
   Routes,
   useNavigate,
 } from "react-router-dom";
-import Admin from "routes/Admin";
+import Admin from "routes/Admin/Admin";
 import Home from "routes/Home";
 import Review from "routes/Review";
 import ReviewDetail from "routes/ReviewDetail";
