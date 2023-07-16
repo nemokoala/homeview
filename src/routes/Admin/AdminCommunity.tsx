@@ -39,9 +39,12 @@ function AdminCommunity() {
     if (answer == null) alert("글 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
-        const response = await axios.delete(`${apiAddress}/admin/post/${id}`, {
-          withCredentials: true,
-        });
+        const response = await axios.delete(
+          `${apiAddress}/admin/posting/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
         getPosts();
         alert("삭제가 완료되었습니다.");
         console.log(
@@ -63,14 +66,6 @@ function AdminCommunity() {
       alert("id값을 잘못 입력하여서 글 삭제가 취소 되었습니다.");
   };
 
-  const sortId = (n: number): void => {
-    const sortedId = [...posts].sort((a, b) => {
-      if (a.postId < b.postId) return n;
-      if (a.postId > b.postId) return -n;
-      return 0;
-    });
-    setPosts(sortedId);
-  };
   const sortPostId = (n: number): void => {
     const sortedName = [...posts].sort((a, b) => {
       if (a.postId < b.postId) return n;
