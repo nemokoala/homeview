@@ -71,7 +71,7 @@ function Admin({ reviewData, setReviewData }: any) {
           className={location === "comment" ? styles.divOn : styles.divOff}
           onClick={() => setLocation("comment")}
         >
-          리뷰 관리
+          댓글 관리
         </div>
       </aside>
       <section className={styles.section}>

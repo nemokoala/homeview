@@ -34,18 +34,21 @@ function AdminComment() {
 
   const onClickDestroy = async (id: number) => {
     const answer = prompt(
-      `해당 방의 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
+      `해당 댓글 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
     if (answer == null) alert("방 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
-        const response = await axios.delete(`${apiAddress}/admin/room/${id}`, {
-          withCredentials: true,
-        });
+        const response = await axios.delete(
+          `${apiAddress}/admin/comment/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
         getComments();
         alert("삭제가 완료되었습니다.");
         console.log(
-          "AdminRoom.tsx(onClickDestroy): " + JSON.stringify(response)
+          "AdminComment.tsx(onClickDestroy): " + JSON.stringify(response)
         );
       } catch (error: any) {
         dispatch(
@@ -56,7 +59,7 @@ function AdminComment() {
           } as any)
         );
         console.error(
-          "AdminRoom.tsx(onClickDestroy): " + JSON.stringify(error)
+          "AdminComment.tsx(onClickDestroy): " + JSON.stringify(error)
         );
       }
     } else if (parseInt(answer) !== id)
@@ -65,32 +68,32 @@ function AdminComment() {
 
   const sortId = (n: number): void => {
     const sortedId = [...comments].sort((a, b) => {
-      if (a.room_id < b.room_id) return n;
-      if (a.room_id > b.room_id) return -n;
+      if (a.comment_id < b.comment_id) return n;
+      if (a.comment_id > b.comment_id) return -n;
       return 0;
     });
     setComments(sortedId);
   };
-  const sortName = (n: number): void => {
+  const sortPostId = (n: number): void => {
     const sortedName = [...comments].sort((a, b) => {
-      if (a.building < b.building) return n;
-      if (a.building > b.building) return -n;
+      if (a.postId < b.postId) return n;
+      if (a.postId > b.postId) return -n;
       return 0;
     });
     setComments(sortedName);
   };
-  const sortSido = (n: number): void => {
+  const sortMemberId = (n: number): void => {
     const sortedScore = [...comments].sort((a, b) => {
-      if (a.sido < b.sido) return n;
-      if (a.sido > b.sido) return -n;
+      if (a.memberId < b.memberId) return n;
+      if (a.memberId > b.memberId) return -n;
       return 0;
     });
     setComments(sortedScore);
   };
-  const sortaddress = (n: number): void => {
+  const sortMemberNickName = (n: number): void => {
     const sortedaddress = [...comments].sort((a, b) => {
-      if (a.new_address < b.new_address) return n;
-      if (a.new_address > b.new_address) return -n;
+      if (a.memberNickName < b.memberNickName) return n;
+      if (a.memberNickName > b.memberNickName) return -n;
       return 0;
     });
     setComments(sortedaddress);
@@ -102,50 +105,43 @@ function AdminComment() {
         <tbody>
           <tr>
             <th>
-              id
+              댓글 id
               <br />
               <button onClick={() => sortId(-1)}>▲</button>
               <button onClick={() => sortId(+1)}>▼</button>
             </th>
             <th>
-              이름
+              글 id
               <br />
-              <button onClick={() => sortName(-1)}>▲</button>
-              <button onClick={() => sortName(1)}>▼</button>
+              <button onClick={() => sortPostId(-1)}>▲</button>
+              <button onClick={() => sortPostId(1)}>▼</button>
             </th>
             <th>
-              시도 | 시군구 | 동<br />
-              <button onClick={() => sortSido(-1)}>▲</button>
-              <button onClick={() => sortSido(1)}>▼</button>
+              유저 id
+              <br />
+              <button onClick={() => sortMemberId(-1)}>▲</button>
+              <button onClick={() => sortMemberId(1)}>▼</button>
             </th>
             <th>
-              방 주소
+              유저 닉네임
               <br />
-              <button onClick={() => sortaddress(-1)}>▲</button>
-              <button onClick={() => sortaddress(1)}>▼</button>
+              <button onClick={() => sortMemberNickName(-1)}>▲</button>
+              <button onClick={() => sortMemberNickName(1)}>▼</button>
             </th>
-            <th>지역 좌표</th>
+            <th>댓글 내용</th>
             <th>삭제</th>
           </tr>
-          {comments.map((room: any) => (
-            <tr key={room.room_id}>
-              <td>{room.room_id}</td>
-              <td>{room.building}</td>
-              <td>
-                {room.sido} | {room.sigungu} | {room.dong}
-              </td>
-              <td>
-                {room.new_address}
-                <br />
-                {room.old_address}
-              </td>
-              <td>
-                {room.latitude.toFixed(4)},{room.longitude.toFixed(4)}
-              </td>
+          {comments.map((comment: any) => (
+            <tr key={comment.comment_id}>
+              <td>{comment.commentId}</td>
+              <td>{comment.postId}</td>
+              <td>{comment.memberId}</td>
+              <td>{comment.memberNickName}</td>
+              <td>{comment.content}</td>
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => onClickDestroy(room.room_id)}
+                  onClick={() => onClickDestroy(comment.comment_id)}
                 >
                   삭제
                 </button>
