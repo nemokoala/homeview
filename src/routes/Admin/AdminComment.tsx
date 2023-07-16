@@ -36,7 +36,7 @@ function AdminComment() {
     const answer = prompt(
       `해당 댓글 아이디("${id}")를 입력하면 삭제처리가 됩니다.`
     );
-    if (answer == null) alert("방 삭제를 취소하였습니다.");
+    if (answer == null) alert("댓글 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
         const response = await axios.delete(
@@ -63,13 +63,13 @@ function AdminComment() {
         );
       }
     } else if (parseInt(answer) !== id)
-      alert("id값을 잘못 입력하여서 방 삭제가 취소 되었습니다.");
+      alert("id값을 잘못 입력하여서 댓글 삭제가 취소 되었습니다.");
   };
 
   const sortId = (n: number): void => {
     const sortedId = [...comments].sort((a, b) => {
-      if (a.comment_id < b.comment_id) return n;
-      if (a.comment_id > b.comment_id) return -n;
+      if (a.commentId < b.commentId) return n;
+      if (a.commentId > b.commentId) return -n;
       return 0;
     });
     setComments(sortedId);
@@ -132,7 +132,7 @@ function AdminComment() {
             <th>삭제</th>
           </tr>
           {comments.map((comment: any) => (
-            <tr key={comment.comment_id}>
+            <tr key={comment.commentId}>
               <td>{comment.commentId}</td>
               <td>{comment.postId}</td>
               <td>{comment.memberId}</td>
@@ -141,7 +141,7 @@ function AdminComment() {
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => onClickDestroy(comment.comment_id)}
+                  onClick={() => onClickDestroy(comment.commentId)}
                 >
                   삭제
                 </button>
@@ -187,12 +187,12 @@ const Table = styled.table`
     width: 80px;
   }
   & td:nth-child(2) {
-    width: 160px;
+    width: 80px;
   }
   & td:nth-child(3) {
-    width: 170px;
+    width: 80px;
   }
-  & td:nth-child(5) {
+  & td:nth-child(4) {
     width: 150px;
   }
   & td:nth-child(6) {
