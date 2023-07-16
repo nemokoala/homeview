@@ -39,12 +39,9 @@ function AdminCommunity() {
     if (answer == null) alert("글 삭제를 취소하였습니다.");
     else if (parseInt(answer) === id) {
       try {
-        const response = await axios.delete(
-          `${apiAddress}/admin/comment/${id}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.delete(`${apiAddress}/admin/post/${id}`, {
+          withCredentials: true,
+        });
         getPosts();
         alert("삭제가 완료되었습니다.");
         console.log(
@@ -68,8 +65,8 @@ function AdminCommunity() {
 
   const sortId = (n: number): void => {
     const sortedId = [...posts].sort((a, b) => {
-      if (a.commentId < b.commentId) return n;
-      if (a.commentId > b.commentId) return -n;
+      if (a.postId < b.postId) return n;
+      if (a.postId > b.postId) return -n;
       return 0;
     });
     setPosts(sortedId);
@@ -100,8 +97,8 @@ function AdminCommunity() {
   };
   const sortTime = (n: number): void => {
     const sortedaddress = [...posts].sort((a, b) => {
-      if (changeDate(a.commentTime) < changeDate(b.commentTime)) return n;
-      if (changeDate(a.commentTime) > changeDate(b.commentTime)) return -n;
+      if (changeDate(a.postTime) < changeDate(b.postTime)) return n;
+      if (changeDate(a.postTime) > changeDate(b.postTime)) return -n;
       return 0;
     });
     setPosts(sortedaddress);
@@ -126,12 +123,6 @@ function AdminCommunity() {
         <tbody>
           <tr>
             <th>
-              댓글 id
-              <br />
-              <button onClick={() => sortId(-1)}>▲</button>
-              <button onClick={() => sortId(+1)}>▼</button>
-            </th>
-            <th>
               글 id
               <br />
               <button onClick={() => sortPostId(-1)}>▲</button>
@@ -149,7 +140,8 @@ function AdminCommunity() {
               <button onClick={() => sortMemberNickName(-1)}>▲</button>
               <button onClick={() => sortMemberNickName(1)}>▼</button>
             </th>
-            <th>댓글 내용</th>
+            <th>글 제목</th>
+            <th>글 내용</th>
             <th>
               작성 시간
               <br />
@@ -158,18 +150,18 @@ function AdminCommunity() {
             </th>
             <th>삭제</th>
           </tr>
-          {posts.map((comment: any) => (
-            <tr key={comment.commentId}>
-              <td>{comment.commentId}</td>
-              <td>{comment.postId}</td>
-              <td>{comment.memberId}</td>
-              <td>{comment.memberNickName}</td>
-              <td>{comment.content}</td>
-              <td>{changeDate(comment.commentTime)}</td>
+          {posts.map((post: any) => (
+            <tr key={post.postId}>
+              <td>{post.postId}</td>
+              <td>{post.memberId}</td>
+              <td>{post.memberNickname}</td>
+              <td>{post.title}</td>
+              <td>{post.content}</td>
+              <td>{changeDate(post.postTime)}</td>
               <td>
                 <button
                   style={{ background: "rgb(228, 84, 84)" }}
-                  onClick={() => onClickDestroy(comment.commentId)}
+                  onClick={() => onClickDestroy(post.postId)}
                 >
                   삭제
                 </button>
@@ -218,12 +210,12 @@ const Table = styled.table`
     width: 80px;
   }
   & td:nth-child(3) {
-    width: 80px;
+    width: 150px;
   }
   & td:nth-child(4) {
     width: 150px;
   }
-  & td:nth-child(6) {
+  & td:nth-child(7) {
     width: 65px;
   }
   & tr:nth-child(odd) {
