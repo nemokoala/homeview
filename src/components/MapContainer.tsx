@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import React from "react";
 
-function MapContainer({ reviewData, nearBuildings }: any) {
+function MapContainer({ reviewData, nearBuildings, setNearBuildings }: any) {
   const [state, setState] = useState<any>({
     center: { lat: 33.452613, lng: 126.570888 },
     isPanto: false,
@@ -23,6 +23,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
 
     isLoading: true,
   });
+  const [zoomLevel, setZoomLevel] = useState(4);
   let geocoder = new kakao.maps.services.Geocoder();
 
   function searchLoc() {
@@ -62,7 +63,7 @@ function MapContainer({ reviewData, nearBuildings }: any) {
           width: "100%",
           height: "400px",
         }}
-        level={4} // 지도의 확대 레벨
+        level={zoomLevel} // 지도의 확대 레벨
       >
         <MapMarker // 해당 건물 마커
           position={state.center}
@@ -114,37 +115,47 @@ function MapContainer({ reviewData, nearBuildings }: any) {
         </CustomOverlayMap>
 
         {nearBuildings &&
-          nearBuildings.map((building: any) => (
+          nearBuildings.map((building: any, index: number) => (
             <React.Fragment key={building.place_url}>
-              <CustomOverlayMap
-                position={{
-                  lat: building.y,
-                  lng: building.x,
-                }}
-                zIndex={1}
-                xAnchor={0.5}
-                yAnchor={2.3}
-              >
-                <NearDiv>
-                  <a
-                    className="building"
-                    href={building.place_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      padding: "7px 10px",
-                      fontSize: "1rem",
-                      height: "auto",
-                    }}
-                  >
-                    {building.place_name}
-                  </a>
-                </NearDiv>
-              </CustomOverlayMap>
+              {(building.visible || zoomLevel <= 3) && (
+                <CustomOverlayMap
+                  position={{
+                    lat: building.y,
+                    lng: building.x,
+                  }}
+                  zIndex={1}
+                  xAnchor={0.5}
+                  yAnchor={2.3}
+                >
+                  <NearDiv>
+                    <a
+                      className="building"
+                      href={building.place_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        padding: "7px 10px",
+                        fontSize: "0.93rem",
+                        height: "auto",
+                      }}
+                    >
+                      {building.place_name}
+                    </a>
+                  </NearDiv>
+                </CustomOverlayMap>
+              )}
               <MapMarker // 해당 건물 마커
                 position={{
                   lat: building.y,
                   lng: building.x,
+                }}
+                onClick={() => {
+                  const updatedBuildings = [...nearBuildings];
+                  updatedBuildings[index] = {
+                    ...updatedBuildings[index],
+                    visible: !updatedBuildings[index].visible,
+                  };
+                  setNearBuildings(updatedBuildings);
                 }}
               ></MapMarker>
             </React.Fragment>

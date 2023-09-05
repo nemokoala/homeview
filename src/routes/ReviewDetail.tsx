@@ -80,7 +80,12 @@ function ReviewDetail() {
         headers,
         params,
       });
-      setNearBuildings(response.data);
+
+      const buildings = response.data.documents.map((building: any) => ({
+        ...building,
+        visible: false,
+      }));
+      setNearBuildings(buildings);
       console.log("카테고리 " + JSON.stringify(response));
     } catch (error) {
       console.error(error);
@@ -148,6 +153,7 @@ function ReviewDetail() {
           <MapContainer
             reviewData={reviewData}
             nearBuildings={nearBuildings?.documents}
+            setNearBuildings={setNearBuildings}
           />
           <CategoryContainer>
             {categoryGroup.list.map((category: any) => (

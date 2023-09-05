@@ -22,6 +22,7 @@ import Modal from "./Modal";
 import Community from "routes/Community";
 import CommunityFactory from "routes/CommunityFactory";
 import Post from "./Post";
+import MapCluster from "./MapCluster";
 
 function AppRouter() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,6 +43,7 @@ function AppRouter() {
               <Review searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             }
           />
+          <Route path="/map" element={<MapCluster />} />
           <Route path="/review/:id" element={<ReviewDetail />} />
           <Route path="/reviewfac" element={<ReviewFac />} />
           <Route path="/map" element={<Map />} />

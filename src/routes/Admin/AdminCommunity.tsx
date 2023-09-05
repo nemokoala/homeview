@@ -11,7 +11,7 @@ function AdminCommunity() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPosts();
+    getPosts(); //수정
   }, []);
 
   const getPosts = async () => {
