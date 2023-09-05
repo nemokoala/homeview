@@ -152,7 +152,7 @@ function ReviewDetail() {
         <>
           <MapContainer
             reviewData={reviewData}
-            nearBuildings={nearBuildings?.documents}
+            nearBuildings={nearBuildings}
             setNearBuildings={setNearBuildings}
           />
           <CategoryContainer>
